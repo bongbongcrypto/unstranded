@@ -270,7 +270,9 @@ npm install
 2. Check the fields you are about to use: `node scripts/verify-withdrawal.mjs <file>`.
    It recomputes the withdrawal hash from the fields and fails on a mismatch.
 3. Import `workflows/on-demand-finalizer.json`, set `<WALLET_INTEGRATION_ID>` to
-   your organization's wallet integration, and run it with the withdrawal as input.
+   your organization's wallet integration, and run it with seven inputs:
+   `withdrawalHash`, `nonce`, `sender`, `target`, `value`, `gasLimit` and
+   `withdrawalData`. `docs/example-withdrawal.json` is one, in that shape.
 4. For the unattended variant, import `workflows/unattended-finalizer.json`,
    fill the withdrawal into the two web3 nodes, and enable it.
 
@@ -283,7 +285,13 @@ it films are built from the chain rather than committed. The fourth compares
 the workflows sitting in a KeeperHub account against the JSON here, and says it
 was not checked when there is no key to check it with.
 
-Note that the trigger input for the withdrawal's calldata is called
+Seven, not six, because the gates read state by the hash while the write passes
+the six fields. Leave the hash out and the run stops at the first read rather
+than reading something else: the platform refuses to render a reference it
+cannot resolve, which is the right thing for it to do and worth knowing before
+it happens to you.
+
+Note also that the trigger input for the withdrawal's calldata is called
 `withdrawalData`, not `data`. A trigger field called `data` is shadowed by the
 trigger envelope's own `data` key, and the reference resolves to the whole
 payload instead of the field.
