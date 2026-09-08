@@ -34,14 +34,15 @@ const script = JSON.parse(readFileSync(join(ROOT, "docs", "demo-script.json"), "
 
 // Segment boundaries are named by the line each one starts at, so a retime
 // moves them rather than breaking them.
-const SEGMENT_STARTS = { 0: "a", 5: "b", 8: "c", 11: "d", 14: "e", 17: "f" };
+const SEGMENT_STARTS = { 0: "a", 5: "b", 8: "c", 11: "d", 14: "e", 17: "f", 19: "g" };
 const WHAT = {
   a: "three transactions, people stop after two, and the count",
   b: "anyone may finish someone else's withdrawal, and cannot take it",
   c: "the workflow: five reads, two gates, one write",
   d: "a stranger's 0.95 ETH released, and the balance that moved",
   e: "both refusals, and the gate that was missing at first",
-  f: "waiting unattended, what is unfinished, the close",
+  f: "waiting unattended, and what is unfinished",
+  g: "the three that were in KeeperHub, and the close",
 };
 
 // Once the audio exists, measure it. The word rate is only an estimate, and it

@@ -39,6 +39,10 @@ const CLAIMS = [
   { what: "the balance before", readme: "0.0140003049743579", spoken: "zero point zero one four", page: "0.0140" },
   { what: "the balance after", readme: "0.9640003049743579", spoken: "zero point nine six four", page: "0.9640" },
   { what: "what the watcher is watching", readme: "5.447626998490219023 ETH", spoken: "five point four ether", page: null },
+  { what: "how many were upstream", readme: "Three of the things in the way were in KeeperHub",
+    spoken: "Three of the things in the way were in KeeperHub", page: "Three of them were in KeeperHub" },
+  { what: "the upstream fix that matters", readme: "keeperhub#2319",
+    spoken: "nine came out greater than ten", page: "pull request 2319" },
 ];
 
 for (const claim of CLAIMS) {
@@ -59,6 +63,9 @@ for (const [what, text] of [
   ["the recipient concentration", "same recipient"],
   ["the estimation address trick", "address(1)"],
   ["who runs it", "## Who runs it"],
+  ["the second upstream fix", "keeperhub#2320"],
+  ["the upstream finding filed as an issue", "keeperhub#2359"],
+  ["why the gates compare strings", "rather than as `<` or `>`"],
 ]) {
   if (!README.includes(text)) note(`README no longer states ${what} ("${text}")`);
 }

@@ -148,7 +148,21 @@
     },
     {
       "start": "02:12.400",
-      "end": "02:21.200",
+      "end": "02:18.100",
+      "shot": "upstream",
+      "say": "Three of the things in the way were in KeeperHub rather than in this, so they were fixed there.",
+      "ko": "가로막던 것 중 셋은 이쪽이 아니라 KeeperHub 안에 있었습니다. 그래서 거기서 고쳤습니다."
+    },
+    {
+      "start": "02:18.100",
+      "end": "02:31.900",
+      "shot": "https://github.com/KeeperHub/keeperhub/pull/2319",
+      "say": "Its condition node compared numbers written as text, so nine came out greater than ten, and that is the node a workflow asks before it writes. Two are open pull requests, and the third is filed as an issue.",
+      "ko": "Condition 노드가 숫자를 글자로 비교해서 9가 10보다 크게 나왔습니다. 워크플로가 쓰기 전에 묻는 것이 바로 그 노드입니다. 둘은 열려 있는 PR이고, 나머지 하나는 이슈로 냈습니다."
+    },
+    {
+      "start": "02:31.900",
+      "end": "02:40.700",
       "shot": "close",
       "say": "The survey that produced those numbers, both workflows, and a checker that reads every claim back off the chain are in the repository.",
       "ko": "그 숫자를 만든 조사 스크립트, 워크플로 두 개, 그리고 모든 주장을 체인에서 다시 읽어 확인하는 검사기가 저장소에 있습니다."

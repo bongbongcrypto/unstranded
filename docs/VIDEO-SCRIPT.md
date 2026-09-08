@@ -74,6 +74,8 @@ fails if the README and the chain disagree.
 | 1:47 | run-unresolved | The first version had only one gate. It reached for the portal every thirty minutes and was reverted. Nothing was ever sent, and it still was not something you would leave running. |
 | 1:58 | watching | So it asks the game first. This one is watching five point four ether, and waiting. |
 | 2:04 | limits | Unfinished: testnet for the demonstration, one withdrawal per workflow, and it does not find them by itself. |
-| 2:12 | close | The survey that produced those numbers, both workflows, and a checker that reads every claim back off the chain are in the repository. |
+| 2:12 | upstream | Three of the things in the way were in KeeperHub rather than in this, so they were fixed there. |
+| 2:21 | https://github.com/KeeperHub/keeperhub/pull/2319 | Its condition node compared numbers written as text, so nine came out greater than ten, and that is the node a workflow asks before it writes. Two are open pull requests, and the third is filed as an issue. |
+| 2:36 | close | The survey that produced those numbers, both workflows, and a checker that reads every claim back off the chain are in the repository. |
 
 <!-- shots:end -->

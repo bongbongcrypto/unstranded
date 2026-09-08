@@ -17,4 +17,6 @@ Give it one whose dispute game is still running and the second gate closes. No t
 The first version had only one gate. It reached for the portal every thirty minutes and was reverted. Nothing was ever sent, and it still was not something you would leave running.
 So it asks the game first. This one is watching five point four ether, and waiting.
 Unfinished: testnet for the demonstration, one withdrawal per workflow, and it does not find them by itself.
+Three of the things in the way were in KeeperHub rather than in this, so they were fixed there.
+Its condition node compared numbers written as text, so nine came out greater than ten, and that is the node a workflow asks before it writes. Two are open pull requests, and the third is filed as an issue.
 The survey that produced those numbers, both workflows, and a checker that reads every claim back off the chain are in the repository.

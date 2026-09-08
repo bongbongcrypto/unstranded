@@ -44,6 +44,7 @@ const WATCHER = "https://app.keeperhub.com/workflows/" + WATCHER_ID;
 const RELEASE_TX =
   "https://sepolia.etherscan.io/tx/0xd47911d516b533e4c0899101cada489a33ebe2f09187df14c2eba249b5f8bf62";
 const REPO = "https://github.com/bongbongcrypto/unstranded";
+const PR_ONE = "https://github.com/KeeperHub/keeperhub/pull/2319";
 const local = (name) => "file:///" + join(OUT, name).replace(/\\/g, "/");
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -485,17 +486,28 @@ const CHOREOGRAPHY = [
     ],
   },
   {
-    // 1:56.7 waiting, unfinished, the repository
+    // 1:58.6 waiting, and what is not done
     id: "f",
     url: WATCHER,
     zoom: 1.1,
     steps: [
       { at: 1500, do: async (s) => canvasWide(s) },
-      // 2:02.7 what is not done
+      // 2:04.6 what is not done
       { at: 5800, do: async (s, go) => go(local("limits.html")) },
-      // 2:10.5 the close
-      { at: 13600, do: async (s, go) => go(local("close.html")) },
-      { at: 15000, do: async (s, go) => go(REPO) },
+    ],
+  },
+  {
+    // 2:12.4 the three that were in KeeperHub, then the close
+    id: "g",
+    url: local("upstream.html"),
+    steps: [
+      { at: 1200, do: async (s) => evaluate(s, `window.__shoot.spotText("pull request 2319", null, 10)`) },
+      // 2:18.1 the first one, on their own repository
+      { at: 5500, do: async (s) => evaluate(s, `window.__shoot.unspot()`) },
+      { at: 5700, do: async (s, go) => go(PR_ONE) },
+      // 2:31.9 the close
+      { at: 19500, do: async (s, go) => go(local("close.html")) },
+      { at: 21000, do: async (s, go) => go(REPO) },
     ],
   },
 ];

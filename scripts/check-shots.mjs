@@ -32,11 +32,11 @@ const note = (m) => problems.push(m);
 // Walk the choreography in order, tracking which page each step is looking at.
 // A spotText belongs to whichever page was last opened before it.
 const body = RECORDER.slice(RECORDER.indexOf("const CHOREOGRAPHY = ["));
-const events = [...body.matchAll(/(?:url:\s*local\("([^"]+)"\)|go\(local\("([^"]+)"\)\)|go\((ON_DEMAND|WATCHER|RELEASE_TX|REPO)\)|spotText\("([^"]+)"|url:\s*(ON_DEMAND|WATCHER))/g)];
+const events = [...body.matchAll(/(?:url:\s*local\("([^"]+)"\)|go\(local\("([^"]+)"\)\)|go\((ON_DEMAND|WATCHER|RELEASE_TX|REPO|PR_ONE)\)|spotText\("([^"]+)"|url:\s*(ON_DEMAND|WATCHER))/g)];
 
 let page = null;
 let checked = 0;
-const live = new Set(["ON_DEMAND", "WATCHER", "RELEASE_TX", "REPO"]);
+const live = new Set(["ON_DEMAND", "WATCHER", "RELEASE_TX", "REPO", "PR_ONE"]);
 
 for (const m of events) {
   const openLocal = m[1] ?? m[2];

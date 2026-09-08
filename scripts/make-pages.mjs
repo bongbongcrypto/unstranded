@@ -141,6 +141,18 @@ write("limits.html", page("limits", `
   <div class="row"><div class="k">which rollups</div><div class="v warn">OP Stack portals only</div></div>
 `));
 
+// --- what was wrong upstream ------------------------------------------------
+// The numbers and the one line each are the same ones the README carries, and
+// scripts/check-consistency.mjs fails if the two stop agreeing.
+write("upstream.html", page("upstream", `
+  <div class="src">github.com/KeeperHub/keeperhub</div>
+  <h1>Three of them were in KeeperHub</h1>
+  <div class="row"><div class="k">pull request 2319</div><div class="v">the Condition node compared numbers written as text, so "9" &lt; "10" was false</div></div>
+  <div class="row"><div class="k">pull request 2320</div><div class="v">every new organisation's example workflows abort before their Condition node runs</div></div>
+  <div class="row"><div class="k">issue 2359</div><div class="v">a template token inside an array is never rendered and always reported</div></div>
+  <div class="note">Two pull requests, review addressed. One issue, filed at the maintainer's request.</div>
+`));
+
 // --- the close --------------------------------------------------------------
 write("close.html", page("close", `
   <div class="src">In the repository</div>
