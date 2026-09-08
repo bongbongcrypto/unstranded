@@ -92,77 +92,77 @@
     },
     {
       "start": "01:14.600",
-      "end": "01:22.700",
+      "end": "01:21.100",
       "shot": "run-release",
-      "say": "Here it is releasing five ether that the owner proved themselves, forty six days ago, and never came back to finish.",
-      "ko": "주인이 직접 증명해 놓고 46일 동안 마무리하러 오지 않은 5 이더를 풀어내는 장면입니다."
+      "say": "Here it is releasing five ether that the owner proved themselves and then left for forty six days.",
+      "ko": "주인이 직접 증명해 놓고 46일 동안 내버려 둔 5 이더를 풀어내는 장면입니다."
     },
     {
-      "start": "01:22.700",
-      "end": "01:29.400",
+      "start": "01:21.100",
+      "end": "01:27.800",
       "shot": "https://sepolia.etherscan.io/tx/0xb3c37356e9af4915eef7fd20189ac739443ac99b79e29284c57c285e55eb9c57",
       "say": "Their balance goes from three point one eight ether to eight point one eight. We never held their key.",
       "ko": "그 사람 잔고가 3.18 이더에서 8.18로 올라갑니다. 우리는 그 사람 키를 가진 적이 없습니다."
     },
     {
-      "start": "01:29.400",
-      "end": "01:36.300",
+      "start": "01:27.800",
+      "end": "01:33.000",
       "shot": "balances",
-      "say": "Gas was sponsored by the keeper's KeeperHub organisation, so getting the money back cost the owner nothing.",
-      "ko": "가스는 키퍼 쪽 KeeperHub 조직이 대납했습니다. 돈을 되찾는 데 주인은 한 푼도 안 냈습니다."
+      "say": "KeeperHub paid the gas, so getting the money back cost the owner nothing.",
+      "ko": "가스는 KeeperHub가 냈습니다. 돈을 되찾는 데 주인은 한 푼도 안 냈습니다."
     },
     {
-      "start": "01:36.300",
-      "end": "01:42.500",
+      "start": "01:33.000",
+      "end": "01:39.200",
       "shot": "run-unproven",
       "say": "It also refuses. Give it a withdrawal nobody proved and the first gate closes.",
       "ko": "거절도 합니다. 아무도 증명하지 않은 출금을 주면 첫 게이트가 닫힙니다."
     },
     {
-      "start": "01:42.500",
-      "end": "01:49.700",
+      "start": "01:39.200",
+      "end": "01:46.400",
       "shot": "run-unresolved",
       "say": "Give it one whose dispute game is still running and the second gate closes. No transaction either time.",
       "ko": "분쟁 게임이 아직 진행 중인 걸 주면 두 번째 게이트가 닫힙니다. 두 경우 다 트랜잭션이 없습니다."
     },
     {
-      "start": "01:49.700",
-      "end": "02:00.600",
+      "start": "01:46.400",
+      "end": "01:57.300",
       "shot": "run-unresolved",
       "say": "The first version had only one gate. It reached for the portal every thirty minutes and was reverted. Nothing was ever sent, and it still was not something you would leave running.",
       "ko": "첫 판은 게이트가 하나뿐이었습니다. 30분마다 포털에 손을 뻗었다가 되돌려졌습니다. 나간 건 없었지만, 그래도 켜 둘 만한 물건은 아니었습니다."
     },
     {
-      "start": "02:00.600",
-      "end": "02:06.600",
+      "start": "01:57.300",
+      "end": "02:03.300",
       "shot": "watching",
       "say": "So it asks the game first. This one is watching five point four ether, and waiting.",
       "ko": "그래서 게임부터 물어봅니다. 이건 5.4 이더를 지켜보며 기다리는 중입니다."
     },
     {
-      "start": "02:06.600",
-      "end": "02:14.400",
+      "start": "02:03.300",
+      "end": "02:11.100",
       "shot": "limits",
       "say": "Unfinished: testnet for the demonstration, one withdrawal per workflow, and it does not find them by itself.",
       "ko": "미완성. 시연은 테스트넷이고, 워크플로 하나가 출금 하나를 맡고, 스스로 찾아내지는 못합니다."
     },
     {
-      "start": "02:14.400",
-      "end": "02:18.800",
+      "start": "02:11.100",
+      "end": "02:15.500",
       "shot": "upstream",
       "say": "Three of the things in the way were in KeeperHub, not in this.",
       "ko": "가로막던 것 중 셋은 이쪽이 아니라 KeeperHub 안에 있었습니다."
     },
     {
-      "start": "02:18.800",
-      "end": "02:32.600",
+      "start": "02:15.500",
+      "end": "02:29.300",
       "shot": "https://github.com/KeeperHub/keeperhub/pull/2319",
       "say": "Its condition node compared numbers written as text, so nine came out greater than ten, and that is the node a workflow asks before it writes. Two are open pull requests, and the third is filed as an issue.",
       "ko": "Condition 노드가 숫자를 글자로 비교해서 9가 10보다 크게 나왔습니다. 워크플로가 쓰기 전에 묻는 것이 바로 그 노드입니다. 둘은 열려 있는 PR이고, 나머지 하나는 이슈로 냈습니다."
     },
     {
-      "start": "02:32.600",
-      "end": "02:41.400",
+      "start": "02:29.300",
+      "end": "02:38.100",
       "shot": "close",
       "say": "The survey that produced those numbers, both workflows, and a checker that reads every claim back off the chain are in the repository.",
       "ko": "그 숫자를 만든 조사 스크립트, 워크플로 두 개, 그리고 모든 주장을 체인에서 다시 읽어 확인하는 검사기가 저장소에 있습니다."

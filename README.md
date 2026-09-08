@@ -116,7 +116,7 @@ second transaction, including one holder who did it ten times.
 | Cannot act early | The second gate reads the dispute game backing the proof and refuses unless it has resolved in the defender's favour. The portal enforces this anyway, but asking first means a keeper that is not ready sends nothing rather than a reverted transaction every tick. |
 | Cannot tell whether the money will arrive | It cannot. A workflow has no way to simulate, and the portal only reveals a failing target call to a simulation whose `tx.origin` is `address(1)`. `scripts/survey.mjs` runs that check; the keeper trusts whoever configured it. |
 | Cannot be pointed at the wrong withdrawal | The gates read state by the withdrawal hash while the write passes the six fields, and nothing inside the workflow checks that the two describe the same withdrawal. If they disagree the write reverts, because a withdrawal with that hash was never proven, so the failure is loud and costs gas rather than money. `scripts/verify-withdrawal.mjs` is what closes it beforehand. |
-| Costs the owner nothing | The keeper's KeeperHub organization pays, and on this plan that gas was sponsored. Either way the bill is the keeper's, never the owner's. |
+| Costs the owner nothing | KeeperHub submits and pays, on the keeper organization's behalf and on this plan sponsored. Either way the bill is never the owner's. |
 
 ## How it works
 
