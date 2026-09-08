@@ -1,0 +1,79 @@
+1
+00:00:00,000 --> 00:00:08,750
+Moving money off a rollup takes three transactions, not one. You start it, you prove it, and a week later you come back and finish it.
+
+2
+00:00:09,100 --> 00:00:12,234
+People do the first two and never come back.
+
+3
+00:00:12,600 --> 00:00:19,934
+So I counted. On Base, across ten sampled days, two hundred and seventy one withdrawals were proven.
+
+4
+00:00:20,300 --> 00:00:26,530
+Fifteen were never finished. Sixty eight thousand dollars of tether, sitting in the bridge.
+
+5
+00:00:26,900 --> 00:00:32,098
+Ten of them have been there seventy five days. None is still inside a challenge period.
+
+6
+00:00:32,500 --> 00:00:37,866
+Here is the part that makes this fixable. Anyone can finish someone else's withdrawal.
+
+7
+00:00:38,300 --> 00:00:46,618
+The portal takes the prover's proof from a different caller, and the recipient is already fixed inside the withdrawal that was proven.
+
+8
+00:00:47,000 --> 00:00:55,222
+So a stranger can push it through and cannot take it. All fifteen simulate clean from an address with no connection to any of them.
+
+9
+00:00:55,600 --> 00:00:58,758
+This is that, as a KeeperHub workflow.
+
+10
+00:00:59,200 --> 00:01:09,294
+It reads whether the withdrawal is finished, whether anyone proved it, who that was, which dispute game the proof rests on, and whether that game resolved.
+
+11
+00:01:09,700 --> 00:01:12,306
+Two gates. Then one write.
+
+12
+00:01:12,700 --> 00:01:17,034
+Here it is releasing a withdrawal that had been abandoned for three days.
+
+13
+00:01:17,400 --> 00:01:25,142
+The owner's balance goes from zero point zero one four ether to zero point nine six four. We never held their key.
+
+14
+00:01:25,500 --> 00:01:32,018
+Gas was sponsored by the keeper's KeeperHub organisation, so getting the money back cost the owner nothing.
+
+15
+00:01:32,400 --> 00:01:38,174
+It also refuses. Give it a withdrawal nobody proved and the first gate closes.
+
+16
+00:01:38,600 --> 00:01:45,382
+Give it one whose dispute game is still running and the second gate closes. No transaction either time.
+
+17
+00:01:45,800 --> 00:01:56,350
+The first version had only one gate. It reached for the portal every thirty minutes and was reverted. Nothing was ever sent, and it still was not something you would leave running.
+
+18
+00:01:56,700 --> 00:02:02,330
+So it asks the game first. This one is watching five point four ether, and waiting.
+
+19
+00:02:02,700 --> 00:02:10,082
+Unfinished: testnet for the demonstration, one withdrawal per workflow, and it does not find them by itself.
+
+20
+00:02:10,500 --> 00:02:18,914
+The survey that produced those numbers, both workflows, and a checker that reads every claim back off the chain are in the repository.

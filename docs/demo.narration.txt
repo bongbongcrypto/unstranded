@@ -1,0 +1,20 @@
+Moving money off a rollup takes three transactions, not one. You start it, you prove it, and a week later you come back and finish it.
+People do the first two and never come back.
+So I counted. On Base, across ten sampled days, two hundred and seventy one withdrawals were proven.
+Fifteen were never finished. Sixty eight thousand dollars of tether, sitting in the bridge.
+Ten of them have been there seventy five days. None is still inside a challenge period.
+Here is the part that makes this fixable. Anyone can finish someone else's withdrawal.
+The portal takes the prover's proof from a different caller, and the recipient is already fixed inside the withdrawal that was proven.
+So a stranger can push it through and cannot take it. All fifteen simulate clean from an address with no connection to any of them.
+This is that, as a KeeperHub workflow.
+It reads whether the withdrawal is finished, whether anyone proved it, who that was, which dispute game the proof rests on, and whether that game resolved.
+Two gates. Then one write.
+Here it is releasing a withdrawal that had been abandoned for three days.
+The owner's balance goes from zero point zero one four ether to zero point nine six four. We never held their key.
+Gas was sponsored by the keeper's KeeperHub organisation, so getting the money back cost the owner nothing.
+It also refuses. Give it a withdrawal nobody proved and the first gate closes.
+Give it one whose dispute game is still running and the second gate closes. No transaction either time.
+The first version had only one gate. It reached for the portal every thirty minutes and was reverted. Nothing was ever sent, and it still was not something you would leave running.
+So it asks the game first. This one is watching five point four ether, and waiting.
+Unfinished: testnet for the demonstration, one withdrawal per workflow, and it does not find them by itself.
+The survey that produced those numbers, both workflows, and a checker that reads every claim back off the chain are in the repository.

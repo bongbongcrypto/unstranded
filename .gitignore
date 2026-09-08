@@ -1,0 +1,50 @@
+# Secrets
+.env*
+!.env.example
+*.key
+*.pem
+id_rsa*
+*.mnemonic
+wallet.json
+
+# Binaries
+*.exe
+*.bin
+*.dll
+*.so
+
+# Node / Python
+node_modules/
+npm-debug.log*
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Local scratch
+scratch/
+*.local.json
+.data/
+
+# Internal working notes: never in a public repo
+PROGRESS.md
+CLAUDE.md
+AGENTS.md
+DEFERRED.md
+.claude/
+
+# The guard itself carries the forbidden list; it lives in .git/hooks only
+scripts/publish-guard.py
+
+# Recording profile: holds a signed-in session, never commit
+.shoot-profile/
+
+# Recording output: screenshots, takes and the cut (large, regenerated)
+docs/recording/
+docs/narration/

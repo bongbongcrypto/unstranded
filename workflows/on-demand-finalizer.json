@@ -1,0 +1,262 @@
+{
+  "_comment": "Release one abandoned withdrawal. Supply it as trigger input: withdrawalHash, nonce, sender, target, value, gasLimit, withdrawalData.",
+  "name": "Unstranded: release an abandoned withdrawal",
+  "nodes": [
+    {
+      "id": "trigger-1",
+      "type": "trigger",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "data": {
+        "type": "trigger",
+        "label": "Trigger",
+        "status": "idle",
+        "config": {
+          "triggerType": "Manual"
+        }
+      }
+    },
+    {
+      "id": "step-1",
+      "type": "action",
+      "position": {
+        "x": 252,
+        "y": 0
+      },
+      "data": {
+        "type": "action",
+        "label": "Already Released",
+        "status": "idle",
+        "config": {
+          "actionType": "web3/read-contract",
+          "network": "11155111",
+          "contractAddress": "0x49f53e41452C74589E85cA1677426Ba426459e85",
+          "abi": "[{\"inputs\":[{\"name\":\"_withdrawalHash\",\"type\":\"bytes32\"}],\"name\":\"finalizedWithdrawals\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"_withdrawalHash\",\"type\":\"bytes32\"}],\"name\":\"numProofSubmitters\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"\",\"type\":\"bytes32\"},{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"proofSubmitters\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"\",\"type\":\"bytes32\"},{\"name\":\"\",\"type\":\"address\"}],\"name\":\"provenWithdrawals\",\"outputs\":[{\"name\":\"disputeGameProxy\",\"type\":\"address\"},{\"name\":\"timestamp\",\"type\":\"uint64\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"_tx\",\"type\":\"tuple\",\"components\":[{\"name\":\"nonce\",\"type\":\"uint256\"},{\"name\":\"sender\",\"type\":\"address\"},{\"name\":\"target\",\"type\":\"address\"},{\"name\":\"value\",\"type\":\"uint256\"},{\"name\":\"gasLimit\",\"type\":\"uint256\"},{\"name\":\"data\",\"type\":\"bytes\"}]},{\"name\":\"_proofSubmitter\",\"type\":\"address\"}],\"name\":\"finalizeWithdrawalTransactionExternalProof\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]",
+          "abiFunction": "finalizedWithdrawals",
+          "functionArgs": "[\"{{@trigger-1:Trigger.withdrawalHash}}\"]",
+          "integrationId": "<WALLET_INTEGRATION_ID>"
+        }
+      }
+    },
+    {
+      "id": "step-2",
+      "type": "action",
+      "position": {
+        "x": 504,
+        "y": 0
+      },
+      "data": {
+        "type": "action",
+        "label": "Proof Count",
+        "status": "idle",
+        "config": {
+          "actionType": "web3/read-contract",
+          "network": "11155111",
+          "contractAddress": "0x49f53e41452C74589E85cA1677426Ba426459e85",
+          "abi": "[{\"inputs\":[{\"name\":\"_withdrawalHash\",\"type\":\"bytes32\"}],\"name\":\"finalizedWithdrawals\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"_withdrawalHash\",\"type\":\"bytes32\"}],\"name\":\"numProofSubmitters\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"\",\"type\":\"bytes32\"},{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"proofSubmitters\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"\",\"type\":\"bytes32\"},{\"name\":\"\",\"type\":\"address\"}],\"name\":\"provenWithdrawals\",\"outputs\":[{\"name\":\"disputeGameProxy\",\"type\":\"address\"},{\"name\":\"timestamp\",\"type\":\"uint64\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"_tx\",\"type\":\"tuple\",\"components\":[{\"name\":\"nonce\",\"type\":\"uint256\"},{\"name\":\"sender\",\"type\":\"address\"},{\"name\":\"target\",\"type\":\"address\"},{\"name\":\"value\",\"type\":\"uint256\"},{\"name\":\"gasLimit\",\"type\":\"uint256\"},{\"name\":\"data\",\"type\":\"bytes\"}]},{\"name\":\"_proofSubmitter\",\"type\":\"address\"}],\"name\":\"finalizeWithdrawalTransactionExternalProof\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]",
+          "abiFunction": "numProofSubmitters",
+          "functionArgs": "[\"{{@trigger-1:Trigger.withdrawalHash}}\"]",
+          "integrationId": "<WALLET_INTEGRATION_ID>"
+        }
+      }
+    },
+    {
+      "id": "step-3",
+      "type": "action",
+      "position": {
+        "x": 756,
+        "y": 0
+      },
+      "data": {
+        "type": "action",
+        "label": "Worth Looking At",
+        "status": "idle",
+        "config": {
+          "actionType": "Condition",
+          "condition": "String({{@step-1:Already Released.result}}) === \"false\" && String({{@step-2:Proof Count.result}}) !== \"0\""
+        }
+      }
+    },
+    {
+      "id": "step-4",
+      "type": "action",
+      "position": {
+        "x": 1008,
+        "y": 0
+      },
+      "data": {
+        "type": "action",
+        "label": "Who Proved It",
+        "status": "idle",
+        "config": {
+          "actionType": "web3/read-contract",
+          "network": "11155111",
+          "contractAddress": "0x49f53e41452C74589E85cA1677426Ba426459e85",
+          "abi": "[{\"inputs\":[{\"name\":\"_withdrawalHash\",\"type\":\"bytes32\"}],\"name\":\"finalizedWithdrawals\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"_withdrawalHash\",\"type\":\"bytes32\"}],\"name\":\"numProofSubmitters\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"\",\"type\":\"bytes32\"},{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"proofSubmitters\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"\",\"type\":\"bytes32\"},{\"name\":\"\",\"type\":\"address\"}],\"name\":\"provenWithdrawals\",\"outputs\":[{\"name\":\"disputeGameProxy\",\"type\":\"address\"},{\"name\":\"timestamp\",\"type\":\"uint64\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"_tx\",\"type\":\"tuple\",\"components\":[{\"name\":\"nonce\",\"type\":\"uint256\"},{\"name\":\"sender\",\"type\":\"address\"},{\"name\":\"target\",\"type\":\"address\"},{\"name\":\"value\",\"type\":\"uint256\"},{\"name\":\"gasLimit\",\"type\":\"uint256\"},{\"name\":\"data\",\"type\":\"bytes\"}]},{\"name\":\"_proofSubmitter\",\"type\":\"address\"}],\"name\":\"finalizeWithdrawalTransactionExternalProof\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]",
+          "abiFunction": "proofSubmitters",
+          "functionArgs": "[\"{{@trigger-1:Trigger.withdrawalHash}}\",\"0\"]",
+          "integrationId": "<WALLET_INTEGRATION_ID>"
+        }
+      }
+    },
+    {
+      "id": "step-5",
+      "type": "action",
+      "position": {
+        "x": 1260,
+        "y": 0
+      },
+      "data": {
+        "type": "action",
+        "label": "Proven Where",
+        "status": "idle",
+        "config": {
+          "actionType": "web3/read-contract",
+          "network": "11155111",
+          "contractAddress": "0x49f53e41452C74589E85cA1677426Ba426459e85",
+          "abi": "[{\"inputs\":[{\"name\":\"_withdrawalHash\",\"type\":\"bytes32\"}],\"name\":\"finalizedWithdrawals\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"_withdrawalHash\",\"type\":\"bytes32\"}],\"name\":\"numProofSubmitters\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"\",\"type\":\"bytes32\"},{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"proofSubmitters\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"\",\"type\":\"bytes32\"},{\"name\":\"\",\"type\":\"address\"}],\"name\":\"provenWithdrawals\",\"outputs\":[{\"name\":\"disputeGameProxy\",\"type\":\"address\"},{\"name\":\"timestamp\",\"type\":\"uint64\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"_tx\",\"type\":\"tuple\",\"components\":[{\"name\":\"nonce\",\"type\":\"uint256\"},{\"name\":\"sender\",\"type\":\"address\"},{\"name\":\"target\",\"type\":\"address\"},{\"name\":\"value\",\"type\":\"uint256\"},{\"name\":\"gasLimit\",\"type\":\"uint256\"},{\"name\":\"data\",\"type\":\"bytes\"}]},{\"name\":\"_proofSubmitter\",\"type\":\"address\"}],\"name\":\"finalizeWithdrawalTransactionExternalProof\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]",
+          "abiFunction": "provenWithdrawals",
+          "functionArgs": "[\"{{@trigger-1:Trigger.withdrawalHash}}\",\"{{@step-4:Who Proved It.result}}\"]",
+          "integrationId": "<WALLET_INTEGRATION_ID>"
+        }
+      }
+    },
+    {
+      "id": "step-6",
+      "type": "action",
+      "position": {
+        "x": 1512,
+        "y": 0
+      },
+      "data": {
+        "type": "action",
+        "label": "Game Resolved",
+        "status": "idle",
+        "config": {
+          "actionType": "web3/read-contract",
+          "network": "11155111",
+          "contractAddress": "{{@step-5:Proven Where.result.disputeGameProxy}}",
+          "abi": "[{\"inputs\":[],\"name\":\"status\",\"outputs\":[{\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"}]",
+          "abiFunction": "status",
+          "functionArgs": "[]",
+          "integrationId": "<WALLET_INTEGRATION_ID>"
+        }
+      }
+    },
+    {
+      "id": "step-7",
+      "type": "action",
+      "position": {
+        "x": 1764,
+        "y": 0
+      },
+      "data": {
+        "type": "action",
+        "label": "Ready To Release",
+        "status": "idle",
+        "config": {
+          "actionType": "Condition",
+          "condition": "String({{@step-6:Game Resolved.result}}) === \"2\""
+        }
+      }
+    },
+    {
+      "id": "step-8",
+      "type": "action",
+      "position": {
+        "x": 2016,
+        "y": 0
+      },
+      "data": {
+        "type": "action",
+        "label": "Release To Owner",
+        "status": "idle",
+        "config": {
+          "actionType": "web3/write-contract",
+          "network": "11155111",
+          "contractAddress": "0x49f53e41452C74589E85cA1677426Ba426459e85",
+          "abi": "[{\"inputs\":[{\"name\":\"_withdrawalHash\",\"type\":\"bytes32\"}],\"name\":\"finalizedWithdrawals\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"_withdrawalHash\",\"type\":\"bytes32\"}],\"name\":\"numProofSubmitters\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"\",\"type\":\"bytes32\"},{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"proofSubmitters\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"\",\"type\":\"bytes32\"},{\"name\":\"\",\"type\":\"address\"}],\"name\":\"provenWithdrawals\",\"outputs\":[{\"name\":\"disputeGameProxy\",\"type\":\"address\"},{\"name\":\"timestamp\",\"type\":\"uint64\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"_tx\",\"type\":\"tuple\",\"components\":[{\"name\":\"nonce\",\"type\":\"uint256\"},{\"name\":\"sender\",\"type\":\"address\"},{\"name\":\"target\",\"type\":\"address\"},{\"name\":\"value\",\"type\":\"uint256\"},{\"name\":\"gasLimit\",\"type\":\"uint256\"},{\"name\":\"data\",\"type\":\"bytes\"}]},{\"name\":\"_proofSubmitter\",\"type\":\"address\"}],\"name\":\"finalizeWithdrawalTransactionExternalProof\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]",
+          "abiFunction": "finalizeWithdrawalTransactionExternalProof",
+          "functionArgs": "[{\"nonce\":\"{{@trigger-1:Trigger.nonce}}\",\"sender\":\"{{@trigger-1:Trigger.sender}}\",\"target\":\"{{@trigger-1:Trigger.target}}\",\"value\":\"{{@trigger-1:Trigger.value}}\",\"gasLimit\":\"{{@trigger-1:Trigger.gasLimit}}\",\"data\":\"{{@trigger-1:Trigger.withdrawalData}}\"},\"{{@step-4:Who Proved It.result}}\"]",
+          "integrationId": "<WALLET_INTEGRATION_ID>"
+        }
+      }
+    },
+    {
+      "id": "step-9",
+      "type": "action",
+      "position": {
+        "x": 2268,
+        "y": 0
+      },
+      "data": {
+        "type": "action",
+        "label": "Confirm Released",
+        "status": "idle",
+        "config": {
+          "actionType": "web3/read-contract",
+          "network": "11155111",
+          "contractAddress": "0x49f53e41452C74589E85cA1677426Ba426459e85",
+          "abi": "[{\"inputs\":[{\"name\":\"_withdrawalHash\",\"type\":\"bytes32\"}],\"name\":\"finalizedWithdrawals\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"_withdrawalHash\",\"type\":\"bytes32\"}],\"name\":\"numProofSubmitters\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"\",\"type\":\"bytes32\"},{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"proofSubmitters\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"\",\"type\":\"bytes32\"},{\"name\":\"\",\"type\":\"address\"}],\"name\":\"provenWithdrawals\",\"outputs\":[{\"name\":\"disputeGameProxy\",\"type\":\"address\"},{\"name\":\"timestamp\",\"type\":\"uint64\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"_tx\",\"type\":\"tuple\",\"components\":[{\"name\":\"nonce\",\"type\":\"uint256\"},{\"name\":\"sender\",\"type\":\"address\"},{\"name\":\"target\",\"type\":\"address\"},{\"name\":\"value\",\"type\":\"uint256\"},{\"name\":\"gasLimit\",\"type\":\"uint256\"},{\"name\":\"data\",\"type\":\"bytes\"}]},{\"name\":\"_proofSubmitter\",\"type\":\"address\"}],\"name\":\"finalizeWithdrawalTransactionExternalProof\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]",
+          "abiFunction": "finalizedWithdrawals",
+          "functionArgs": "[\"{{@trigger-1:Trigger.withdrawalHash}}\"]",
+          "integrationId": "<WALLET_INTEGRATION_ID>"
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "trigger-1",
+      "target": "step-1"
+    },
+    {
+      "id": "e2",
+      "source": "step-1",
+      "target": "step-2"
+    },
+    {
+      "id": "e3",
+      "source": "step-2",
+      "target": "step-3"
+    },
+    {
+      "id": "e4",
+      "type": "animated",
+      "source": "step-3",
+      "target": "step-4",
+      "sourceHandle": "true"
+    },
+    {
+      "id": "e5",
+      "source": "step-4",
+      "target": "step-5"
+    },
+    {
+      "id": "e6",
+      "source": "step-5",
+      "target": "step-6"
+    },
+    {
+      "id": "e7",
+      "source": "step-6",
+      "target": "step-7"
+    },
+    {
+      "id": "e8",
+      "type": "animated",
+      "source": "step-7",
+      "target": "step-8",
+      "sourceHandle": "true"
+    },
+    {
+      "id": "e9",
+      "source": "step-8",
+      "target": "step-9"
+    }
+  ],
+  "enabled": false
+}

@@ -1,0 +1,157 @@
+{
+  "_comment": [
+    "The demo video's narration, in one file.",
+    "",
+    "`say` is spoken aloud and is the only text an audience hears. `ko` is the",
+    "Korean gloss burned under it, so whoever is editing the cut",
+    "can read what it says. `shot` names the page or URL on screen.",
+    "",
+    "Every number here was produced by a script in this repository and is",
+    "re-checked by scripts/check-docs.mjs against the chain.",
+    "",
+    "Rebuild: node scripts/make-pages.mjs, node scripts/make-video-assets.mjs,",
+    "node scripts/record-demo.mjs --all, node scripts/assemble-demo.mjs"
+  ],
+  "lines": [
+    {
+      "start": "00:00.000",
+      "end": "00:09.100",
+      "shot": "three-steps",
+      "say": "Moving money off a rollup takes three transactions, not one. You start it, you prove it, and a week later you come back and finish it.",
+      "ko": "롤업에서 돈을 빼는 데는 트랜잭션이 한 번이 아니라 세 번 듭니다. 출금을 걸고, 증명하고, 일주일 뒤에 다시 와서 마무리합니다."
+    },
+    {
+      "start": "00:09.100",
+      "end": "00:12.600",
+      "shot": "three-steps",
+      "say": "People do the first two and never come back.",
+      "ko": "사람들은 앞의 둘까지 하고 다시 오지 않습니다."
+    },
+    {
+      "start": "00:12.600",
+      "end": "00:20.300",
+      "shot": "survey",
+      "say": "So I counted. On Base, across ten sampled days, two hundred and seventy one withdrawals were proven.",
+      "ko": "그래서 세어 봤습니다. Base에서 열흘치를 표본으로 뜨니 증명까지 마친 출금이 271건이었습니다."
+    },
+    {
+      "start": "00:20.300",
+      "end": "00:26.900",
+      "shot": "survey",
+      "say": "Fifteen were never finished. Sixty eight thousand dollars of tether, sitting in the bridge.",
+      "ko": "그중 15건이 끝내 마무리되지 않았습니다. 테더 6만 8천 달러가 브리지에 그대로 있습니다."
+    },
+    {
+      "start": "00:26.900",
+      "end": "00:32.500",
+      "shot": "survey",
+      "say": "Ten of them have been there seventy five days. None is still inside a challenge period.",
+      "ko": "그중 10건은 75일째입니다. 대기 기간 때문에 못 나온 건 하나도 없습니다."
+    },
+    {
+      "start": "00:32.500",
+      "end": "00:38.300",
+      "shot": "external-proof",
+      "say": "Here is the part that makes this fixable. Anyone can finish someone else's withdrawal.",
+      "ko": "이걸 고칠 수 있게 만드는 지점이 여기입니다. 남의 출금은 아무나 대신 마무리할 수 있습니다."
+    },
+    {
+      "start": "00:38.300",
+      "end": "00:47.000",
+      "shot": "external-proof",
+      "say": "The portal takes the prover's proof from a different caller, and the recipient is already fixed inside the withdrawal that was proven.",
+      "ko": "포털이 증명한 사람의 증명을 다른 호출자에게서 받아 줍니다. 그리고 받는 사람은 이미 증명된 출금 안에 박혀 있습니다."
+    },
+    {
+      "start": "00:47.000",
+      "end": "00:55.600",
+      "shot": "simulate",
+      "say": "So a stranger can push it through and cannot take it. All fifteen simulate clean from an address with no connection to any of them.",
+      "ko": "그래서 남이 밀어 넣을 수는 있어도 가져갈 수는 없습니다. 15건 전부, 아무 관계 없는 주소에서 시뮬레이션이 통과합니다."
+    },
+    {
+      "start": "00:55.600",
+      "end": "00:59.200",
+      "shot": "canvas",
+      "say": "This is that, as a KeeperHub workflow.",
+      "ko": "그걸 KeeperHub 워크플로로 만든 것이 이겁니다."
+    },
+    {
+      "start": "00:59.200",
+      "end": "01:09.700",
+      "shot": "canvas",
+      "say": "It reads whether the withdrawal is finished, whether anyone proved it, who that was, which dispute game the proof rests on, and whether that game resolved.",
+      "ko": "마무리됐는지, 증명한 사람이 있는지, 그게 누구인지, 그 증명이 어느 분쟁 게임에 기대고 있는지, 그 게임이 해결됐는지를 차례로 읽습니다."
+    },
+    {
+      "start": "01:09.700",
+      "end": "01:12.700",
+      "shot": "canvas",
+      "say": "Two gates. Then one write.",
+      "ko": "게이트 둘. 그다음 쓰기 한 번."
+    },
+    {
+      "start": "01:12.700",
+      "end": "01:17.400",
+      "shot": "run-release",
+      "say": "Here it is releasing a withdrawal that had been abandoned for three days.",
+      "ko": "사흘째 방치돼 있던 출금을 풀어내는 장면입니다."
+    },
+    {
+      "start": "01:17.400",
+      "end": "01:25.500",
+      "shot": "https://sepolia.etherscan.io/tx/0xd47911d516b533e4c0899101cada489a33ebe2f09187df14c2eba249b5f8bf62",
+      "say": "The owner's balance goes from zero point zero one four ether to zero point nine six four. We never held their key.",
+      "ko": "주인 잔고가 0.014 이더에서 0.964로 올라갑니다. 우리는 그 사람 키를 가진 적이 없습니다."
+    },
+    {
+      "start": "01:25.500",
+      "end": "01:32.400",
+      "shot": "balances",
+      "say": "Gas was sponsored by the keeper's KeeperHub organisation, so getting the money back cost the owner nothing.",
+      "ko": "가스는 키퍼 쪽 KeeperHub 조직이 대납했습니다. 돈을 되찾는 데 주인은 한 푼도 안 냈습니다."
+    },
+    {
+      "start": "01:32.400",
+      "end": "01:38.600",
+      "shot": "refuse-unproven",
+      "say": "It also refuses. Give it a withdrawal nobody proved and the first gate closes.",
+      "ko": "거절도 합니다. 아무도 증명하지 않은 출금을 주면 첫 게이트가 닫힙니다."
+    },
+    {
+      "start": "01:38.600",
+      "end": "01:45.800",
+      "shot": "refuse-unresolved",
+      "say": "Give it one whose dispute game is still running and the second gate closes. No transaction either time.",
+      "ko": "분쟁 게임이 아직 진행 중인 걸 주면 두 번째 게이트가 닫힙니다. 두 경우 다 트랜잭션이 없습니다."
+    },
+    {
+      "start": "01:45.800",
+      "end": "01:56.700",
+      "shot": "refuse-unresolved",
+      "say": "The first version had only one gate. It reached for the portal every thirty minutes and was reverted. Nothing was ever sent, and it still was not something you would leave running.",
+      "ko": "첫 판은 게이트가 하나뿐이었습니다. 30분마다 포털에 손을 뻗었다가 되돌려졌습니다. 나간 건 없었지만, 그래도 켜 둘 만한 물건은 아니었습니다."
+    },
+    {
+      "start": "01:56.700",
+      "end": "02:02.700",
+      "shot": "watching",
+      "say": "So it asks the game first. This one is watching five point four ether, and waiting.",
+      "ko": "그래서 게임부터 물어봅니다. 이건 5.4 이더를 지켜보며 기다리는 중입니다."
+    },
+    {
+      "start": "02:02.700",
+      "end": "02:10.500",
+      "shot": "limits",
+      "say": "Unfinished: testnet for the demonstration, one withdrawal per workflow, and it does not find them by itself.",
+      "ko": "미완성. 시연은 테스트넷이고, 워크플로 하나가 출금 하나를 맡고, 스스로 찾아내지는 못합니다."
+    },
+    {
+      "start": "02:10.500",
+      "end": "02:19.300",
+      "shot": "close",
+      "say": "The survey that produced those numbers, both workflows, and a checker that reads every claim back off the chain are in the repository.",
+      "ko": "그 숫자를 만든 조사 스크립트, 워크플로 두 개, 그리고 모든 주장을 체인에서 다시 읽어 확인하는 검사기가 저장소에 있습니다."
+    }
+  ]
+}
