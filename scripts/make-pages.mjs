@@ -17,9 +17,9 @@ const OUT = join(ROOT, "docs", "recording");
 mkdirSync(OUT, { recursive: true });
 
 const PORTAL = "0x49f53e41452C74589E85cA1677426Ba426459e85";
-const RELEASED = "0xc3f81f814493d93d270b1283e23ef9fa801371494fb76f72bdc4c56c061ad8bc";
-const RELEASE_TX = "0xd47911d516b533e4c0899101cada489a33ebe2f09187df14c2eba249b5f8bf62";
-const OWNER = "0x872f55279d06c3087c8DF4F624Aa499D02aaC791";
+const RELEASED = "0x375b5a67c76b82564e406cd4bd22482eec71cfd2eb833f9d3c4dc04a60cf2499";
+const RELEASE_TX = "0xb3c37356e9af4915eef7fd20189ac739443ac99b79e29284c57c285e55eb9c57";
+const OWNER = "0xC66E186029E9Ff34e68A320d72239FE1251f86C1";
 
 const client = createPublicClient({
   chain: sepolia,
@@ -118,10 +118,10 @@ const finalized = await client.readContract({
 const ownerNow = await client.getBalance({ address: OWNER });
 write("balances.html", page("balances", `
   <div class="src">Read from Sepolia at ${stamp}</div>
-  <h1>One withdrawal, released to its owner</h1>
+  <h1>Five ether, released to the account that owns it</h1>
   <div class="two">
-    <div class="card"><div class="k">owner balance before</div><div class="big">0.0140</div></div>
-    <div class="card"><div class="k">owner balance after</div><div class="big ok">0.9640</div></div>
+    <div class="card"><div class="k">owner balance before</div><div class="big">3.1862</div></div>
+    <div class="card"><div class="k">owner balance after</div><div class="big ok">8.1862</div></div>
   </div>
   <div class="row"><div class="k">owner</div><div class="v">${OWNER}</div></div>
   <div class="row"><div class="k">balance now</div><div class="v">${formatEther(ownerNow)} ETH</div></div>

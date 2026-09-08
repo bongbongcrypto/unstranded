@@ -42,7 +42,7 @@ const WATCHER_ID = "ffz6dntmq9ftu7e2wr15d";
 const ON_DEMAND = "https://app.keeperhub.com/workflows/" + ON_DEMAND_ID;
 const WATCHER = "https://app.keeperhub.com/workflows/" + WATCHER_ID;
 const RELEASE_TX =
-  "https://sepolia.etherscan.io/tx/0xd47911d516b533e4c0899101cada489a33ebe2f09187df14c2eba249b5f8bf62";
+  "https://sepolia.etherscan.io/tx/0xb3c37356e9af4915eef7fd20189ac739443ac99b79e29284c57c285e55eb9c57";
 const REPO = "https://github.com/bongbongcrypto/unstranded";
 const PR_ONE = "https://github.com/KeeperHub/keeperhub/pull/2319";
 const local = (name) => "file:///" + join(OUT, name).replace(/\\/g, "/");
@@ -457,21 +457,21 @@ const CHOREOGRAPHY = [
     ],
   },
   {
-    // 1:12.7 the release, and the balance that moved
+    // 1:14.6 the release, and the balance that moved
     id: "d",
     url: local("run-release.html"),
     steps: [
       { at: 1000, do: async (s) => evaluate(s, `window.__shoot.spotText("Release To Owner", null, 10)`) },
-      // 1:17.4 the transaction on Etherscan
-      { at: 4500, do: async (s) => evaluate(s, `window.__shoot.unspot()`) },
-      { at: 4700, do: async (s, go) => go(RELEASE_TX) },
-      // 1:25.5 what it cost the owner
-      { at: 12600, do: async (s, go) => go(local("balances.html")) },
-      { at: 14000, do: async (s) => evaluate(s, `window.__shoot.spotText("0.9640", null, 12)`) },
+      // 1:22.8 the transaction on Etherscan
+      { at: 8000, do: async (s) => evaluate(s, `window.__shoot.unspot()`) },
+      { at: 8200, do: async (s, go) => go(RELEASE_TX) },
+      // 1:29.5 what it cost the owner
+      { at: 14900, do: async (s, go) => go(local("balances.html")) },
+      { at: 16300, do: async (s) => evaluate(s, `window.__shoot.spotText("8.1862", null, 12)`) },
     ],
   },
   {
-    // 1:32.4 both refusals
+    // 1:36.4 both refusals
     id: "e",
     url: local("run-unproven.html"),
     steps: [
@@ -486,28 +486,28 @@ const CHOREOGRAPHY = [
     ],
   },
   {
-    // 1:58.6 waiting, and what is not done
+    // 2:00.7 waiting, and what is not done
     id: "f",
     url: WATCHER,
     zoom: 1.1,
     steps: [
       { at: 1500, do: async (s) => canvasWide(s) },
-      // 2:04.6 what is not done
+      // 2:06.7 what is not done
       { at: 5800, do: async (s, go) => go(local("limits.html")) },
     ],
   },
   {
-    // 2:12.4 the three that were in KeeperHub, then the close
+    // 2:14.5 the three that were in KeeperHub, then the close
     id: "g",
     url: local("upstream.html"),
     steps: [
       { at: 1200, do: async (s) => evaluate(s, `window.__shoot.spotText("pull request 2319", null, 10)`) },
-      // 2:18.1 the first one, on their own repository
-      { at: 5500, do: async (s) => evaluate(s, `window.__shoot.unspot()`) },
-      { at: 5700, do: async (s, go) => go(PR_ONE) },
-      // 2:31.9 the close
-      { at: 19500, do: async (s, go) => go(local("close.html")) },
-      { at: 21000, do: async (s, go) => go(REPO) },
+      // 2:18.9 the first one, on their own repository
+      { at: 4200, do: async (s) => evaluate(s, `window.__shoot.unspot()`) },
+      { at: 4400, do: async (s, go) => go(PR_ONE) },
+      // 2:32.7 the close
+      { at: 18200, do: async (s, go) => go(local("close.html")) },
+      { at: 19700, do: async (s, go) => go(REPO) },
     ],
   },
 ];

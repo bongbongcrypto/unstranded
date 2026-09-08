@@ -55,9 +55,9 @@ for (const hash of uniqueTx) {
 }
 
 // --- the release moved what the README says --------------------------------
-const RELEASE = "0xd47911d516b533e4c0899101cada489a33ebe2f09187df14c2eba249b5f8bf62";
-const OWNER = "0x872f55279d06c3087c8DF4F624Aa499D02aaC791";
-const RELEASED_HASH = "0xc3f81f814493d93d270b1283e23ef9fa801371494fb76f72bdc4c56c061ad8bc";
+const RELEASE = "0xb3c37356e9af4915eef7fd20189ac739443ac99b79e29284c57c285e55eb9c57";
+const OWNER = "0xC66E186029E9Ff34e68A320d72239FE1251f86C1";
+const RELEASED_HASH = "0x375b5a67c76b82564e406cd4bd22482eec71cfd2eb833f9d3c4dc04a60cf2499";
 const WAITING_HASH = "0x8a5b2bce4b089900d06b8da8c3a47803625d11fb173ecdf1f5fccf28db474900";
 
 if (README.includes(RELEASE)) {
@@ -82,8 +82,8 @@ if (README.includes(RELEASE)) {
         note(`README does not carry the owner's ${label} balance ${formatEther(value)}`);
       }
     }
-    if (moved !== 950000000000000000n) {
-      note(`release moved ${formatEther(moved)} ETH, README says 0.95`);
+    if (moved !== 5000000000000000000n) {
+      note(`release moved ${formatEther(moved)} ETH, README says 5`);
     }
   }
 } else {

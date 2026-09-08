@@ -39,7 +39,7 @@ const WHAT = {
   a: "three transactions, people stop after two, and the count",
   b: "anyone may finish someone else's withdrawal, and cannot take it",
   c: "the workflow: five reads, two gates, one write",
-  d: "a stranger's 0.95 ETH released, and the balance that moved",
+  d: "a stranger's five ether released, and the balance that moved",
   e: "both refusals, and the gate that was missing at first",
   f: "waiting unattended, and what is unfinished",
   g: "the three that were in KeeperHub, and the close",

@@ -11,10 +11,10 @@ export const SEGMENT_SLOTS = [
   { id: "a", from: "00:00.000", to: "00:32.500", what: "three transactions, people stop after two, and the count" },
   { id: "b", from: "00:32.500", to: "00:57.500", what: "anyone may finish someone else's withdrawal, and cannot take it" },
   { id: "c", from: "00:57.500", to: "01:14.600", what: "the workflow: five reads, two gates, one write" },
-  { id: "d", from: "01:14.600", to: "01:34.300", what: "a stranger's 0.95 ETH released, and the balance that moved" },
-  { id: "e", from: "01:34.300", to: "01:58.600", what: "both refusals, and the gate that was missing at first" },
-  { id: "f", from: "01:58.600", to: "02:12.400", what: "waiting unattended, and what is unfinished" },
-  { id: "g", from: "02:12.400", to: "02:40.700", what: "the three that were in KeeperHub, and the close" },
+  { id: "d", from: "01:14.600", to: "01:36.400", what: "a stranger's five ether released, and the balance that moved" },
+  { id: "e", from: "01:36.400", to: "02:00.700", what: "both refusals, and the gate that was missing at first" },
+  { id: "f", from: "02:00.700", to: "02:14.500", what: "waiting unattended, and what is unfinished" },
+  { id: "g", from: "02:14.500", to: "02:41.500", what: "the three that were in KeeperHub, and the close" },
 ];
 
 /** mm:ss.mmm to seconds. */

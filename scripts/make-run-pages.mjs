@@ -30,18 +30,18 @@ if (!key) {
 }
 
 const RUNS = [
-  { file: "run-release.html", id: "0gn14g1a979r317aa82hh",
+  { file: "run-release.html", id: "4sgxpz8nrc5us11p6d7g3",
     title: "It released a withdrawal to the account that owns it",
-    note: "The keeper holds no key belonging to that account. This run was made by the "
-      + "revision with one gate, so there is no second one in the log. The proof rests on a "
-      + "dispute game resolved for the defender, of the type the portal respects, so the "
-      + "second gate would have opened too." },
-  { file: "run-unproven.html", id: "vhksgdq08pmz6mpuo8qob",
+    note: "Five ether, proven by that account itself forty seven days earlier and never "
+      + "finished. The keeper holds no key belonging to it. Both gates read true, then one "
+      + "write, then the portal was read back." },
+  { file: "run-unproven.html", id: "w0sqinbi5fvjm9s22t7qo",
     title: "Given a withdrawal nobody proved, it does nothing",
-    note: "Gate one closes on a proof count of zero. No transaction is sent." },
-  { file: "run-unresolved.html", id: "i1coae2gsc0z1mu2kocse",
+    note: "A withdrawal really started on Base Sepolia and not yet proved. Gate one closes "
+      + "on a proof count of zero. No transaction is sent." },
+  { file: "run-unresolved.html", id: "udtbe37bc5y845tnijt2y",
     title: "Given one whose dispute game is still running, it does nothing",
-    note: "Gate two closes on the game's own status. No transaction is sent." },
+    note: "Gate one opens, and gate two closes on the game's own status. No transaction is sent." },
 ];
 
 const CSS = `

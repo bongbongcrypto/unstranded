@@ -159,39 +159,41 @@ All on Ethereum Sepolia, against the Base Sepolia portal.
 
 ### It released a stranger's withdrawal to that stranger
 
-A withdrawal of 0.95 ETH was proven on 5 September and left unfinalized. The
-keeper's organization had never interacted with the account that owns it.
+Five ether, started on Base Sepolia and proven on 23 July by the account that
+owns it, then left unfinalized for forty seven days. The keeper's organization
+holds no key belonging to that account and had never interacted with it.
 
 | | |
 | --- | --- |
-| Withdrawal | `0xc3f81f814493d93d270b1283e23ef9fa801371494fb76f72bdc4c56c061ad8bc` |
-| Owner | `0x872f55279d06c3087c8DF4F624Aa499D02aaC791` |
-| Owner's balance before | 0.0140003049743579 ETH |
-| Owner's balance after | 0.9640003049743579 ETH |
-| Transaction | [`0xd47911d5...8bf62`](https://sepolia.etherscan.io/tx/0xd47911d516b533e4c0899101cada489a33ebe2f09187df14c2eba249b5f8bf62) |
-| Gas | 311,236, sponsored |
+| Withdrawal | `0x375b5a67c76b82564e406cd4bd22482eec71cfd2eb833f9d3c4dc04a60cf2499` |
+| Owner | `0xC66E186029E9Ff34e68A320d72239FE1251f86C1` |
+| Owner's balance before | 3.186206822535233652 ETH |
+| Owner's balance after | 8.186206822535233652 ETH |
+| Transaction | [`0xb3c37356...b9c57`](https://sepolia.etherscan.io/tx/0xb3c37356e9af4915eef7fd20189ac739443ac99b79e29284c57c285e55eb9c57) |
+| Gas | 308,593, sponsored |
 
-The run's own log, step by step: `finalizedWithdrawals` false, then
-`numProofSubmitters` `"1"`, then the gate true, then `proofSubmitters(hash, 0)`
-returning the prover, then the write, then `finalizedWithdrawals` true.
+The run's own log is the workflow above, step for step: `finalizedWithdrawals`
+false, `numProofSubmitters` `"1"`, gate one **true**, `proofSubmitters(hash, 0)`
+returning the prover, `provenWithdrawals` returning dispute game
+`0x5B8F56697Fe61d56904Da72F2027A5634f915A67`, that game's `status()` `"2"`, gate
+two **true**, the write, then `finalizedWithdrawals` **true**.
 
-That run was made by the revision that had one gate, so its log has no second
-one in it. The second gate would have opened: the proof rests on dispute game
-`0x456880De45EB2FEb9A8f4e6Fa26ee8b7ac56e993`, whose status is resolved for the
-defender, of game type 621, which is the type the portal respects. The workflow
-shipped here reads all of that before it writes, and would have made the same
-release.
+An earlier release, of 0.95 ETH on 5 September, was made by the revision that had
+only the first gate. It is
+[`0xd47911d5...8bf62`](https://sepolia.etherscan.io/tx/0xd47911d516b533e4c0899101cada489a33ebe2f09187df14c2eba249b5f8bf62),
+and it is what the second gate was added after.
 
 ### It did nothing when it should do nothing
 
-The same workflow, given a withdrawal that had been started on Base Sepolia but
-not yet proven:
+The same workflow, given a withdrawal really started on Base Sepolia and not yet
+proven by anybody:
 
 | | |
 | --- | --- |
+| Withdrawal | `0x1fb7c525a5a23f00c997cebbd5e05f122479233d97576b1692659b93c8e0fefd` |
 | `finalizedWithdrawals` | false |
 | `numProofSubmitters` | `"0"` |
-| Gate | **false** |
+| Gate one | **false** |
 | Transactions sent | **none** |
 
 The run finished successfully with an empty `transactionHashes`.
@@ -262,12 +264,14 @@ npm install
 4. For the unattended variant, import `workflows/unattended-finalizer.json`,
    fill the withdrawal into the two web3 nodes, and enable it.
 
-`npm run check` runs three checkers. The first reads every claim in this file
+`npm run check` runs four checkers. The first reads every claim in this file
 back off the chain. The second checks that the README, the narration script,
 the page generator and the workflow JSON still say the same thing as each
 other. The third checks that every shot the demo reaches for has something on
 screen to point at, and finds nothing to do on a fresh clone, because the pages
-it films are built from the chain rather than committed.
+it films are built from the chain rather than committed. The fourth compares
+the workflows sitting in a KeeperHub account against the JSON here, and says it
+was not checked when there is no key to check it with.
 
 Note that the trigger input for the withdrawal's calldata is called
 `withdrawalData`, not `data`. A trigger field called `data` is shadowed by the
