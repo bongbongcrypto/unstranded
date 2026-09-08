@@ -73,6 +73,20 @@ Note that the plain `finalizeWithdrawalTransaction` will not do: the newer
 portal keys a proof by its submitter, so a stranger calling it reverts. The
 external proof variant is the one that lets a third party help.
 
+## Who runs it
+
+Whoever is owed the money, for themselves. You withdraw, you prove, you point
+this at your own withdrawal, and you stop having to remember. That needs no
+trust in anyone, because the keeper cannot send the money anywhere but to you.
+
+Someone can also run it for other people, and there is no way to charge them for
+it. The release pays the address inside the withdrawal and nothing else, so
+there is no fee to take and no hook to put one on. That is the same property
+that makes it safe, seen from the other side.
+
+The 68,080 USDT is not a market. It is the evidence that people stop after the
+second transaction, including one holder who did it ten times.
+
 ## What it guarantees
 
 | Property | How it is enforced |
