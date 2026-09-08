@@ -63,6 +63,16 @@ const WAITING_HASH = "0x8a5b2bce4b089900d06b8da8c3a47803625d11fb173ecdf1f5fccf28
 if (README.includes(RELEASE)) {
   const receipt = await client.getTransactionReceipt({ hash: RELEASE });
   if (receipt.status !== "success") note("the release transaction did not succeed");
+  // Who actually sent it. The organization's own wallet does not: KeeperHub
+  // submits from a relayer through a forwarder, and the README says so. If that
+  // path ever changes, the README is wrong about it before anyone notices.
+  const sent = await client.getTransaction({ hash: RELEASE });
+  console.log(`release submitted by ${sent.from} to ${sent.to}`);
+  for (const [what, address] of [["sender", sent.from], ["contract it was sent to", sent.to]]) {
+    if (!README.toLowerCase().includes(address.toLowerCase())) {
+      note(`README does not name the release's ${what} (${address})`);
+    }
+  }
   // The balances either side need an archive node. A public one refuses, and a
   // refusal is not a disagreement: say which it was rather than passing or
   // failing on the strength of a node's retention policy.

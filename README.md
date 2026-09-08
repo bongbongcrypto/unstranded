@@ -171,6 +171,14 @@ holds no key belonging to that account and had never interacted with it.
 | Owner's balance after | 8.186206822535233652 ETH |
 | Transaction | [`0xb3c37356...b9c57`](https://sepolia.etherscan.io/tx/0xb3c37356e9af4915eef7fd20189ac739443ac99b79e29284c57c285e55eb9c57) |
 | Gas | 308,593, sponsored |
+| Submitted by | KeeperHub's relayer `0xa17cb6ad...`, through its forwarder `0x5af5194b...` |
+
+That last row is worth reading twice. The organization's own wallet did not send
+this. KeeperHub submits from its relayer through a forwarder, on the
+organization's behalf, which is what sponsored gas means here: the wallet at
+`0x4F256e...` has never had to hold gas at all. The portal sees the forwarder as
+its caller and does not care who that is, because the recipient is fixed inside
+the withdrawal that was already proven.
 
 The run's own log is the workflow above, step for step: `finalizedWithdrawals`
 false, `numProofSubmitters` `"1"`, gate one **true**, `proofSubmitters(hash, 0)`
@@ -319,6 +327,8 @@ three is why.
 | Base portal | [`0x49048044D57e1C92A77f79988d21Fa8fAF74E97e`](https://etherscan.io/address/0x49048044D57e1C92A77f79988d21Fa8fAF74E97e) on Ethereum |
 | Base Sepolia portal | [`0x49f53e41452C74589E85cA1677426Ba426459e85`](https://sepolia.etherscan.io/address/0x49f53e41452C74589E85cA1677426Ba426459e85) on Sepolia |
 | Keeper organization wallet | [`0x4F256eD4420136dfD1e595044626F0dDb9Ac2503`](https://sepolia.etherscan.io/address/0x4F256eD4420136dfD1e595044626F0dDb9Ac2503) |
+| KeeperHub relayer, which submits and pays | [`0xa17cb6adb58277e5b4a44b8c1ecb449bb6614e87`](https://sepolia.etherscan.io/address/0xa17cb6adb58277e5b4a44b8c1ecb449bb6614e87) |
+| KeeperHub forwarder, which calls the portal | [`0x5af5194b4b0909eb978e3cf1e25333852277f07d`](https://sepolia.etherscan.io/address/0x5af5194b4b0909eb978e3cf1e25333852277f07d) |
 
 ## License
 
