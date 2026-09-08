@@ -66,7 +66,7 @@ fails if the README and the chain disagree.
 | 0:57 | canvas | This is that, as a KeeperHub workflow. |
 | 1:01 | canvas | It reads whether the withdrawal is finished, whether anyone proved it, who that was, which dispute game the proof rests on, and whether that game resolved. |
 | 1:11 | canvas | Two gates. Then one write. |
-| 1:14 | run-release | Here it is releasing five ether that the owner proved themselves, forty seven days ago, and never came back to finish. |
+| 1:14 | run-release | Here it is releasing five ether that the owner proved themselves, forty six days ago, and never came back to finish. |
 | 1:22 | https://sepolia.etherscan.io/tx/0xb3c37356e9af4915eef7fd20189ac739443ac99b79e29284c57c285e55eb9c57 | Their balance goes from three point one eight ether to eight point one eight. We never held their key. |
 | 1:29 | balances | Gas was sponsored by the keeper's KeeperHub organisation, so getting the money back cost the owner nothing. |
 | 1:36 | run-unproven | It also refuses. Give it a withdrawal nobody proved and the first gate closes. |

@@ -462,16 +462,16 @@ const CHOREOGRAPHY = [
     url: local("run-release.html"),
     steps: [
       { at: 1000, do: async (s) => evaluate(s, `window.__shoot.spotText("Release To Owner", null, 10)`) },
-      // 1:22.8 the transaction on Etherscan
-      { at: 8000, do: async (s) => evaluate(s, `window.__shoot.unspot()`) },
-      { at: 8200, do: async (s, go) => go(RELEASE_TX) },
-      // 1:29.5 what it cost the owner
-      { at: 14900, do: async (s, go) => go(local("balances.html")) },
-      { at: 16300, do: async (s) => evaluate(s, `window.__shoot.spotText("8.1862", null, 12)`) },
+      // 1:22.7 the transaction on Etherscan
+      { at: 7900, do: async (s) => evaluate(s, `window.__shoot.unspot()`) },
+      { at: 8100, do: async (s, go) => go(RELEASE_TX) },
+      // 1:29.4 what it cost the owner
+      { at: 14800, do: async (s, go) => go(local("balances.html")) },
+      { at: 16200, do: async (s) => evaluate(s, `window.__shoot.spotText("8.1862", null, 12)`) },
     ],
   },
   {
-    // 1:36.4 both refusals
+    // 1:36.3 both refusals
     id: "e",
     url: local("run-unproven.html"),
     steps: [
@@ -486,26 +486,26 @@ const CHOREOGRAPHY = [
     ],
   },
   {
-    // 2:00.7 waiting, and what is not done
+    // 2:00.6 waiting, and what is not done
     id: "f",
     url: WATCHER,
     zoom: 1.1,
     steps: [
       { at: 1500, do: async (s) => canvasWide(s) },
-      // 2:06.7 what is not done
+      // 2:06.6 what is not done
       { at: 5800, do: async (s, go) => go(local("limits.html")) },
     ],
   },
   {
-    // 2:14.5 the three that were in KeeperHub, then the close
+    // 2:14.4 the three that were in KeeperHub, then the close
     id: "g",
     url: local("upstream.html"),
     steps: [
       { at: 1200, do: async (s) => evaluate(s, `window.__shoot.spotText("pull request 2319", null, 10)`) },
-      // 2:18.9 the first one, on their own repository
+      // 2:18.8 the first one, on their own repository
       { at: 4200, do: async (s) => evaluate(s, `window.__shoot.unspot()`) },
       { at: 4400, do: async (s, go) => go(PR_ONE) },
-      // 2:32.7 the close
+      // 2:32.6 the close
       { at: 18200, do: async (s, go) => go(local("close.html")) },
       { at: 19700, do: async (s, go) => go(REPO) },
     ],

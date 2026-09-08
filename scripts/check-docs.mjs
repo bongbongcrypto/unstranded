@@ -100,6 +100,48 @@ if (README.includes(RELEASE)) {
   note("README no longer links the release transaction");
 }
 
+// --- how long it sat there, in the words the README uses --------------------
+// The README says the owner proved it and then left it for a number of days,
+// and that number was wrong the first time it was written: the dispute game's
+// creation time was read instead of the proof's, which is a day earlier. Both
+// timestamps are on chain, so the gap is computed rather than remembered.
+const PROVEN_ABI = [{
+  name: "provenWithdrawals", type: "function", stateMutability: "view",
+  inputs: [{ type: "bytes32" }, { type: "address" }],
+  outputs: [{ name: "disputeGameProxy", type: "address" }, { name: "timestamp", type: "uint64" }],
+}, {
+  name: "proofSubmitters", type: "function", stateMutability: "view",
+  inputs: [{ type: "bytes32" }, { type: "uint256" }], outputs: [{ type: "address" }],
+}];
+const TENS = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
+const UNITS = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
+  "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen",
+  "eighteen", "nineteen"];
+const inWords = (n) => (n < 20 ? UNITS[n] : (TENS[Math.floor(n / 10)] + (n % 10 ? " " + UNITS[n % 10] : "")));
+
+try {
+  const prover = await client.readContract({
+    address: PORTAL, abi: PROVEN_ABI, functionName: "proofSubmitters", args: [RELEASED_HASH, 0n],
+  });
+  const [, provenAt] = await client.readContract({
+    address: PORTAL, abi: PROVEN_ABI, functionName: "provenWithdrawals", args: [RELEASED_HASH, prover],
+  });
+  const releaseBlock = await client.getBlock({
+    blockNumber: (await client.getTransactionReceipt({ hash: RELEASE })).blockNumber,
+  });
+  const days = Math.floor((Number(releaseBlock.timestamp) - Number(provenAt)) / 86400);
+  const proved = new Date(Number(provenAt) * 1000).toISOString().slice(0, 10);
+  console.log(`the released withdrawal was proved on ${proved} and sat ${days} days`);
+  if (prover.toLowerCase() !== OWNER.toLowerCase()) {
+    note(`the README says the owner proved it, and ${prover} did`);
+  }
+  if (!README.includes(`${inWords(days)} days`)) {
+    note(`README does not say it sat "${inWords(days)} days"`);
+  }
+} catch (error) {
+  console.log(`how long it sat: not checked (${String(error.shortMessage ?? error.message).slice(0, 50)})`);
+}
+
 // --- the portal agrees about which is done and which is not ----------------
 const releaseIsDone = await client.readContract({
   address: PORTAL, abi: PORTAL_ABI, functionName: "finalizedWithdrawals", args: [RELEASED_HASH],

@@ -32,7 +32,7 @@ if (!key) {
 const RUNS = [
   { file: "run-release.html", id: "4sgxpz8nrc5us11p6d7g3",
     title: "It released a withdrawal to the account that owns it",
-    note: "Five ether, proven by that account itself forty seven days earlier and never "
+    note: "Five ether, proven by that account itself forty six days earlier and never "
       + "finished. The keeper holds no key belonging to it. Both gates read true, then one "
       + "write, then the portal was read back." },
   { file: "run-unproven.html", id: "w0sqinbi5fvjm9s22t7qo",

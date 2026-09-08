@@ -159,8 +159,8 @@ All on Ethereum Sepolia, against the Base Sepolia portal.
 
 ### It released a stranger's withdrawal to that stranger
 
-Five ether, started on Base Sepolia and proven on 23 July by the account that
-owns it, then left unfinalized for forty seven days. The keeper's organization
+Five ether, started on Base Sepolia and proven on 24 July by the account that
+owns it, then left unfinalized for forty six days. The keeper's organization
 holds no key belonging to that account and had never interacted with it.
 
 | | |

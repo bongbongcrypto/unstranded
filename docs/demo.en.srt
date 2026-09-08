@@ -43,45 +43,45 @@ It reads whether the withdrawal is finished, whether anyone proved it, who that 
 Two gates. Then one write.
 
 12
-00:01:14,600 --> 00:01:22,366
-Here it is releasing five ether that the owner proved themselves, forty seven days ago, and never came back to finish.
+00:01:14,600 --> 00:01:22,270
+Here it is releasing five ether that the owner proved themselves, forty six days ago, and never came back to finish.
 
 13
-00:01:22,800 --> 00:01:29,150
+00:01:22,700 --> 00:01:29,050
 Their balance goes from three point one eight ether to eight point one eight. We never held their key.
 
 14
-00:01:29,500 --> 00:01:36,018
+00:01:29,400 --> 00:01:35,918
 Gas was sponsored by the keeper's KeeperHub organisation, so getting the money back cost the owner nothing.
 
 15
-00:01:36,400 --> 00:01:42,174
+00:01:36,300 --> 00:01:42,074
 It also refuses. Give it a withdrawal nobody proved and the first gate closes.
 
 16
-00:01:42,600 --> 00:01:49,382
+00:01:42,500 --> 00:01:49,282
 Give it one whose dispute game is still running and the second gate closes. No transaction either time.
 
 17
-00:01:49,800 --> 00:02:00,350
+00:01:49,700 --> 00:02:00,250
 The first version had only one gate. It reached for the portal every thirty minutes and was reverted. Nothing was ever sent, and it still was not something you would leave running.
 
 18
-00:02:00,700 --> 00:02:06,330
+00:02:00,600 --> 00:02:06,230
 So it asks the game first. This one is watching five point four ether, and waiting.
 
 19
-00:02:06,700 --> 00:02:14,082
+00:02:06,600 --> 00:02:13,982
 Unfinished: testnet for the demonstration, one withdrawal per workflow, and it does not find them by itself.
 
 20
-00:02:14,500 --> 00:02:18,474
+00:02:14,400 --> 00:02:18,374
 Three of the things in the way were in KeeperHub, not in this.
 
 21
-00:02:18,900 --> 00:02:32,258
+00:02:18,800 --> 00:02:32,158
 Its condition node compared numbers written as text, so nine came out greater than ten, and that is the node a workflow asks before it writes. Two are open pull requests, and the third is filed as an issue.
 
 22
-00:02:32,700 --> 00:02:41,114
+00:02:32,600 --> 00:02:41,014
 The survey that produced those numbers, both workflows, and a checker that reads every claim back off the chain are in the repository.
