@@ -32,7 +32,10 @@ if (!key) {
 const RUNS = [
   { file: "run-release.html", id: "0gn14g1a979r317aa82hh",
     title: "It released a withdrawal to the account that owns it",
-    note: "The keeper holds no key belonging to that account." },
+    note: "The keeper holds no key belonging to that account. This run was made by the "
+      + "revision with one gate, so there is no second one in the log. The proof rests on a "
+      + "dispute game resolved for the defender, of the type the portal respects, so the "
+      + "second gate would have opened too." },
   { file: "run-unproven.html", id: "vhksgdq08pmz6mpuo8qob",
     title: "Given a withdrawal nobody proved, it does nothing",
     note: "Gate one closes on a proof count of zero. No transaction is sent." },

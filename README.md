@@ -175,6 +175,13 @@ The run's own log, step by step: `finalizedWithdrawals` false, then
 `numProofSubmitters` `"1"`, then the gate true, then `proofSubmitters(hash, 0)`
 returning the prover, then the write, then `finalizedWithdrawals` true.
 
+That run was made by the revision that had one gate, so its log has no second
+one in it. The second gate would have opened: the proof rests on dispute game
+`0x456880De45EB2FEb9A8f4e6Fa26ee8b7ac56e993`, whose status is resolved for the
+defender, of game type 621, which is the type the portal respects. The workflow
+shipped here reads all of that before it writes, and would have made the same
+release.
+
 ### It did nothing when it should do nothing
 
 The same workflow, given a withdrawal that had been started on Base Sepolia but
@@ -187,8 +194,7 @@ not yet proven:
 | Gate | **false** |
 | Transactions sent | **none** |
 
-The run finished successfully with an empty `transactionHashes`. A keeper that
-only demonstrates the happy path has demonstrated half of itself.
+The run finished successfully with an empty `transactionHashes`.
 
 ### It is waiting, unattended, on a live one
 
@@ -247,12 +253,12 @@ npm install
    It recomputes the withdrawal hash from the fields and fails on a mismatch.
 3. Import `workflows/on-demand-finalizer.json`, set `<WALLET_INTEGRATION_ID>` to
    your organization's wallet integration, and run it with the withdrawal as input.
+4. For the unattended variant, import `workflows/unattended-finalizer.json`,
+   fill the withdrawal into the two web3 nodes, and enable it.
 
 `npm run check` runs both checkers: one reads every claim in this file back off
 the chain, the other checks that the README, the narration script, the fact
 pages and the workflow JSON still say the same thing as each other.
-4. For the unattended variant, import `workflows/unattended-finalizer.json`,
-   fill the withdrawal into the two web3 nodes, and enable it.
 
 Note that the trigger input for the withdrawal's calldata is called
 `withdrawalData`, not `data`. A trigger field called `data` is shadowed by the
