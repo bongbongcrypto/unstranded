@@ -73,9 +73,46 @@ const PORTAL_ABI = [
     inputs: [{ type: "bytes32" }], outputs: [{ type: "uint256" }] },
   { name: "proofSubmitters", type: "function", stateMutability: "view",
     inputs: [{ type: "bytes32" }, { type: "uint256" }], outputs: [{ type: "address" }] },
+  { name: "provenWithdrawals", type: "function", stateMutability: "view",
+    inputs: [{ type: "bytes32" }, { type: "address" }],
+    outputs: [{ name: "disputeGameProxy", type: "address" }, { name: "timestamp", type: "uint64" }] },
+  { name: "disputeGameBlacklist", type: "function", stateMutability: "view",
+    inputs: [{ type: "address" }], outputs: [{ type: "bool" }] },
+  { name: "respectedGameType", type: "function", stateMutability: "view",
+    inputs: [], outputs: [{ type: "uint32" }] },
   { name: "finalizeWithdrawalTransactionExternalProof", type: "function", stateMutability: "nonpayable",
     inputs: [WITHDRAWAL_TUPLE, { name: "_proofSubmitter", type: "address" }], outputs: [] },
 ];
+
+const GAME_ABI = [
+  { name: "status", type: "function", stateMutability: "view", inputs: [], outputs: [{ type: "uint8" }] },
+  { name: "gameType", type: "function", stateMutability: "view", inputs: [], outputs: [{ type: "uint32" }] },
+];
+const GAME_STATUS = ["in progress", "the challenger won", "resolved"];
+
+/** Why the portal will not accept this release, read from the portal itself. */
+async function whyBlocked(portal, hash, prover, respected) {
+  try {
+    const [game] = await client.readContract({
+      address: portal, abi: PORTAL_ABI, functionName: "provenWithdrawals", args: [hash, prover],
+    });
+    const blacklisted = await client.readContract({
+      address: portal, abi: PORTAL_ABI, functionName: "disputeGameBlacklist", args: [game],
+    }).catch(() => null);
+    if (blacklisted) return "its dispute game is blacklisted";
+    const type = await client.readContract({ address: game, abi: GAME_ABI, functionName: "gameType" }).catch(() => null);
+    if (type !== null && respected !== null && Number(type) !== Number(respected)) {
+      return `proven against game type ${type}, and the portal respects ${respected}: it has to be proven again`;
+    }
+    const status = await client.readContract({ address: game, abi: GAME_ABI, functionName: "status" }).catch(() => null);
+    if (status !== null && Number(status) !== 2) {
+      return `its dispute game is ${GAME_STATUS[Number(status)] ?? status}`;
+    }
+    return "reason not identified";
+  } catch {
+    return "reason not readable";
+  }
+}
 
 // A withdrawal to the cross-domain messenger carries its real payload in
 // calldata, so the value field alone says nothing about what is inside.
@@ -210,6 +247,10 @@ for (const item of proven) {
 const rate = (100 * abandoned.length) / proven.length;
 console.log(`finalized ${finalized}   never finalized ${abandoned.length}   (${rate.toFixed(1)}%)\n`);
 
+const respected = await client.readContract({
+  address: chain.portal, abi: PORTAL_ABI, functionName: "respectedGameType",
+}).catch(() => null);
+
 const totals = new Map();
 let releasableNow = 0;
 let wouldBurn = 0;
@@ -251,9 +292,14 @@ for (const item of abandoned) {
   console.log(`  ${item.hash}`);
   console.log(`     ${formatUnits(payload.amount, payload.decimals)} ${payload.symbol}` +
     `  to ${payload.to}  proven ~${item.daysAgo}d ago`);
-  console.log(`     the call would succeed: ${callSucceeds ? "yes" : "no"}` +
-    `   the money would arrive: ${moneyArrives ? "yes" : "no"}` +
-    (callSucceeds && !moneyArrives ? "   DO NOT RELEASE: this one would be consumed and deliver nothing" : ""));
+  if (moneyArrives) {
+    console.log("     releasable now, and the money arrives");
+  } else if (callSucceeds) {
+    console.log("     DO NOT RELEASE: the call succeeds but the target fails, so it would be");
+    console.log("     spent and deliver nothing");
+  } else {
+    console.log(`     not releasable: ${await whyBlocked(chain.portal, item.hash, prover, respected)}`);
+  }
 }
 
 console.log("\nsitting in the bridge, from the answered windows alone:");

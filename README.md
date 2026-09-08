@@ -48,6 +48,25 @@ withdrawal carries zero there and puts the amount inside its calldata, which is
 why the survey unwraps `relayMessage` and the bridge call inside it before
 counting anything.
 
+### How far back this reaches
+
+The same survey over an older range, ten windows between 110 and 170 days ago,
+found 12 of 508 never finalized, a rate of 2.4% rather than 5.5%. Eleven of
+those twelve cannot be released by anyone, and the reason is not that they are
+old:
+
+| | |
+| --- | --- |
+| Proven against a dispute game of type 0 | 11 |
+| Game type the portal respects today | 621, since 2026-05-26 |
+
+A proof made against a game type the portal no longer respects has to be made
+again before the withdrawal can be finalized. Re-proving needs a merkle proof
+built from L2 state, which is not something a workflow can do, so a keeper
+reaches the withdrawals proven under the current respected game type and no
+further back. `scripts/survey.mjs` tells you which those are, per withdrawal,
+rather than leaving it to be inferred from a date.
+
 ## The part that makes a keeper possible
 
 `OptimismPortal2.finalizeWithdrawalTransactionExternalProof(tx, proofSubmitter)`
@@ -208,7 +227,7 @@ every thirty minutes is not one you would leave running.
 | Two ticks overlap | The second finds the flag already true, or reverts on the portal. There is no second payment to make. | stated |
 | The keeper's organization runs out of gas | Nothing is sent, and the withdrawal stays exactly as it was | stated |
 | Two keepers race for the same withdrawal | One wins. The other finds the finalized flag already true, or the portal rejects it. There is no second release to make. | stated |
-| The proof is invalidated and needs re-proving | Out of scope. Re-proving needs a merkle proof from L2 state, which a workflow cannot build. | stated |
+| The proof was made against a game type the portal no longer respects | The release call reverts and nothing is sent. Re-proving is out of scope: it needs a merkle proof from L2 state, which a workflow cannot build. Measured on 11 of 12 withdrawals from 110 to 170 days ago. | proved |
 | Wrong withdrawal configured | The portal rejects a withdrawal whose hash was never proven. A wrong hash releases nothing. | stated |
 | Configured on one whose target call fails | The withdrawal is spent and nothing is delivered. The keeper cannot detect this; the survey can, and says so. Where the target is the messenger the message can be relayed again. | stated |
 
@@ -245,8 +264,11 @@ payload instead of the field.
   does not have one yet.
 - It does not discover abandoned withdrawals by itself. `scripts/survey.mjs`
   finds them off-chain and a person decides what to watch.
-- It cannot prove, only finalize. Building a withdrawal proof needs L2 state
-  and a merkle proof, which is not something a workflow can do.
+- It cannot prove, only finalize. Building a withdrawal proof needs L2 state and
+  a merkle proof, which is not something a workflow can do. That is also what
+  bounds how far back it reaches: a withdrawal proven against a game type the
+  portal no longer respects has to be proven again first, and 11 of the 12 found
+  between 110 and 170 days ago are in exactly that state.
 - Each tick spends an execution whether or not it acts. Thirty minutes is 1,440
   a month against 5,000 on the free plan.
 - Only OP Stack portals. Other rollups finish withdrawals differently.
