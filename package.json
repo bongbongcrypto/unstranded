@@ -20,7 +20,8 @@
     "record": "node scripts/record-demo.mjs",
     "assemble": "node scripts/assemble-demo.mjs",
     "check-consistency": "node scripts/check-consistency.mjs",
-    "check": "node scripts/check-docs.mjs && node scripts/check-consistency.mjs"
+    "check": "node scripts/check-docs.mjs && node scripts/check-consistency.mjs && node scripts/check-shots.mjs",
+    "check-shots": "node scripts/check-shots.mjs"
   },
   "dependencies": {
     "viem": "2.56.3"

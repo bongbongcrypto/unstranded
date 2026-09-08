@@ -481,7 +481,7 @@ const CHOREOGRAPHY = [
       { at: 7600, do: async (s) => evaluate(s, `window.__shoot.spotText("Game Resolved", null, 10)`) },
       // 1:45.8 what the first version did instead
       { at: 13200, do: async (s) => evaluate(s, `window.__shoot.unspot()`) },
-      { at: 13400, do: async (s) => evaluate(s, `window.__shoot.spotText("Transactions sent", null, 10)`) },
+      { at: 13400, do: async (s) => evaluate(s, `window.__shoot.spotText("transactions sent", null, 10)`) },
     ],
   },
   {
