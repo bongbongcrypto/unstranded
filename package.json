@@ -18,7 +18,9 @@
     "video-assets": "node scripts/make-video-assets.mjs",
     "narration-track": "node scripts/build-narration-track.mjs",
     "record": "node scripts/record-demo.mjs",
-    "assemble": "node scripts/assemble-demo.mjs"
+    "assemble": "node scripts/assemble-demo.mjs",
+    "check-consistency": "node scripts/check-consistency.mjs",
+    "check": "node scripts/check-docs.mjs && node scripts/check-consistency.mjs"
   },
   "dependencies": {
     "viem": "2.56.3"

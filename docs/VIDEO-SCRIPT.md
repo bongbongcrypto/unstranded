@@ -69,9 +69,9 @@ fails if the README and the chain disagree.
 | 1:14 | run-release | Here it is releasing a withdrawal that had been abandoned for three days. |
 | 1:19 | https://sepolia.etherscan.io/tx/0xd47911d516b533e4c0899101cada489a33ebe2f09187df14c2eba249b5f8bf62 | The owner's balance goes from zero point zero one four ether to zero point nine six four. We never held their key. |
 | 1:27 | balances | Gas was sponsored by the keeper's KeeperHub organisation, so getting the money back cost the owner nothing. |
-| 1:34 | refuse-unproven | It also refuses. Give it a withdrawal nobody proved and the first gate closes. |
-| 1:40 | refuse-unresolved | Give it one whose dispute game is still running and the second gate closes. No transaction either time. |
-| 1:47 | refuse-unresolved | The first version had only one gate. It reached for the portal every thirty minutes and was reverted. Nothing was ever sent, and it still was not something you would leave running. |
+| 1:34 | run-unproven | It also refuses. Give it a withdrawal nobody proved and the first gate closes. |
+| 1:40 | run-unresolved | Give it one whose dispute game is still running and the second gate closes. No transaction either time. |
+| 1:47 | run-unresolved | The first version had only one gate. It reached for the portal every thirty minutes and was reverted. Nothing was ever sent, and it still was not something you would leave running. |
 | 1:58 | watching | So it asks the game first. This one is watching five point four ether, and waiting. |
 | 2:04 | limits | Unfinished: testnet for the demonstration, one withdrawal per workflow, and it does not find them by itself. |
 | 2:12 | close | The survey that produced those numbers, both workflows, and a checker that reads every claim back off the chain are in the repository. |

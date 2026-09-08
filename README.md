@@ -247,6 +247,10 @@ npm install
    It recomputes the withdrawal hash from the fields and fails on a mismatch.
 3. Import `workflows/on-demand-finalizer.json`, set `<WALLET_INTEGRATION_ID>` to
    your organization's wallet integration, and run it with the withdrawal as input.
+
+`npm run check` runs both checkers: one reads every claim in this file back off
+the chain, the other checks that the README, the narration script, the fact
+pages and the workflow JSON still say the same thing as each other.
 4. For the unattended variant, import `workflows/unattended-finalizer.json`,
    fill the withdrawal into the two web3 nodes, and enable it.
 
