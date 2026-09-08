@@ -216,6 +216,12 @@ way to the answer and stops:
 The run ends successfully with an empty `transactionHashes`. When that game
 resolves, the same tick will release the money with nobody present.
 
+That tick is from 8 September, and the game was still running on 9 September,
+87 hours after it was created. It may have resolved by the time you read this,
+in which case the schedule has already released the money and the table above
+is the state before that. `npm run check` reads the portal and says which of
+the two is true today.
+
 An earlier revision had only the first gate, and it shows in the schedule's own
 history: the 19:30 tick reached the portal and was reverted by it, and every
 tick since the second gate landed has ended successfully having sent nothing.
@@ -256,9 +262,12 @@ npm install
 4. For the unattended variant, import `workflows/unattended-finalizer.json`,
    fill the withdrawal into the two web3 nodes, and enable it.
 
-`npm run check` runs both checkers: one reads every claim in this file back off
-the chain, the other checks that the README, the narration script, the fact
-pages and the workflow JSON still say the same thing as each other.
+`npm run check` runs three checkers. The first reads every claim in this file
+back off the chain. The second checks that the README, the narration script,
+the page generator and the workflow JSON still say the same thing as each
+other. The third checks that every shot the demo reaches for has something on
+screen to point at, and finds nothing to do on a fresh clone, because the pages
+it films are built from the chain rather than committed.
 
 Note that the trigger input for the withdrawal's calldata is called
 `withdrawalData`, not `data`. A trigger field called `data` is shadowed by the

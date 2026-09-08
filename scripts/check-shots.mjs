@@ -17,6 +17,15 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const OUT = join(ROOT, "docs", "recording");
 const RECORDER = readFileSync(join(ROOT, "scripts", "record-demo.mjs"), "utf8");
 
+// The fact pages are built from the chain, not committed, so a fresh clone has
+// none of them and there is nothing to point a camera at yet. Once the folder
+// exists, every page and every string in it has to be there.
+if (!existsSync(OUT)) {
+  console.log("docs/recording does not exist yet, so there is nothing to film.");
+  console.log("Build the pages first: node scripts/make-pages.mjs, then scripts/make-run-pages.mjs.");
+  process.exit(0);
+}
+
 const problems = [];
 const note = (m) => problems.push(m);
 

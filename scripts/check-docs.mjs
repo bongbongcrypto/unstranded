@@ -91,17 +91,25 @@ if (README.includes(RELEASE)) {
 }
 
 // --- the portal agrees about which is done and which is not ----------------
-for (const [hash, expected, label] of [
-  [RELEASED_HASH, true, "the released withdrawal"],
-  [WAITING_HASH, false, "the withdrawal still being watched"],
-]) {
-  const finalized = await client.readContract({
-    address: PORTAL, abi: PORTAL_ABI, functionName: "finalizedWithdrawals", args: [hash],
-  });
-  console.log(`${label}: finalizedWithdrawals = ${finalized}`);
-  if (finalized !== expected) {
-    note(`${label} (${hash.slice(0, 18)}..) is ${finalized}, README implies ${expected}`);
-  }
+const releaseIsDone = await client.readContract({
+  address: PORTAL, abi: PORTAL_ABI, functionName: "finalizedWithdrawals", args: [RELEASED_HASH],
+});
+console.log(`the released withdrawal: finalizedWithdrawals = ${releaseIsDone}`);
+if (!releaseIsDone) {
+  note(`the released withdrawal (${RELEASED_HASH.slice(0, 18)}..) reads false, and the README says it went out`);
+}
+
+// The watched one is live state. The README says the schedule is waiting on it,
+// and says what the schedule does when its dispute game resolves. Finding it
+// released is the second sentence coming true rather than a contradiction, so
+// report which of the two is the case today and let the run pass either way.
+const watchIsDone = await client.readContract({
+  address: PORTAL, abi: PORTAL_ABI, functionName: "finalizedWithdrawals", args: [WAITING_HASH],
+});
+console.log(`the withdrawal still being watched: finalizedWithdrawals = ${watchIsDone}`);
+if (watchIsDone) {
+  console.log("  its dispute game has resolved since, and it has been released. That is what");
+  console.log("  the schedule is for. The waiting tick shown in the README is the state before.");
 }
 
 // --- the workflow templates are importable and carry no organisation id ----
