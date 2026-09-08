@@ -227,6 +227,7 @@ every thirty minutes is not one you would leave running.
 | Two ticks overlap | The second finds the flag already true, or reverts on the portal. There is no second payment to make. | stated |
 | The keeper's organization runs out of gas | Nothing is sent, and the withdrawal stays exactly as it was | stated |
 | Two keepers race for the same withdrawal | One wins. The other finds the finalized flag already true, or the portal rejects it. There is no second release to make. | stated |
+| A withdrawal proven more than once | The keeper reads `proofSubmitters(hash, 0)` and no further, so if a later submitter's proof is the usable one it refuses a withdrawal it could have released. That is a missed release, not a loss. Two of twelve on Base carry more than one submitter, and in both the extra one is the same address, so none would be missed here. | measured |
 | The proof was made against a game type the portal no longer respects | The release call reverts and nothing is sent. Re-proving is out of scope: it needs a merkle proof from L2 state, which a workflow cannot build. Measured on 11 of 12 withdrawals from 110 to 170 days ago. | proved |
 | Wrong withdrawal configured | The portal rejects a withdrawal whose hash was never proven. A wrong hash releases nothing. | stated |
 | Configured on one whose target call fails | The withdrawal is spent and nothing is delivered. The keeper cannot detect this; the survey can, and says so. Where the target is the messenger the message can be relayed again. | stated |
