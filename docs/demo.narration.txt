@@ -5,7 +5,7 @@ Fifteen were never finished. Sixty eight thousand dollars of tether, sitting in 
 Ten of them have been there seventy five days. None is still inside a challenge period.
 Here is the part that makes this fixable. Anyone can finish someone else's withdrawal.
 The portal takes the prover's proof from a different caller, and the recipient is already fixed inside the withdrawal that was proven.
-So a stranger can push it through and cannot take it. All fifteen simulate clean from an address with no connection to any of them.
+So a stranger can push it through and cannot take it. Thirteen of the fifteen would deliver. Two would be spent and deliver nothing, and the survey says which.
 This is that, as a KeeperHub workflow.
 It reads whether the withdrawal is finished, whether anyone proved it, who that was, which dispute game the proof rests on, and whether that game resolved.
 Two gates. Then one write.

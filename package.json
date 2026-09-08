@@ -1,0 +1,26 @@
+{
+  "name": "unstranded",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A keeper that finishes L2 to L1 withdrawals their owners never came back for",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "survey": "node scripts/survey.mjs",
+    "verify": "node scripts/verify-withdrawal.mjs",
+    "check-docs": "node scripts/check-docs.mjs",
+    "build-workflows": "node scripts/build-workflows.mjs",
+    "make-pages": "node scripts/make-pages.mjs",
+    "retime": "node scripts/retime-script.mjs",
+    "video-assets": "node scripts/make-video-assets.mjs",
+    "narration-track": "node scripts/build-narration-track.mjs",
+    "record": "node scripts/record-demo.mjs",
+    "assemble": "node scripts/assemble-demo.mjs"
+  },
+  "dependencies": {
+    "viem": "2.56.3"
+  }
+}

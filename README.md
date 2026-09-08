@@ -27,27 +27,47 @@ withdrawal was ever finalized:
 | Finalized | 256 |
 | **Proven and never finalized** | **15 (5.5%)** |
 | Sitting in those 15 | **68,080.576119 USDT**, 0.008936858245022266 ETH, 0.000480937597936668 DGLD |
-| **Releasable by anyone, right now** | **15 of 15** |
+| **Would actually deliver if released now** | **13 of 15** |
 
 Those windows are 40 days and older, so none of this is a challenge period
 still running. Ten of the fifteen have been sitting for 75 days.
 
-The value is not in the withdrawal's `value` field. A token withdrawal carries
-zero there and puts the amount inside its calldata, which is why the survey
-unwraps `relayMessage` and the bridge call inside it before counting anything.
+Two of the fifteen are worth being precise about. The release call succeeds for
+all fifteen, but the portal marks a withdrawal finalized *before* it calls the
+target and a failed target call does not revert the outer call. It surfaces that
+failure in one case only, when `tx.origin` is `address(1)`, which the contract
+calls its estimation address. Under that simulation two of the fifteen fail: a
+0.0297 ETH direct withdrawal and a 0.00048 DGLD one. Releasing either would
+consume it and deliver nothing. `scripts/survey.mjs` runs both simulations and
+says so, and this is the check to run before pointing a keeper at anything.
+
+Two more things the numbers do not say on their own. Ten of the fifteen have the
+same recipient, so this is one holder with most of that money rather than ten
+separate people. And the value is not in the withdrawal's `value` field: a token
+withdrawal carries zero there and puts the amount inside its calldata, which is
+why the survey unwraps `relayMessage` and the bridge call inside it before
+counting anything.
 
 ## The part that makes a keeper possible
 
 `OptimismPortal2.finalizeWithdrawalTransactionExternalProof(tx, proofSubmitter)`
 lets an address that is not the prover finalize using the prover's proof.
 
-The recipient is fixed inside the withdrawal that was already proven. A keeper
-calling this function cannot change where the money goes, cannot take a cut,
-and cannot make anything worse. It can only move a withdrawal from unfinished
-to finished.
+The recipient is fixed inside the withdrawal that was already proven. Change any
+field and the hash changes, so the edited withdrawal was never proven and the
+call reverts. A keeper cannot send the money anywhere else and cannot take a cut.
 
 That is the whole basis of this project. It needs no key, no signature, and no
 permission from the person whose money it is.
+
+What a keeper *can* do wrong is release a withdrawal whose target call fails. The
+withdrawal is spent either way, so that turns a pending withdrawal into a spent
+one that delivered nothing. Two things bound it. The portal's `callWithMinGas`
+reverts unless the target is given the gas limit the withdrawal asked for, so a
+keeper cannot cause this by being cheap on gas. And where the target is the
+cross domain messenger, which is what the standard bridge produces, a failed
+message is recorded and can be relayed again. It is still a decision about
+*when*, and `scripts/survey.mjs` is what tells you before you make it.
 
 Note that the plain `finalizeWithdrawalTransaction` will not do: the newer
 portal keys a proof by its submitter, so a stranger calling it reverts. The
@@ -57,12 +77,13 @@ external proof variant is the one that lets a third party help.
 
 | Property | How it is enforced |
 | --- | --- |
-| Cannot take the money | The recipient is inside the proven withdrawal. The keeper passes that withdrawal through unchanged and has no field to alter. |
+| Cannot take the money | The recipient is inside the proven withdrawal. Editing any field changes its hash, and a withdrawal with that hash was never proven, so the call reverts. |
 | Cannot act on an unproven withdrawal | The gate reads `numProofSubmitters` and refuses at zero. |
 | Cannot act twice | The gate reads `finalizedWithdrawals` and refuses when it is already true. |
 | Cannot act early | The second gate reads the dispute game backing the proof and refuses unless it has resolved in the defender's favour. The portal enforces this anyway, but asking first means a keeper that is not ready sends nothing rather than a reverted transaction every tick. |
-| Cannot be pointed at the wrong withdrawal | The withdrawal's fields hash to its withdrawal hash. `scripts/verify-withdrawal.mjs` recomputes it, and one wrong character fails. |
-| Costs the owner nothing | Gas is paid by the keeper's KeeperHub organization, sponsored. |
+| Cannot tell whether the money will arrive | It cannot. A workflow has no way to simulate, and the portal only reveals a failing target call to a simulation whose `tx.origin` is `address(1)`. `scripts/survey.mjs` runs that check; the keeper trusts whoever configured it. |
+| Cannot be pointed at the wrong withdrawal | The gates read state by the withdrawal hash while the write passes the six fields, and nothing inside the workflow checks that the two describe the same withdrawal. If they disagree the write reverts, because a withdrawal with that hash was never proven, so the failure is loud and costs gas rather than money. `scripts/verify-withdrawal.mjs` is what closes it beforehand. |
+| Costs the owner nothing | The keeper's KeeperHub organization pays, and on this plan that gas was sponsored. Either way the bill is the keeper's, never the owner's. |
 
 ## How it works
 
@@ -156,9 +177,11 @@ way to the answer and stops:
 The run ends successfully with an empty `transactionHashes`. When that game
 resolves, the same tick will release the money with nobody present.
 
-An earlier revision had only the first gate, and every tick reached the portal
-and was reverted by it. Nothing was ever sent, but a keeper that throws a failed
-transaction every thirty minutes is not one you would leave running.
+An earlier revision had only the first gate, and it shows in the schedule's own
+history: the 19:30 tick reached the portal and was reverted by it, and every
+tick since the second gate landed has ended successfully having sent nothing.
+Nothing was ever sent either way, but a keeper that throws a failed transaction
+every thirty minutes is not one you would leave running.
 
 ## Failure modes
 
@@ -170,15 +193,22 @@ transaction every thirty minutes is not one you would leave running.
 | Dispute game not resolved yet | The second gate reads the game's status and closes. Nothing is sent and the run ends successfully. | proved |
 | Two ticks overlap | The second finds the flag already true, or reverts on the portal. There is no second payment to make. | stated |
 | The keeper's organization runs out of gas | Nothing is sent, and the withdrawal stays exactly as it was | stated |
+| Two keepers race for the same withdrawal | One wins. The other finds the finalized flag already true, or the portal rejects it. There is no second release to make. | stated |
 | The proof is invalidated and needs re-proving | Out of scope. Re-proving needs a merkle proof from L2 state, which a workflow cannot build. | stated |
 | Wrong withdrawal configured | The portal rejects a withdrawal whose hash was never proven. A wrong hash releases nothing. | stated |
+| Configured on one whose target call fails | The withdrawal is spent and nothing is delivered. The keeper cannot detect this; the survey can, and says so. Where the target is the messenger the message can be relayed again. | stated |
 
 ## Reproduce
 
 You need a KeeperHub account and its managed wallet. No local key and no funded
 wallet of your own.
 
-1. Find something to release: `node scripts/survey.mjs base-sepolia`.
+```
+npm install
+```
+
+1. Find something to release: `node scripts/survey.mjs base-sepolia`. Take only
+   the ones it says would actually deliver.
 2. Check the fields you are about to use: `node scripts/verify-withdrawal.mjs <file>`.
    It recomputes the withdrawal hash from the fields and fails on a mismatch.
 3. Import `workflows/on-demand-finalizer.json`, set `<WALLET_INTEGRATION_ID>` to

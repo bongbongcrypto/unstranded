@@ -102,12 +102,13 @@ write("external-proof.html", page("external proof", `
 
 // --- the simulation ---------------------------------------------------------
 write("simulate.html", page("simulate", `
-  <div class="src">eth_call from 0x0000000000000000000000000000000000000042, an address party to none of them</div>
-  <h1>All fifteen release cleanly from a stranger</h1>
-  <div class="row"><div class="k">simulated</div><div class="v">15</div></div>
-  <div class="row"><div class="k">would succeed</div><div class="v big ok">15</div></div>
-  <div class="row"><div class="k">would revert</div><div class="v">0</div></div>
-  <div class="note">Simulated, not sent. The money would go to the addresses already named inside them.</div>
+  <div class="src">eth_call from an address party to none of them, run twice: as anyone, and with tx.origin = address(1)</div>
+  <h1>Thirteen of the fifteen would deliver</h1>
+  <div class="row"><div class="k">the call would succeed</div><div class="v">15</div></div>
+  <div class="row"><div class="k">the money would arrive</div><div class="v big ok">13</div></div>
+  <div class="row"><div class="k">spent, delivering nothing</div><div class="v bad">2</div></div>
+  <div class="note">The portal marks a withdrawal finalized before it calls the target, and only
+  a simulation whose tx.origin is address(1) reveals a failing call. The survey runs both.</div>
 `));
 
 // --- the balances -----------------------------------------------------------

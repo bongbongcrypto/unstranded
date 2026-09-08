@@ -38,9 +38,17 @@ const CHAINS = {
 
 const WITHDRAWAL_PROVEN =
   "0x67a6208cfcc0801d50f6cbe764733f4fddf66ac0b04442061a8a8c0cb6b63f62";
-// Any address. Used only to ask whether a call would succeed from someone with
-// no relationship to the withdrawal.
+// Any address. Used to ask whether the call would succeed from someone with no
+// relationship to the withdrawal.
 const NOBODY = "0x0000000000000000000000000000000000000042";
+// The portal marks a withdrawal finalized before it calls the target, and a
+// failed target call does not revert the outer call. It surfaces that failure
+// in exactly one case: when tx.origin is address(1), which the contract calls
+// its estimation address. So a plain simulation answers "would this call
+// succeed", and only this one answers "would the money arrive". Two of the
+// fifteen found on Base differ between the two, which is the difference between
+// releasing a withdrawal and burning it.
+const ESTIMATION = "0x0000000000000000000000000000000000000001";
 
 const WITHDRAWAL_TUPLE = {
   name: "_tx", type: "tuple", components: [
@@ -204,6 +212,7 @@ console.log(`finalized ${finalized}   never finalized ${abandoned.length}   (${r
 
 const totals = new Map();
 let releasableNow = 0;
+let wouldBurn = 0;
 
 for (const item of abandoned) {
   const tx = await client.getTransaction({ hash: item.tx });
@@ -222,23 +231,29 @@ for (const item of abandoned) {
   const prover = await client.readContract({
     address: chain.portal, abi: PORTAL_ABI, functionName: "proofSubmitters", args: [item.hash, 0n],
   });
-  let releasable = false;
-  try {
-    await client.call({
-      account: NOBODY, to: chain.portal,
-      data: encodeFunctionData({
-        abi: PORTAL_ABI, functionName: "finalizeWithdrawalTransactionExternalProof",
-        args: [withdrawal, prover],
-      }),
-    });
-    releasable = true;
-    releasableNow += 1;
-  } catch { /* still waiting on its dispute game */ }
+  const call = encodeFunctionData({
+    abi: PORTAL_ABI, functionName: "finalizeWithdrawalTransactionExternalProof",
+    args: [withdrawal, prover],
+  });
+  const simulate = async (from) => {
+    try {
+      await client.call({ account: from, to: chain.portal, data: call });
+      return true;
+    } catch {
+      return false;
+    }
+  };
+  const callSucceeds = await simulate(NOBODY);
+  const moneyArrives = await simulate(ESTIMATION);
+  if (moneyArrives) releasableNow += 1;
+  if (callSucceeds && !moneyArrives) wouldBurn += 1;
 
   console.log(`  ${item.hash}`);
   console.log(`     ${formatUnits(payload.amount, payload.decimals)} ${payload.symbol}` +
     `  to ${payload.to}  proven ~${item.daysAgo}d ago`);
-  console.log(`     releasable by anyone right now: ${releasable ? "yes" : "no"}`);
+  console.log(`     the call would succeed: ${callSucceeds ? "yes" : "no"}` +
+    `   the money would arrive: ${moneyArrives ? "yes" : "no"}` +
+    (callSucceeds && !moneyArrives ? "   DO NOT RELEASE: this one would be consumed and deliver nothing" : ""));
 }
 
 console.log("\nsitting in the bridge, from the answered windows alone:");
@@ -246,4 +261,11 @@ for (const [key, amount] of totals) {
   const [symbol, decimals] = key.split("|");
   console.log(`   ${formatUnits(amount, Number(decimals))} ${symbol}`);
 }
-console.log(`\nreleasable by anyone right now: ${releasableNow} of ${abandoned.length}`);
+console.log(abandoned.length === 0
+  ? "\nnothing abandoned in the answered windows"
+  : `\nwould actually deliver if released now: ${releasableNow} of ${abandoned.length}`);
+if (wouldBurn > 0) {
+  console.log(`WARNING: ${wouldBurn} would be consumed by the release and deliver nothing.`);
+  console.log("The portal marks a withdrawal finalized before it calls the target, so");
+  console.log("releasing one of those spends it for nothing. Do not point a keeper at them.");
+}
