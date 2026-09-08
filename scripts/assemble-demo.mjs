@@ -76,8 +76,17 @@ function slate(slot, length, file) {
   // The font is named outright. There is no fontconfig on Windows, so drawtext
   // with no fontfile fails with "Cannot load default config file: (null)",
   // which reads like a broken filter rather than a missing font.
-  const font = ["C:/Windows/Fonts/segoeui.ttf", "C:/Windows/Fonts/arial.ttf"].find((f) => existsSync(f));
-  if (!font) throw new Error("no font for the slate; looked for Segoe UI and Arial in C:/Windows/Fonts");
+  const font = [
+    "C:/Windows/Fonts/segoeui.ttf",
+    "C:/Windows/Fonts/arial.ttf",
+    "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+    "/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf",
+    "/usr/share/fonts/TTF/DejaVuSans.ttf",
+    "/System/Library/Fonts/Supplemental/Arial.ttf",
+  ].find((f) => existsSync(f));
+  if (!font) {
+    throw new Error("no font for the slate. Set one of the paths in slate() to a .ttf on this machine.");
+  }
   const fontArg = font.replace(/\\/g, "/").replace(/^([A-Za-z]):/, "$1\\:");
 
   // One drawtext per line rather than a newline inside the text.
@@ -156,6 +165,10 @@ const review = process.argv.includes("--review");
 const final = join(OUT, review ? "demo.review.mp4" : "demo.mp4");
 const assFile = review ? "demo.review.ass" : "demo.short.ass";
 const ass = join(ROOT, "docs", assFile).replace(/\\/g, "/").replace(/^([A-Za-z]):/, "$1\\:");
+// Said out loud because this is the slow part and silence reads like a hang.
+// The preset is deliberate: this is the copy people watch.
+console.log(`\nburning ${assFile} and the narration at preset slow, crf 19.` +
+  ` This is minutes, not seconds.`);
 run([
   "-i", silent,
   "-i", narration,

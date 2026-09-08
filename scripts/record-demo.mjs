@@ -734,7 +734,12 @@ if (argv.includes("--list") || argv.length === 0) {
     );
   }
   const covered = SEGMENTS.reduce((n, s) => n + seconds(s.to) - seconds(s.from), 0);
-  console.log(`\n  ${covered.toFixed(0)}s of 180s covered`);
+  const scriptRuns = seconds(lines.at(-1).end);
+  console.log(`\n  ${covered.toFixed(1)}s covered, and the script runs ${scriptRuns.toFixed(1)}s`);
+  if (Math.abs(covered - scriptRuns) > 0.001) {
+    console.log("  the segments and the script disagree; run scripts/retime-script.mjs");
+    process.exit(1);
+  }
   process.exit(0);
 }
 
