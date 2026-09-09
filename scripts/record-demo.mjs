@@ -23,7 +23,7 @@
 // Both go through KeeperHub's own execute endpoint with the same session, which
 // is the same path a human clicking Run would take.
 import { execFileSync, spawn, spawnSync } from "node:child_process";
-import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { evaluate, launch } from "./lib/cdp.mjs";
@@ -194,6 +194,65 @@ const HELPERS = `
   };
 
   window.__shoot = {
+    // The account chrome is framed out of every shot of the live app: the
+    // signed-in person's picture in one corner, and in the other the
+    // organisation's display name, which belongs to whoever set the account up
+    // rather than to this. Neither says anything about the workflow, and one of
+    // them is somebody's face. Hidden rather than relabelled, because a label
+    // changed for the camera is a different thing from a label left out of it.
+    hideIdentity() {
+      // Inline styles do not survive here: the app re-renders and writes the
+      // element back the way it was. So this marks the elements with a class,
+      // backs the class with an important rule, and puts an observer on the
+      // document to mark them again every time they come back.
+      if (!document.getElementById("__shoot-hide")) {
+        const style = document.createElement("style");
+        style.id = "__shoot-hide";
+        style.textContent = ".__shoot-off{visibility:hidden!important}";
+        document.head.append(style);
+      }
+      const mark = () => {
+        let n = 0;
+        // Hiding one thing too many is how this goes wrong: reach one parent up
+        // from a banner and the whole page goes with it. Nothing that could be a
+        // container is ever hidden.
+        const off = (el) => {
+          if (!el || el.classList.contains("__shoot-off")) return;
+          if (/^(body|html|main|section)$/i.test(el.tagName)) return;
+          const box = el.getBoundingClientRect();
+          if (box.width > 700 || box.height > 120) return;
+          el.classList.add("__shoot-off");
+          n += 1;
+        };
+        // The signed-in person's picture.
+        for (const img of document.querySelectorAll('img[src*="googleusercontent"], img[src*="gravatar"]')) {
+          off(img.closest("button") || img);
+        }
+        // The organisation switcher, alone on the left of the header row. The
+        // workflow's own name is the next thing along and has to stay, and the
+        // sidebar below is a different row again.
+        for (const button of document.querySelectorAll("button")) {
+          const box = button.getBoundingClientRect();
+          if (box.height === 0) continue;
+          if (box.y > 38 && box.y < 96 && box.x < 270 && box.width > 100) off(button);
+        }
+        // The plan advertisement across the top: the element that holds the
+        // words itself, never its parent.
+        for (const el of document.querySelectorAll("span")) {
+          if (el.children.length) continue;
+          if (!/unlock higher execution limits/i.test(el.textContent || "")) continue;
+          if (el.getBoundingClientRect().y < 40) { off(el); break; }
+        }
+        return n;
+      };
+      const first = mark();
+      if (!window.__shootWatcher) {
+        window.__shootWatcher = new MutationObserver(() => mark());
+        window.__shootWatcher.observe(document.body, { childList: true, subtree: true });
+      }
+      return "identity elements hidden: " + first;
+    },
+
     // The side panel is not removed when it is hidden; it is slid off the right
     // edge of the page, and it stays that way across navigations. So every shot
     // that cares says which way it wants it rather than assuming.
@@ -325,10 +384,11 @@ const UI = {
 /** Hide the panel and fit every node into the canvas. */
 async function canvasWide(s) {
   const panel = await evaluate(s, `window.__shoot.setPanel(false)`);
+  const identity = await evaluate(s, `window.__shoot.hideIdentity()`);
   await sleep(700);
   await clickXY(s, ...UI.fitView);
   await sleep(600);
-  return `wide (${panel})`;
+  return `wide (${panel}, ${identity})`;
 }
 
 /** Fresh page, panel showing, Runs tab open. */
@@ -404,9 +464,19 @@ const CHOREOGRAPHY = [
     // 0:00 three transactions, and the one nobody comes back for
     id: "a",
     url: local("three-steps.html"),
+    // The pages are built where the chain is reachable and the key lives, and
+    // filmed where the screen is. Those are not always the same machine, and
+    // rebuilding here would make the shoot depend on a network and on installed
+    // packages it does not otherwise need. So this checks rather than builds.
     setup: async () => {
-      execFileSync(process.execPath, [join(ROOT, "scripts", "make-pages.mjs")], { stdio: "inherit" });
-      return "pages rebuilt from the chain";
+      const page = join(OUT, "three-steps.html");
+      if (!existsSync(page)) {
+        throw new Error("docs/recording is empty. Build the pages first: "
+          + "node scripts/make-pages.mjs, then scripts/make-run-pages.mjs, "
+          + "then copy docs/recording here.");
+      }
+      const built = statSync(page).mtime.toISOString().slice(0, 16).replace("T", " ");
+      return `pages built ${built}, filmed as they are`;
     },
     steps: [
       { at: 1200, do: async (s) => evaluate(s, `window.__shoot.spotText("Start the withdrawal", null, 10)`) },
