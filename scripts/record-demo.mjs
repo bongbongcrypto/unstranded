@@ -44,7 +44,7 @@ const ON_DEMAND = "https://app.keeperhub.com/workflows/" + ON_DEMAND_ID;
 const WATCHER = "https://app.keeperhub.com/workflows/" + WATCHER_ID;
 const SWEEPER = "https://app.keeperhub.com/workflows/" + SWEEPER_ID;
 const RELEASE_TX =
-  "https://sepolia.etherscan.io/tx/0xb3c37356e9af4915eef7fd20189ac739443ac99b79e29284c57c285e55eb9c57";
+  "https://etherscan.io/tx/0x9bb2ed94bb3ab655a7ff9ab9ef70c46b56d060a239e318a22d8aee224dd3b55a";
 const REPO = "https://github.com/bongbongcrypto/unstranded";
 const PR_ONE = "https://github.com/KeeperHub/keeperhub/pull/2319";
 const local = (name) => "file:///" + join(OUT, name).replace(/\\/g, "/");
@@ -539,11 +539,11 @@ const CHOREOGRAPHY = [
     steps: [
       { at: 1000, do: async (s) => evaluate(s, `window.__shoot.spotText("Release To Owner", null, 10)`) },
       // 1:21.1 the transaction on Etherscan
-      { at: 6300, do: async (s) => evaluate(s, `window.__shoot.unspot()`) },
-      { at: 6500, do: async (s, go) => go(RELEASE_TX) },
+      { at: 6800, do: async (s) => evaluate(s, `window.__shoot.unspot()`) },
+      { at: 7000, do: async (s, go) => go(RELEASE_TX) },
       // 1:27.8 what it cost the owner
-      { at: 13200, do: async (s, go) => go(local("balances.html")) },
-      { at: 14600, do: async (s) => evaluate(s, `window.__shoot.spotText("8.1862", null, 12)`) },
+      { at: 13600, do: async (s, go) => go(local("balances.html")) },
+      { at: 15000, do: async (s) => evaluate(s, `window.__shoot.spotText("6,025.70", null, 12)`) },
     ],
   },
   {

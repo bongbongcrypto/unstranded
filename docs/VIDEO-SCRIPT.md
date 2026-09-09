@@ -66,16 +66,16 @@ fails if the README and the chain disagree.
 | 0:57 | canvas | This is that, as a KeeperHub workflow. It finds them itself. |
 | 1:02 | canvas | It reads whether the withdrawal is finished, whether anyone proved it, who that was, which dispute game the proof rests on, and whether that game resolved. |
 | 1:13 | canvas | Two gates. Then one write. |
-| 1:16 | run-release | Here it is releasing five ether that the owner proved themselves and then left for forty six days. |
-| 1:22 | https://sepolia.etherscan.io/tx/0xb3c37356e9af4915eef7fd20189ac739443ac99b79e29284c57c285e55eb9c57 | Their balance goes from three point one eight ether to eight point one eight. We never held their key. |
+| 1:16 | run-release | Here it is on Ethereum, giving back six thousand dollars of tether that had sat for seventy five days. |
+| 1:23 | https://etherscan.io/tx/0x9bb2ed94bb3ab655a7ff9ab9ef70c46b56d060a239e318a22d8aee224dd3b55a | Six thousand and twenty five tether, to the account that owns it. We never held their key. |
 | 1:29 | balances | KeeperHub paid the gas, so getting the money back cost the owner nothing. |
 | 1:34 | run-unproven | It also refuses. Give it a withdrawal nobody proved and the first gate closes. |
-| 1:40 | run-unresolved | Give it one whose dispute game is still running and the second gate closes. No transaction either time. |
-| 1:47 | run-unresolved | The first version had only one gate. It reached for the portal every thirty minutes and was reverted. Nothing was ever sent, and it still was not something you would leave running. |
-| 1:58 | watching | So it asks the game first. This one is watching five point four ether, and waiting. |
-| 2:04 | limits | Unfinished: testnet for the demonstration, and a sweep reaches one query back, not all of history. |
-| 2:12 | upstream | Three of the things in the way were in KeeperHub, not in this. |
-| 2:16 | https://github.com/KeeperHub/keeperhub/pull/2319 | Its condition node compared numbers written as text, so nine came out greater than ten, and that is the node a workflow asks before it writes. Two are open pull requests, and the third is filed as an issue. |
-| 2:30 | close | The survey that produced those numbers, both workflows, and a checker that reads every claim back off the chain are in the repository. |
+| 1:41 | run-unresolved | Give it one whose dispute game is still running and the second gate closes. No transaction either time. |
+| 1:48 | run-unresolved | The first version had only one gate. It reached for the portal every thirty minutes and was reverted. Nothing was ever sent, and it still was not something you would leave running. |
+| 1:59 | watching | So it asks the game first. This one is watching five point four ether, and waiting. |
+| 2:05 | limits | Unfinished: a sweep reaches one query back, not all of history, and it cannot prove a withdrawal, only finish one. |
+| 2:14 | upstream | Three of the things in the way were in KeeperHub, not in this. |
+| 2:18 | https://github.com/KeeperHub/keeperhub/pull/2319 | Its condition node compared numbers written as text, so nine came out greater than ten, and that is the node a workflow asks before it writes. Two are open pull requests, and the third is filed as an issue. |
+| 2:32 | close | The survey that produced those numbers, both workflows, and a checker that reads every claim back off the chain are in the repository. |
 
 <!-- shots:end -->

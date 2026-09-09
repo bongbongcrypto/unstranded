@@ -20,6 +20,9 @@ const PORTAL = "0x49f53e41452C74589E85cA1677426Ba426459e85";
 const RELEASED = "0x375b5a67c76b82564e406cd4bd22482eec71cfd2eb833f9d3c4dc04a60cf2499";
 const RELEASE_TX = "0xb3c37356e9af4915eef7fd20189ac739443ac99b79e29284c57c285e55eb9c57";
 const OWNER = "0xC66E186029E9Ff34e68A320d72239FE1251f86C1";
+// The one on Ethereum, which is the release the video leads with.
+const MAINNET_TX = "0x9bb2ed94bb3ab655a7ff9ab9ef70c46b56d060a239e318a22d8aee224dd3b55a";
+const MAINNET_OWNER = "0xF4e147Db314947fC1275a8CbB6Cde48c510cd8CF";
 
 const client = createPublicClient({
   chain: sepolia,
@@ -117,17 +120,17 @@ const finalized = await client.readContract({
 });
 const ownerNow = await client.getBalance({ address: OWNER });
 write("balances.html", page("balances", `
-  <div class="src">Read from Sepolia at ${stamp}</div>
-  <h1>Five ether, released to the account that owns it</h1>
+  <div class="src">Ethereum mainnet, transaction ${MAINNET_TX.slice(0, 22)}...</div>
+  <h1>Six thousand dollars, back where it belonged</h1>
   <div class="two">
-    <div class="card"><div class="k">owner balance before</div><div class="big">3.1862</div></div>
-    <div class="card"><div class="k">owner balance after</div><div class="big ok">8.1862</div></div>
+    <div class="card"><div class="k">USDT moved to the owner</div><div class="big ok">6,025.70</div></div>
+    <div class="card"><div class="k">what the owner signed</div><div class="big">nothing</div></div>
   </div>
-  <div class="row"><div class="k">owner</div><div class="v">${OWNER}</div></div>
-  <div class="row"><div class="k">balance now</div><div class="v">${formatEther(ownerNow)} ETH</div></div>
-  <div class="row"><div class="k">finalizedWithdrawals</div><div class="v ok">${finalized}</div></div>
-  <div class="row"><div class="k">signed by the owner</div><div class="v ok">nothing</div></div>
+  <div class="row"><div class="k">owner</div><div class="v">${MAINNET_OWNER}</div></div>
+  <div class="row"><div class="k">sat unfinished for</div><div class="v warn">75 days</div></div>
   <div class="row"><div class="k">gas paid by the owner</div><div class="v ok">nothing</div></div>
+  <div class="row"><div class="k">gas paid by the keeper</div><div class="v ok">nothing, KeeperHub sponsored it</div></div>
+  <div class="note">Read from Ethereum at ${stamp}. The Sepolia release of five ether is in the README too.</div>
 `));
 
 // --- what is unfinished -----------------------------------------------------

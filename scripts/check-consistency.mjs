@@ -36,8 +36,8 @@ const CLAIMS = [
   { what: "how many would actually deliver", readme: "13 of 15", spoken: "Thirteen of the fifteen would deliver", page: "13" },
   { what: "how many would be spent for nothing", readme: "two of the fifteen fail", spoken: "Two would be spent and deliver nothing", page: "spent, delivering nothing" },
   { what: "how long they have been sitting", readme: "75 days", spoken: "seventy five", page: "75 days ago" },
-  { what: "the balance before", readme: "3.186206822535233652", spoken: "three point one eight", page: "3.1862" },
-  { what: "the balance after", readme: "8.186206822535233652", spoken: "eight point one eight", page: "8.1862" },
+  { what: "what moved on Ethereum", readme: "6,025.699708", spoken: "Six thousand and twenty five tether", page: "6,025.70" },
+  { what: "how long it had sat there", readme: "seventy five days", spoken: "seventy five days", page: "75 days" },
   { what: "what the watcher is watching", readme: "5.447626998490219023 ETH", spoken: "five point four ether", page: null },
   { what: "how many were upstream", readme: "Three of the things in the way were in KeeperHub",
     spoken: "Three of the things in the way were in KeeperHub", page: "Three of them were in KeeperHub" },
@@ -72,6 +72,8 @@ for (const [what, text] of [
   ["why the gates compare strings", "rather than as `<` or `>`"],
   ["what a sweep found", "Proven, game resolved, released"],
   ["how far a sweep reaches", "as wide as one event query"],
+  ["the mainnet release", "0x9bb2ed94"],
+  ["that it is not a testnet", "Not a testnet"],
 ]) {
   if (!README.includes(text)) note(`README no longer states ${what} ("${text}")`);
 }

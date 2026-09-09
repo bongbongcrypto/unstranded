@@ -43,45 +43,45 @@ It reads whether the withdrawal is finished, whether anyone proved it, who that 
 Two gates. Then one write.
 
 12
-00:01:16,000 --> 00:01:22,134
-Here it is releasing five ether that the owner proved themselves and then left for forty six days.
+00:01:16,000 --> 00:01:22,614
+Here it is on Ethereum, giving back six thousand dollars of tether that had sat for seventy five days.
 
 13
-00:01:22,500 --> 00:01:28,850
-Their balance goes from three point one eight ether to eight point one eight. We never held their key.
+00:01:23,000 --> 00:01:29,182
+Six thousand and twenty five tether, to the account that owns it. We never held their key.
 
 14
-00:01:29,200 --> 00:01:33,990
+00:01:29,600 --> 00:01:34,390
 KeeperHub paid the gas, so getting the money back cost the owner nothing.
 
 15
-00:01:34,400 --> 00:01:40,174
+00:01:34,800 --> 00:01:40,574
 It also refuses. Give it a withdrawal nobody proved and the first gate closes.
 
 16
-00:01:40,600 --> 00:01:47,382
+00:01:41,000 --> 00:01:47,782
 Give it one whose dispute game is still running and the second gate closes. No transaction either time.
 
 17
-00:01:47,800 --> 00:01:58,350
+00:01:48,200 --> 00:01:58,750
 The first version had only one gate. It reached for the portal every thirty minutes and was reverted. Nothing was ever sent, and it still was not something you would leave running.
 
 18
-00:01:58,700 --> 00:02:04,330
+00:01:59,100 --> 00:02:04,730
 So it asks the game first. This one is watching five point four ether, and waiting.
 
 19
-00:02:04,700 --> 00:02:11,794
-Unfinished: testnet for the demonstration, and a sweep reaches one query back, not all of history.
+00:02:05,100 --> 00:02:13,706
+Unfinished: a sweep reaches one query back, not all of history, and it cannot prove a withdrawal, only finish one.
 
 20
-00:02:12,200 --> 00:02:16,174
+00:02:14,100 --> 00:02:18,074
 Three of the things in the way were in KeeperHub, not in this.
 
 21
-00:02:16,600 --> 00:02:29,958
+00:02:18,500 --> 00:02:31,858
 Its condition node compared numbers written as text, so nine came out greater than ten, and that is the node a workflow asks before it writes. Two are open pull requests, and the third is filed as an issue.
 
 22
-00:02:30,400 --> 00:02:38,814
+00:02:32,300 --> 00:02:40,714
 The survey that produced those numbers, both workflows, and a checker that reads every claim back off the chain are in the repository.

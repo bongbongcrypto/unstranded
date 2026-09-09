@@ -189,7 +189,30 @@ and the schedule walks the window forward.
 
 ## Proof
 
-All on Ethereum Sepolia, against the Base Sepolia portal.
+### It gave a stranger back six thousand dollars on Ethereum
+
+Not a testnet. A withdrawal of 6,025.699708 USDT, proven by somebody on 27 June
+and left unfinalized for seventy five days, released to the account that owns it
+by the workflow in this repository.
+
+| | |
+| --- | --- |
+| Withdrawal | `0xa34a746d9785db3960953c14f4ad095b0c68647e5f93c790f3d028da28bbd164` |
+| Owner | `0xF4e147Db314947fC1275a8CbB6Cde48c510cd8CF` |
+| USDT moved to them | 6,025.699708 |
+| What they did with it | moved it on within minutes |
+| Transaction | [`0x9bb2ed94...`](https://etherscan.io/tx/0x9bb2ed94bb3ab655a7ff9ab9ef70c46b56d060a239e318a22d8aee224dd3b55a) |
+| Gas | 367,465, sponsored |
+
+They had been sitting on it for seventy five days and moved it within minutes of
+getting it back, which is the answer to whether anybody wanted it.
+
+The keeper's organization has never interacted with that account and holds no
+key of theirs. The wallet it runs as held 0.0021 ETH before this and holds
+0.0021 ETH after: KeeperHub paid, as it does on the testnet.
+
+The rest below is on Ethereum Sepolia, against the Base Sepolia portal, where
+the refusals and the sweep can be exercised without spending real money.
 
 ### It released a stranger's withdrawal to that stranger
 
@@ -347,8 +370,9 @@ payload instead of the field.
 
 ## Known limitations
 
-- Testnet for the demonstration. The measurement is of Base on Ethereum; the
-  transactions are on Sepolia against the Base Sepolia portal.
+- Ethereum mainnet is one release. Everything else, the refusals and the sweep,
+  is on Sepolia against the Base Sepolia portal, because those are the runs worth
+  repeating and repeating them on mainnet costs somebody real gas.
 - A sweep is as wide as one event query. Two hundred thousand blocks answer in
   seconds and a million does not, so a run covers a window rather than all of
   history, and the schedule walks it forward. `scripts/survey.mjs` is still what

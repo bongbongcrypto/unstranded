@@ -19,7 +19,7 @@
 //     voice is plain English and internal notes are not published
 //   - every local link in the README resolves to a file
 import { createPublicClient, http, formatEther } from "viem";
-import { sepolia } from "viem/chains";
+import { mainnet, sepolia } from "viem/chains";
 import { readFileSync, existsSync, readdirSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -140,6 +140,49 @@ try {
   }
 } catch (error) {
   console.log(`how long it sat: not checked (${String(error.shortMessage ?? error.message).slice(0, 50)})`);
+}
+
+// --- the one on Ethereum ----------------------------------------------------
+// The README's headline release is on mainnet, against a different portal on a
+// different chain, so it needs its own client and its own read.
+const MAINNET_TX = "0x9bb2ed94bb3ab655a7ff9ab9ef70c46b56d060a239e318a22d8aee224dd3b55a";
+const MAINNET_HASH = "0xa34a746d9785db3960953c14f4ad095b0c68647e5f93c790f3d028da28bbd164";
+const MAINNET_PORTAL = "0x49048044D57e1C92A77f79988d21Fa8fAF74E97e";
+const USDT = "0xdAC17F958D2ee523a2206206994597C13D831ec7";
+const MAINNET_OWNER = "0xF4e147Db314947fC1275a8CbB6Cde48c510cd8CF";
+if (README.includes(MAINNET_TX)) {
+  const eth = createPublicClient({ chain: mainnet, transport: http("https://ethereum-rpc.publicnode.com", { retryCount: 4 }) });
+  try {
+    const receipt = await eth.getTransactionReceipt({ hash: MAINNET_TX });
+    if (receipt.status !== "success") note("the mainnet release did not succeed");
+    const done = await eth.readContract({
+      address: MAINNET_PORTAL, abi: PORTAL_ABI, functionName: "finalizedWithdrawals", args: [MAINNET_HASH],
+    });
+    console.log(`the mainnet release: finalizedWithdrawals = ${done}`);
+    if (!done) note("the mainnet withdrawal reads false, and the README says it went out");
+    // The balance is not the evidence. This owner moved the money on within
+    // minutes of getting it, which is their business and says nothing about
+    // whether it arrived. What says that is the transfer inside the receipt.
+    const TRANSFER = "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef";
+    const paid = receipt.logs.find((l) =>
+      l.address.toLowerCase() === USDT.toLowerCase() &&
+      l.topics[0] === TRANSFER &&
+      ("0x" + l.topics[2].slice(26)).toLowerCase() === MAINNET_OWNER.toLowerCase());
+    if (!paid) {
+      note("the mainnet release moved no USDT to the address the README names");
+    } else {
+      const amount = (Number(BigInt(paid.data)) / 1e6).toFixed(6);
+      const withCommas = amount.replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
+      console.log(`the mainnet release moved ${withCommas} USDT to ${MAINNET_OWNER}`);
+      if (!README.includes(withCommas)) {
+        note(`README does not carry the amount that moved, ${withCommas}`);
+      }
+    }
+  } catch (error) {
+    console.log(`the mainnet release: not checked (${String(error.shortMessage ?? error.message).slice(0, 50)})`);
+  }
+} else {
+  note("README no longer links the mainnet release");
 }
 
 // --- the portal agrees about which is done and which is not ----------------
