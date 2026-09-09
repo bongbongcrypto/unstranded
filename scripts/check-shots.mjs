@@ -32,11 +32,11 @@ const note = (m) => problems.push(m);
 // Walk the choreography in order, tracking which page each step is looking at.
 // A spotText belongs to whichever page was last opened before it.
 const body = RECORDER.slice(RECORDER.indexOf("const CHOREOGRAPHY = ["));
-const events = [...body.matchAll(/(?:url:\s*local\("([^"]+)"\)|go\(local\("([^"]+)"\)\)|go\((ON_DEMAND|WATCHER|RELEASE_TX|REPO|PR_ONE)\)|spotText\("([^"]+)"|url:\s*(ON_DEMAND|WATCHER))/g)];
+const events = [...body.matchAll(/(?:url:\s*local\("([^"]+)"\)|go\(local\("([^"]+)"\)\)|go\((ON_DEMAND|WATCHER|SWEEPER|RELEASE_TX|REPO|PR_ONE)\)|spotText\("([^"]+)"|url:\s*(ON_DEMAND|WATCHER|SWEEPER))/g)];
 
 let page = null;
 let checked = 0;
-const live = new Set(["ON_DEMAND", "WATCHER", "RELEASE_TX", "REPO", "PR_ONE"]);
+const live = new Set(["ON_DEMAND", "WATCHER", "SWEEPER", "RELEASE_TX", "REPO", "PR_ONE"]);
 
 for (const m of events) {
   const openLocal = m[1] ?? m[2];
@@ -62,8 +62,13 @@ for (const m of events) {
 
 // Node ids the choreography rings have to exist in the workflow it films.
 const wanted = new Set([...RECORDER.matchAll(/data-id="([^"]+)"/g)].map((m) => m[1]));
-const wf = JSON.parse(readFileSync(join(ROOT, "workflows", "on-demand-finalizer.json"), "utf8"));
-const have = new Set(wf.nodes.map((n) => n.id));
+// Any of the shipped workflows may be the one on camera, so a node the shot
+// list rings has to exist in at least one of them.
+const have = new Set();
+for (const file of ["sweeper.json", "on-demand-finalizer.json", "unattended-finalizer.json"]) {
+  const wf = JSON.parse(readFileSync(join(ROOT, "workflows", file), "utf8"));
+  for (const node of wf.nodes) have.add(node.id);
+}
 for (const id of wanted) {
   if (!have.has(id)) note(`the choreography rings ${id}, and the workflow has no such node`);
 }

@@ -39,8 +39,10 @@ const HEIGHT = 1080;
 
 const ON_DEMAND_ID = "bycmjcabf8ypy0u8e16bm";
 const WATCHER_ID = "ffz6dntmq9ftu7e2wr15d";
+const SWEEPER_ID = "bsgeyz8ttwo11xhben2ar";
 const ON_DEMAND = "https://app.keeperhub.com/workflows/" + ON_DEMAND_ID;
 const WATCHER = "https://app.keeperhub.com/workflows/" + WATCHER_ID;
+const SWEEPER = "https://app.keeperhub.com/workflows/" + SWEEPER_ID;
 const RELEASE_TX =
   "https://sepolia.etherscan.io/tx/0xb3c37356e9af4915eef7fd20189ac739443ac99b79e29284c57c285e55eb9c57";
 const REPO = "https://github.com/bongbongcrypto/unstranded";
@@ -511,19 +513,23 @@ const CHOREOGRAPHY = [
   {
     // 0:55.6 the workflow itself
     id: "c",
-    url: ON_DEMAND,
+    url: SWEEPER,
     zoom: 1.1,
     steps: [
-      { at: 2000, do: async (s) => canvasWide(s) },
-      // 0:59.2 the five reads, named as the narration names them
-      { at: 4200, do: async (s) => evaluate(s, `window.__shoot.spot('.react-flow__node[data-id="step-1"]', 10)`) },
-      { at: 6200, do: async (s) => evaluate(s, `window.__shoot.spot('.react-flow__node[data-id="step-4"]', 10)`) },
-      { at: 8200, do: async (s) => evaluate(s, `window.__shoot.spot('.react-flow__node[data-id="step-5"]', 10)`) },
-      { at: 10200, do: async (s) => evaluate(s, `window.__shoot.spot('.react-flow__node[data-id="step-6"]', 10)`) },
-      // 1:09.7 two gates, then one write
-      { at: 14100, do: async (s) => evaluate(s, `window.__shoot.spot('.react-flow__node[data-id="step-3"]', 10)`) },
-      { at: 15200, do: async (s) => evaluate(s, `window.__shoot.spot('.react-flow__node[data-id="step-7"]', 10)`) },
-      { at: 16200, do: async (s) => evaluate(s, `window.__shoot.spot('.react-flow__node[data-id="step-8"]', 12)`) },
+      { at: 1500, do: async (s) => canvasWide(s) },
+      // the two that make it find them itself
+      { at: 2600, do: async (s) => evaluate(s, `window.__shoot.spot('.react-flow__node[data-id="step-1"]', 10)`) },
+      { at: 3400, do: async (s) => evaluate(s, `window.__shoot.spot('.react-flow__node[data-id="step-2"]', 10)`) },
+      // the five reads, named as the narration names them
+      { at: 5200, do: async (s) => evaluate(s, `window.__shoot.spot('.react-flow__node[data-id="step-3"]', 10)`) },
+      { at: 6800, do: async (s) => evaluate(s, `window.__shoot.spot('.react-flow__node[data-id="step-4"]', 10)`) },
+      { at: 8600, do: async (s) => evaluate(s, `window.__shoot.spot('.react-flow__node[data-id="step-6"]', 10)`) },
+      { at: 10400, do: async (s) => evaluate(s, `window.__shoot.spot('.react-flow__node[data-id="step-7"]', 10)`) },
+      { at: 12200, do: async (s) => evaluate(s, `window.__shoot.spot('.react-flow__node[data-id="step-8"]', 10)`) },
+      // two gates, then one write
+      { at: 15700, do: async (s) => evaluate(s, `window.__shoot.spot('.react-flow__node[data-id="step-5"]', 10)`) },
+      { at: 16600, do: async (s) => evaluate(s, `window.__shoot.spot('.react-flow__node[data-id="step-9"]', 10)`) },
+      { at: 17400, do: async (s) => evaluate(s, `window.__shoot.spot('.react-flow__node[data-id="step-10"]', 12)`) },
     ],
   },
   {

@@ -43,6 +43,8 @@ const CLAIMS = [
     spoken: "Three of the things in the way were in KeeperHub", page: "Three of them were in KeeperHub" },
   { what: "the upstream fix that matters", readme: "keeperhub#2319",
     spoken: "nine came out greater than ten", page: "pull request 2319" },
+  { what: "that it finds them itself", readme: "`sweeper.json` finds them",
+    spoken: "It finds them itself", page: "every one a sweep finds" },
 ];
 
 for (const claim of CLAIMS) {
@@ -68,6 +70,8 @@ for (const [what, text] of [
   ["the second upstream fix", "keeperhub#2320"],
   ["the upstream finding filed as an issue", "keeperhub#2359"],
   ["why the gates compare strings", "rather than as `<` or `>`"],
+  ["what a sweep found", "Proven, game resolved, released"],
+  ["how far a sweep reaches", "as wide as one event query"],
 ]) {
   if (!README.includes(text)) note(`README no longer states ${what} ("${text}")`);
 }
@@ -143,6 +147,23 @@ if (shotRows !== SCRIPT.lines.length) {
 }
 
 // The README describes the workflow it ships.
+// The sweeper is a different shape: it wraps the same five reads and two gates
+// in a query and a loop, so it carries two more nodes than the other two.
+{
+  const file = "workflows/sweeper.json";
+  if (!existsSync(join(ROOT, file))) note(`${file} is missing`);
+  else {
+    const wf = JSON.parse(read(file));
+    const kinds = wf.nodes.map((n) => n.data?.config?.actionType ?? n.data?.config?.triggerType);
+    const gates = kinds.filter((k) => k === "Condition").length;
+    if (gates !== 2) note(`${file} has ${gates} gates, and the README describes two`);
+    for (const need of ["web3/query-events", "For Each", "Collect", "web3/write-contract"]) {
+      if (!kinds.includes(need)) note(`${file} has no ${need}, which is what makes it find them`);
+    }
+    if (!README.includes("sweeper.json")) note("the README no longer mentions the sweeper");
+  }
+}
+
 for (const file of ["workflows/on-demand-finalizer.json", "workflows/unattended-finalizer.json"]) {
   if (!existsSync(join(ROOT, file))) { note(`${file} is missing`); continue; }
   const wf = JSON.parse(read(file));

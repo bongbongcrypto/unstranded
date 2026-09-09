@@ -63,19 +63,19 @@ fails if the README and the chain disagree.
 | 0:32 | external-proof | Here is the part that makes this fixable. Anyone can finish someone else's withdrawal. |
 | 0:38 | external-proof | The portal takes the prover's proof from a different caller, and the recipient is already fixed inside the withdrawal that was proven. |
 | 0:47 | simulate | So a stranger can push it through and cannot take it. Thirteen of the fifteen would deliver. Two would be spent and deliver nothing, and the survey says which. |
-| 0:57 | canvas | This is that, as a KeeperHub workflow. |
-| 1:01 | canvas | It reads whether the withdrawal is finished, whether anyone proved it, who that was, which dispute game the proof rests on, and whether that game resolved. |
-| 1:11 | canvas | Two gates. Then one write. |
-| 1:14 | run-release | Here it is releasing five ether that the owner proved themselves and then left for forty six days. |
-| 1:21 | https://sepolia.etherscan.io/tx/0xb3c37356e9af4915eef7fd20189ac739443ac99b79e29284c57c285e55eb9c57 | Their balance goes from three point one eight ether to eight point one eight. We never held their key. |
-| 1:27 | balances | KeeperHub paid the gas, so getting the money back cost the owner nothing. |
-| 1:33 | run-unproven | It also refuses. Give it a withdrawal nobody proved and the first gate closes. |
-| 1:39 | run-unresolved | Give it one whose dispute game is still running and the second gate closes. No transaction either time. |
-| 1:46 | run-unresolved | The first version had only one gate. It reached for the portal every thirty minutes and was reverted. Nothing was ever sent, and it still was not something you would leave running. |
-| 1:57 | watching | So it asks the game first. This one is watching five point four ether, and waiting. |
-| 2:03 | limits | Unfinished: testnet for the demonstration, one withdrawal per workflow, and it does not find them by itself. |
-| 2:11 | upstream | Three of the things in the way were in KeeperHub, not in this. |
-| 2:15 | https://github.com/KeeperHub/keeperhub/pull/2319 | Its condition node compared numbers written as text, so nine came out greater than ten, and that is the node a workflow asks before it writes. Two are open pull requests, and the third is filed as an issue. |
-| 2:29 | close | The survey that produced those numbers, both workflows, and a checker that reads every claim back off the chain are in the repository. |
+| 0:57 | canvas | This is that, as a KeeperHub workflow. It finds them itself. |
+| 1:02 | canvas | It reads whether the withdrawal is finished, whether anyone proved it, who that was, which dispute game the proof rests on, and whether that game resolved. |
+| 1:13 | canvas | Two gates. Then one write. |
+| 1:16 | run-release | Here it is releasing five ether that the owner proved themselves and then left for forty six days. |
+| 1:22 | https://sepolia.etherscan.io/tx/0xb3c37356e9af4915eef7fd20189ac739443ac99b79e29284c57c285e55eb9c57 | Their balance goes from three point one eight ether to eight point one eight. We never held their key. |
+| 1:29 | balances | KeeperHub paid the gas, so getting the money back cost the owner nothing. |
+| 1:34 | run-unproven | It also refuses. Give it a withdrawal nobody proved and the first gate closes. |
+| 1:40 | run-unresolved | Give it one whose dispute game is still running and the second gate closes. No transaction either time. |
+| 1:47 | run-unresolved | The first version had only one gate. It reached for the portal every thirty minutes and was reverted. Nothing was ever sent, and it still was not something you would leave running. |
+| 1:58 | watching | So it asks the game first. This one is watching five point four ether, and waiting. |
+| 2:04 | limits | Unfinished: testnet for the demonstration, and a sweep reaches one query back, not all of history. |
+| 2:12 | upstream | Three of the things in the way were in KeeperHub, not in this. |
+| 2:16 | https://github.com/KeeperHub/keeperhub/pull/2319 | Its condition node compared numbers written as text, so nine came out greater than ten, and that is the node a workflow asks before it writes. Two are open pull requests, and the third is filed as an issue. |
+| 2:30 | close | The survey that produced those numbers, both workflows, and a checker that reads every claim back off the chain are in the repository. |
 
 <!-- shots:end -->

@@ -22,6 +22,18 @@ const PORTAL = process.env.PORTAL ?? "0x49f53e41452C74589E85cA1677426Ba426459e85
 const NETWORK = process.env.NETWORK ?? "11155111";
 const INTEGRATION = "<WALLET_INTEGRATION_ID>";
 const CRON = process.env.CRON ?? "*/30 * * * *";
+// The sweeper reads the rollup's own message passer, which is where a
+// withdrawal is born and where its six fields are written down.
+const L2_NETWORK = process.env.L2_NETWORK ?? "84532";
+const MESSAGE_PASSER = "0x4200000000000000000000000000000000000016";
+const SWEEP_CRON = process.env.SWEEP_CRON ?? "0 */6 * * *";
+// One query reaches about this far. Two hundred thousand blocks answered in
+// seconds and a million timed out, so the window is the widest one that comes
+// back rather than the widest one imaginable.
+const SWEEP_BLOCKS = process.env.SWEEP_BLOCKS ?? "200000";
+const SWEEP_FROM = process.env.SWEEP_FROM ?? null;
+const SWEEP_TO = process.env.SWEEP_TO ?? null;
+const SWEEP_MAX = process.env.SWEEP_MAX ?? 25;
 
 const WITHDRAWAL_TUPLE = {
   name: "_tx", type: "tuple", components: [
@@ -44,6 +56,17 @@ const PORTAL_ABI = JSON.stringify([
     name: "finalizeWithdrawalTransactionExternalProof", outputs: [],
     stateMutability: "nonpayable", type: "function" },
 ]);
+
+const PASSER_ABI = JSON.stringify([{
+  type: "event", name: "MessagePassed", inputs: [
+    { name: "nonce", type: "uint256", indexed: true },
+    { name: "sender", type: "address", indexed: true },
+    { name: "target", type: "address", indexed: true },
+    { name: "value", type: "uint256", indexed: false },
+    { name: "gasLimit", type: "uint256", indexed: false },
+    { name: "data", type: "bytes", indexed: false },
+    { name: "withdrawalHash", type: "bytes32", indexed: false }],
+}]);
 
 const GAME_ABI = JSON.stringify([
   { inputs: [], name: "status", outputs: [{ name: "", type: "uint8" }],
@@ -165,5 +188,92 @@ writeFileSync(join(ROOT, "workflows", "unattended-finalizer.json"), JSON.stringi
   enabled: false,
 }, null, 2) + "\n");
 
+// --- the sweeper -----------------------------------------------------------
+//
+// The two workflows above are pointed at a withdrawal somebody already found.
+// This one finds them. The rollup's message passer emits every field the portal
+// later hashes, so a query over that event is a list of withdrawals with
+// everything needed to finish them, and the loop asks the portal about each in
+// turn. Nothing is carried between runs and nothing is read off chain.
+//
+// What bounds it is the width of one query. Two hundred thousand blocks come
+// back in seconds; a million does not. So a run sweeps a window, and a schedule
+// walks the window forward.
+const ITEM = "{{@step-2:Each Withdrawal.currentItem";
+const itemHash = ITEM + ".args.withdrawalHash}}";
+const itemTuple = {
+  nonce: ITEM + ".args.nonce}}", sender: ITEM + ".args.sender}}",
+  target: ITEM + ".args.target}}", value: ITEM + ".args.value}}",
+  gasLimit: ITEM + ".args.gasLimit}}", data: ITEM + ".args.data}}",
+};
+
+const sweepGateOne = `String({{@step-3:Already Released.result}}) === "false"`
+  + ` && String({{@step-4:Proof Count.result}}) !== "0"`;
+const sweepGateTwo = `String({{@step-8:Game Resolved.result}}) === "${DEFENDER_WINS}"`;
+
+const sweepNodes = [
+  { id: "trigger-1", type: "trigger", position: { x: 0, y: 0 },
+    data: { type: "trigger", label: "Trigger", status: "idle",
+            config: { triggerType: "Schedule", scheduleCron: SWEEP_CRON, timezone: "UTC" } } },
+  { id: "step-1", type: "action", position: { x: 252, y: 0 },
+    data: { type: "action", label: "Withdrawals Started", status: "idle", config: {
+      actionType: "web3/query-events", network: L2_NETWORK, contractAddress: MESSAGE_PASSER,
+      abi: PASSER_ABI, eventName: "MessagePassed", failOnError: true,
+      ...(SWEEP_FROM && SWEEP_TO ? { fromBlock: SWEEP_FROM, toBlock: SWEEP_TO }
+                                 : { blockCount: SWEEP_BLOCKS }) } } },
+  { id: "step-2", type: "action", position: { x: 504, y: 0 },
+    data: { type: "action", label: "Each Withdrawal", status: "idle", config: {
+      actionType: "For Each", arraySource: "{{@step-1:Withdrawals Started.events}}",
+      concurrency: "sequential", maxIterations: Number(SWEEP_MAX) } } },
+  read("step-3", "Already Released", "finalizedWithdrawals", [itemHash], 756,
+       PORTAL, { config: { failOnError: false } }),
+  read("step-4", "Proof Count", "numProofSubmitters", [itemHash], 1008,
+       PORTAL, { config: { failOnError: false } }),
+  condition("step-5", "Worth Looking At", sweepGateOne, 1260),
+  read("step-6", "Who Proved It", "proofSubmitters", [itemHash, "0"], 1512,
+       PORTAL, { config: { failOnError: false } }),
+  read("step-7", "Proven Where", "provenWithdrawals",
+       [itemHash, "{{@step-6:Who Proved It.result}}"], 1764,
+       PORTAL, { config: { failOnError: false } }),
+  read("step-8", "Game Resolved", "status", [], 2016,
+       "{{@step-7:Proven Where.result.disputeGameProxy}}",
+       { abi: GAME_ABI, config: { failOnError: false } }),
+  condition("step-9", "Ready To Release", sweepGateTwo, 2268),
+  { id: "step-10", type: "action", position: { x: 2520, y: 0 },
+    data: { type: "action", label: "Release To Owner", status: "idle", config: {
+      actionType: "web3/write-contract", network: NETWORK, contractAddress: PORTAL,
+      abi: PORTAL_ABI, abiFunction: "finalizeWithdrawalTransactionExternalProof",
+      functionArgs: JSON.stringify([itemTuple, "{{@step-6:Who Proved It.result}}"]),
+      integrationId: INTEGRATION } } },
+  { id: "step-11", type: "action", position: { x: 2772, y: 0 },
+    data: { type: "action", label: "Released This Run", status: "idle",
+            config: { actionType: "Collect" } } },
+];
+
+const sweepEdges = [
+  { id: "s1", source: "trigger-1", target: "step-1" },
+  { id: "s2", source: "step-1", target: "step-2" },
+  { id: "s3", source: "step-2", target: "step-3" },
+  { id: "s4", source: "step-3", target: "step-4" },
+  { id: "s5", source: "step-4", target: "step-5" },
+  { id: "s6", type: "animated", source: "step-5", target: "step-6", sourceHandle: "true" },
+  { id: "s7", source: "step-6", target: "step-7" },
+  { id: "s8", source: "step-7", target: "step-8" },
+  { id: "s9", source: "step-8", target: "step-9" },
+  { id: "s10", type: "animated", source: "step-9", target: "step-10", sourceHandle: "true" },
+  { id: "s11", source: "step-10", target: "step-11" },
+];
+
+writeFileSync(join(ROOT, "workflows", "sweeper.json"), JSON.stringify({
+  _comment: "Find abandoned withdrawals and finish them, without being told which. "
+    + "Reads the rollup's message passer for withdrawals started in a window, then "
+    + "asks the portal about each one. Fill in the wallet integration and enable.",
+  name: "Unstranded: sweep for abandoned withdrawals",
+  nodes: sweepNodes,
+  edges: sweepEdges,
+  enabled: false,
+}, null, 2) + "\n");
+
 console.log("wrote workflows/on-demand-finalizer.json and workflows/unattended-finalizer.json");
-console.log(`nodes ${onDemand.nodes.length}, edges ${onDemand.edges.length}, two gates`);
+console.log("wrote workflows/sweeper.json");
+console.log(`nodes ${onDemand.nodes.length}, edges ${onDemand.edges.length}, two gates; sweeper ${sweepNodes.length} nodes, ${sweepEdges.length} edges`);

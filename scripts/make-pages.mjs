@@ -77,7 +77,7 @@ write("three-steps.html", page("three steps", `
 
 // --- the count --------------------------------------------------------------
 write("survey.html", page("survey", `
-  <div class="src">node scripts/survey.mjs base &nbsp;|&nbsp; ten one day windows, 40 to 100 days ago</div>
+  <div class="src">node scripts/survey.mjs base &nbsp;|&nbsp; ten one day windows, 40 to 100 days ago, run 8 September</div>
   <h1>Proven, then never finished</h1>
   <div class="row"><div class="k">withdrawals proven</div><div class="v">271</div></div>
   <div class="row"><div class="k">finalized</div><div class="v">256</div></div>
@@ -135,8 +135,8 @@ write("limits.html", page("limits", `
   <div class="src">README.md, Known limitations</div>
   <h1>Unfinished</h1>
   <div class="row"><div class="k">where it ran</div><div class="v warn">testnet, for the demonstration</div></div>
-  <div class="row"><div class="k">how many it watches</div><div class="v warn">one withdrawal per workflow</div></div>
-  <div class="row"><div class="k">finding them</div><div class="v warn">a person decides what to watch</div></div>
+  <div class="row"><div class="k">how many it watches</div><div class="v ok">every one a sweep finds</div></div>
+  <div class="row"><div class="k">how far one sweep reaches</div><div class="v warn">one event query, not all of history</div></div>
   <div class="row"><div class="k">proving</div><div class="v warn">out of scope; it only finalizes</div></div>
   <div class="row"><div class="k">which rollups</div><div class="v warn">OP Stack portals only</div></div>
 `));

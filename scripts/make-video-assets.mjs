@@ -151,27 +151,82 @@ if (problems.length > 0) {
 }
 
 /**
- * Split a spoken line into short caption bursts, evenly.
+ * Split a spoken line into short caption bursts, at places a reader expects.
  *
- * Slicing four words at a time leaves whatever is left over alone in the last
- * burst, so a thirteen-word line ended "...into any page." / "page." and that
- * single word flashed for a fifth of a second. Three lines of the original
- * script did it, and the half-second floor below missed all three by eight
- * milliseconds.
+ * Cutting every four words regardless of what the words are produced
+ * "Moving money off a", "open pull requests, and", "days, two hundred". A
+ * reader finishes the burst holding an article, a conjunction or half a number
+ * with nothing to attach it to, and the next burst has to be re-read from the
+ * start. It measured fine on characters per second and still read badly.
  *
- * So the burst count is fixed first, and the words are spread across it: the
- * remainder rides in the early bursts, where there is company, instead of
- * being stranded at the end.
+ * So the break goes where a reader would put it: after punctuation first, never
+ * leaving a word that leans on the next one at the end of a burst, and never
+ * between the halves of a spelled out number.
  */
+const LEANS_FORWARD = new Set([
+  "a", "an", "the", "and", "or", "but", "so", "of", "to", "in", "on", "at", "for",
+  "from", "with", "into", "that", "which", "who", "is", "are", "was", "were", "be",
+  "it", "its", "this", "these", "those", "you", "we", "they", "their", "your", "no",
+  "not", "as", "by", "than", "then", "when", "what", "how", "one", "two", "three",
+  "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve",
+  "thirteen", "fourteen", "fifteen", "twenty", "thirty", "forty", "fifty", "sixty",
+  "seventy", "eighty", "ninety", "hundred", "thousand", "point", "zero", "per",
+]);
+const MAX_POP_WORDS = 5;
+const MAX_POP_CHARS = 34;
+const MIN_POP_CHARS = 13;
+
+const bare = (w) => w.toLowerCase().replace(/[^a-z]/g, "");
+const closes = (w) => /[.,;:?!]$/.test(w);
+/** A word that ends a clause never leans on the next one, whatever it is. */
+const leansOn = (w) => !closes(w) && LEANS_FORWARD.has(bare(w));
+
 function pops(text) {
   const words = text.trim().split(/\s+/);
-  const count = Math.ceil(words.length / WORDS_PER_POP);
   const out = [];
-  let i = 0;
-  for (let c = 0; c < count; c++) {
-    const take = Math.ceil((words.length - i) / (count - c));
-    out.push(words.slice(i, i + take).join(" "));
-    i += take;
+  let current = [];
+  const flush = () => { if (current.length) { out.push(current.join(" ")); current = []; } };
+
+  for (let i = 0; i < words.length; i++) {
+    current.push(words[i]);
+    if (i === words.length - 1) break;
+    const chars = current.join(" ").length;
+    // The best place to stop is right after a clause or a sentence ends.
+    if (closes(words[i]) && chars >= MIN_POP_CHARS) { flush(); continue; }
+    if (current.length >= MAX_POP_WORDS || chars >= MAX_POP_CHARS) {
+      // Hand back any trailing word that leans forward, so the burst does not
+      // end on an article or half a spelled out number. The cap still holds.
+      while (current.length > 2 && leansOn(current[current.length - 1])) {
+        current.pop();
+        i -= 1;
+      }
+      flush();
+    }
+  }
+  flush();
+
+  // The slot is shared out by character count, so a short burst is also a brief
+  // one. Below about a dozen characters it flashes. It is merged into whichever
+  // neighbour it belongs with: forward when it ends on a word that leans on what
+  // comes next, so a spelled out number is not cut in half, backward otherwise.
+  // A caption that runs to two lines is a smaller cost than a number cut in
+  // half, so the merge that keeps words together is allowed to go further.
+  const HARD_CEILING = 52;
+  const KEEPS_TOGETHER = 64;
+  for (let i = out.length - 1; i >= 0; i--) {
+    if (out[i].length >= MIN_POP_CHARS) continue;
+    const tail = out[i].split(" ").at(-1);
+    const forward = leansOn(tail) && i + 1 < out.length;
+    if (forward && out[i].length + 1 + out[i + 1].length <= KEEPS_TOGETHER) {
+      out[i + 1] = out[i] + " " + out[i + 1];
+      out.splice(i, 1);
+    } else if (i > 0 && out[i - 1].length + 1 + out[i].length <= HARD_CEILING) {
+      out[i - 1] = out[i - 1] + " " + out[i];
+      out.splice(i, 1);
+    } else if (i + 1 < out.length && out[i].length + 1 + out[i + 1].length <= HARD_CEILING) {
+      out[i + 1] = out[i] + " " + out[i + 1];
+      out.splice(i, 1);
+    }
   }
   return out;
 }
