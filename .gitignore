@@ -51,3 +51,6 @@ docs/narration/
 
 # Values this repository has told publish-guard are public chain data.
 .publish-allow
+
+# Built from docs/demo-script.json, not committed.
+docs/demo.narration.wav
