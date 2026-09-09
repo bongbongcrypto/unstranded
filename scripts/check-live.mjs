@@ -42,6 +42,7 @@ const idOf = (name) => {
   return m[1];
 };
 const PAIRS = [
+  { id: idOf("SWEEPER_ID"), file: "workflows/sweeper.json", what: "the sweeper" },
   { id: idOf("ON_DEMAND_ID"), file: "workflows/on-demand-finalizer.json", what: "the on demand keeper" },
   { id: idOf("WATCHER_ID"), file: "workflows/unattended-finalizer.json", what: "the unattended keeper" },
 ];
