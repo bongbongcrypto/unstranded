@@ -684,6 +684,12 @@ async function recordSegment(seg, { dry = false } = {}) {
     await loaded.catch(() => null);
     await sleep(1200);
     await evaluate(s, HELPERS);
+    // Before anything is on camera, not once the shot is already running. The
+    // organisation name was legible for the first two seconds of a take when
+    // this was left to the choreography.
+    if (/keeperhub\.com/.test(url)) {
+      await evaluate(s, `window.__shoot.hideIdentity()`);
+    }
     if (seg.zoom && !/keeperhub\.com/.test(url)) {
       await evaluate(s, `document.documentElement.style.zoom = ${JSON.stringify(String(seg.zoom))}`);
       await sleep(300);
