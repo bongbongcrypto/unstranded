@@ -13,8 +13,8 @@ export const SEGMENT_SLOTS = [
   { id: "c", from: "00:57.500", to: "01:16.000", what: "the workflow: five reads, two gates, one write" },
   { id: "d", from: "01:16.000", to: "01:34.800", what: "a stranger's five ether released, and the balance that moved" },
   { id: "e", from: "01:34.800", to: "01:59.100", what: "both refusals, and the gate that was missing at first" },
-  { id: "f", from: "01:59.100", to: "02:14.100", what: "waiting unattended, and what is unfinished" },
-  { id: "g", from: "02:14.100", to: "02:41.100", what: "the three that were in KeeperHub, and the close" },
+  { id: "f", from: "01:59.100", to: "02:11.600", what: "waiting unattended, and what is unfinished" },
+  { id: "g", from: "02:11.600", to: "02:38.600", what: "the three that were in KeeperHub, and the close" },
 ];
 
 /** mm:ss.mmm to seconds. */

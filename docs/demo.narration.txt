@@ -16,7 +16,7 @@ It also refuses. Give it a withdrawal nobody proved and the first gate closes.
 Give it one whose dispute game is still running and the second gate closes. No transaction either time.
 The first version had only one gate. It reached for the portal every thirty minutes and was reverted. Nothing was ever sent, and it still was not something you would leave running.
 So it asks the game first. This one is watching five point four ether, and waiting.
-Unfinished: a sweep reaches one query back, not all of history, and it cannot prove a withdrawal, only finish one.
+Given no withdrawal and no list, one sweep found six, and gave two of them back.
 Three of the things in the way were in KeeperHub, not in this.
 Its condition node compared numbers written as text, so nine came out greater than ten, and that is the node a workflow asks before it writes. Two are open pull requests, and the third is filed as an issue.
 The survey that produced those numbers, both workflows, and a checker that reads every claim back off the chain are in the repository.

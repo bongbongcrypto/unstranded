@@ -73,9 +73,9 @@ fails if the README and the chain disagree.
 | 1:41 | run-unresolved | Give it one whose dispute game is still running and the second gate closes. No transaction either time. |
 | 1:48 | run-unresolved | The first version had only one gate. It reached for the portal every thirty minutes and was reverted. Nothing was ever sent, and it still was not something you would leave running. |
 | 1:59 | watching | So it asks the game first. This one is watching five point four ether, and waiting. |
-| 2:05 | limits | Unfinished: a sweep reaches one query back, not all of history, and it cannot prove a withdrawal, only finish one. |
-| 2:14 | upstream | Three of the things in the way were in KeeperHub, not in this. |
-| 2:18 | https://github.com/KeeperHub/keeperhub/pull/2319 | Its condition node compared numbers written as text, so nine came out greater than ten, and that is the node a workflow asks before it writes. Two are open pull requests, and the third is filed as an issue. |
-| 2:32 | close | The survey that produced those numbers, both workflows, and a checker that reads every claim back off the chain are in the repository. |
+| 2:05 | run-sweep | Given no withdrawal and no list, one sweep found six, and gave two of them back. |
+| 2:11 | upstream | Three of the things in the way were in KeeperHub, not in this. |
+| 2:16 | https://github.com/KeeperHub/keeperhub/pull/2319 | Its condition node compared numbers written as text, so nine came out greater than ten, and that is the node a workflow asks before it writes. Two are open pull requests, and the third is filed as an issue. |
+| 2:29 | close | The survey that produced those numbers, both workflows, and a checker that reads every claim back off the chain are in the repository. |
 
 <!-- shots:end -->

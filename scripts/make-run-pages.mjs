@@ -86,6 +86,47 @@ function readable(entry) {
   return esc(entry.status ?? "");
 }
 
+// The sweep is a loop, not a line of steps: forty log rows for six withdrawals.
+// What matters is how many it found and what it decided about each, so this
+// counts the iterations rather than printing them.
+async function writeSweep() {
+  const id = "uw1qc6t40fhj78wycvoow";
+  const body = await get(`/workflows/executions/${id}/logs`);
+  const rows = (body.logs ?? body.items ?? []).filter((e) => e && e.nodeName);
+  const iterations = new Set(rows.filter((e) => e.iterationIndex !== null && e.iterationIndex !== undefined)
+    .map((e) => e.iterationIndex));
+  const value = (name, i) => {
+    const e = rows.find((r) => r.nodeName === name && r.iterationIndex === i);
+    if (!e) return null;
+    const out = e.output ?? {};
+    return out.condition !== undefined ? out.condition : (out.result ?? null);
+  };
+  let alreadyDone = 0;
+  let neverProven = 0;
+  let released = 0;
+  for (const i of iterations) {
+    if (String(value("Already Released", i)) === "true") { alreadyDone += 1; continue; }
+    if (String(value("Proof Count", i)) === "0") { neverProven += 1; continue; }
+    if (String(value("Ready To Release", i)) === "true") released += 1;
+  }
+  const sent = rows.filter((e) => e.nodeName === "Release To Owner" && e.status === "success")
+    .map((e) => (e.output ?? {}).transactionHash).filter(Boolean);
+
+  writeFileSync(join(OUT, "run-sweep.html"), `<!doctype html><meta charset="utf-8">` +
+    `<title>One sweep</title><style>${CSS} td.step{width:520px}</style><main>` +
+    `<div class="src">KeeperHub execution ${esc(id)}, read from its own log</div>` +
+    `<h1>Given no withdrawal and no list</h1>` +
+    `<table>` +
+    `<tr><td class="step">withdrawals it found</td><td class="val">${iterations.size}</td></tr>` +
+    `<tr><td class="step">already finished, skipped</td><td class="val no">${alreadyDone}</td></tr>` +
+    `<tr><td class="step">never proven, skipped</td><td class="val no">${neverProven}</td></tr>` +
+    `<tr><td class="step">given back</td><td class="val ok">${released}</td></tr>` +
+    `</table>` +
+    sent.map((h) => `<div class="sent tx">transaction ${esc(h)}</div>`).join("") +
+    `<div class="note">Nobody told it which ones to look at.</div></main>`);
+  console.log(`wrote docs/recording/run-sweep.html  (${iterations.size} found, ${released} released)`);
+}
+
 for (const run of RUNS) {
   const body = await get(`/workflows/executions/${run.id}/logs`);
   const entries = (body.logs ?? body.items ?? [])
@@ -108,3 +149,5 @@ for (const run of RUNS) {
     `<div class="note">${esc(run.note)}</div></main>`);
   console.log(`wrote docs/recording/${run.file}  (${entries.length} steps, ${hashes.length} transactions)`);
 }
+
+await writeSweep();

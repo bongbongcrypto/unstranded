@@ -20,19 +20,19 @@ Dialogue: 0,0:00:03.39,0:00:04.88,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy1
 Dialogue: 0,0:00:04.88,0:00:05.76,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}you prove it,
 Dialogue: 0,0:00:05.76,0:00:06.85,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}and a week later
 Dialogue: 0,0:00:06.85,0:00:08.75,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}you come back and finish it.
-Dialogue: 0,0:00:00.00,0:00:08.75,Ko,,0,0,0,,{\fad(120,120)}롤업에서 돈을 빼는 데는 트랜잭션이 한 번이 아니라 세 번 듭니다. 출금을 걸고, 증명하고, 일주일 뒤에 다시 와서 마무리합니다.
+Dialogue: 0,0:00:00.00,0:00:08.75,Ko,,0,0,0,,{\fad(120,120)}롤업에서 돈을 빼는 데는 트랜잭션이 한 번이 아니라 세 번 듭니다. 출금을 걸고,\N증명하고, 일주일 뒤에 다시 와서 마무리합니다.
 Dialogue: 0,0:00:09.10,0:00:10.48,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}People do the first
 Dialogue: 0,0:00:10.48,0:00:12.23,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}two and never come back.
 Dialogue: 0,0:00:09.10,0:00:12.23,Ko,,0,0,0,,{\fad(120,120)}사람들은 앞의 둘까지 하고 다시 오지 않습니다.
 Dialogue: 0,0:00:12.60,0:00:13.57,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}So I counted.
 Dialogue: 0,0:00:13.57,0:00:15.59,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}On Base, across ten sampled
 Dialogue: 0,0:00:15.59,0:00:19.93,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}days, two hundred and seventy one withdrawals were proven.
-Dialogue: 0,0:00:12.60,0:00:19.93,Ko,,0,0,0,,{\fad(120,120)}그래서 세어 봤습니다. Base에서 열흘치를 표본으로 뜨니 증명까지 마친 출금이 271건이었습니다.
+Dialogue: 0,0:00:12.60,0:00:19.93,Ko,,0,0,0,,{\fad(120,120)}그래서 세어 봤습니다. Base에서 열흘치를 표본으로 뜨니 증명까지 마친 출금이\N271건이었습니다.
 Dialogue: 0,0:00:20.30,0:00:22.28,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}Fifteen were never finished.
 Dialogue: 0,0:00:22.28,0:00:24.26,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}Sixty eight thousand dollars
 Dialogue: 0,0:00:24.26,0:00:25.53,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}of tether, sitting
 Dialogue: 0,0:00:25.53,0:00:26.53,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}in the bridge.
-Dialogue: 0,0:00:20.30,0:00:26.53,Ko,,0,0,0,,{\fad(120,120)}그중 15건이 끝내 마무리되지 않았습니다. 테더 6만 8천 달러가 브리지에 그대로 있습니다.
+Dialogue: 0,0:00:20.30,0:00:26.53,Ko,,0,0,0,,{\fad(120,120)}그중 15건이 끝내 마무리되지 않았습니다. 테더 6만 8천 달러가 브리지에 그대로\N있습니다.
 Dialogue: 0,0:00:26.90,0:00:28.20,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}Ten of them have been
 Dialogue: 0,0:00:28.20,0:00:29.68,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}there seventy five days.
 Dialogue: 0,0:00:29.68,0:00:30.92,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}None is still inside
@@ -41,20 +41,20 @@ Dialogue: 0,0:00:26.90,0:00:32.09,Ko,,0,0,0,,{\fad(120,120)}그중 10건은 75�
 Dialogue: 0,0:00:32.50,0:00:33.52,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}Here is the part
 Dialogue: 0,0:00:33.52,0:00:35.05,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}that makes this fixable.
 Dialogue: 0,0:00:35.05,0:00:37.86,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}Anyone can finish someone else's withdrawal.
-Dialogue: 0,0:00:32.50,0:00:37.86,Ko,,0,0,0,,{\fad(120,120)}이걸 고칠 수 있게 만드는 지점이 여기입니다. 남의 출금은 아무나 대신 마무리할 수 있습니다.
+Dialogue: 0,0:00:32.50,0:00:37.86,Ko,,0,0,0,,{\fad(120,120)}이걸 고칠 수 있게 만드는 지점이 여기입니다. 남의 출금은 아무나 대신 마무리할 수\N있습니다.
 Dialogue: 0,0:00:38.30,0:00:40.15,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}The portal takes the prover's
 Dialogue: 0,0:00:40.15,0:00:42.07,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}proof from a different caller,
 Dialogue: 0,0:00:42.07,0:00:43.86,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}and the recipient is already
 Dialogue: 0,0:00:43.86,0:00:45.59,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}fixed inside the withdrawal
 Dialogue: 0,0:00:45.59,0:00:46.61,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}that was proven.
-Dialogue: 0,0:00:38.30,0:00:46.61,Ko,,0,0,0,,{\fad(120,120)}포털이 증명한 사람의 증명을 다른 호출자에게서 받아 줍니다. 그리고 받는 사람은 이미 증명된 출금 안에 박혀 있습니다.
+Dialogue: 0,0:00:38.30,0:00:46.61,Ko,,0,0,0,,{\fad(120,120)}포털이 증명한 사람의 증명을 다른 호출자에게서 받아 줍니다. 그리고 받는 사람은\N이미 증명된 출금 안에 박혀 있습니다.
 Dialogue: 0,0:00:47.00,0:00:48.44,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}So a stranger can push
 Dialogue: 0,0:00:48.44,0:00:50.14,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}it through and cannot take
 Dialogue: 0,0:00:50.14,0:00:52.89,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}it. Thirteen of the fifteen would deliver.
 Dialogue: 0,0:00:52.89,0:00:54.07,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}Two would be spent
 Dialogue: 0,0:00:54.07,0:00:55.39,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}and deliver nothing,
 Dialogue: 0,0:00:55.39,0:00:57.09,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}and the survey says which.
-Dialogue: 0,0:00:47.00,0:00:57.09,Ko,,0,0,0,,{\fad(120,120)}그래서 남이 밀어 넣을 수는 있어도 가져갈 수는 없습니다. 15건 중 13건은 돈이 도착합니다. 2건은 출금만 소모되고 아무것도 안 나오는데, 조사 스크립트가 어느 것인지 알려줍니다.
+Dialogue: 0,0:00:47.00,0:00:57.09,Ko,,0,0,0,,{\fad(120,120)}그래서 남이 밀어 넣을 수는 있어도 가져갈 수는 없습니다. 15건 중 13건은 돈이\N도착합니다. 2건은 출금만 소모되고 아무것도 안 나오는데, 조사 스크립트가 어느\N것인지 알려줍니다.
 Dialogue: 0,0:00:57.50,0:00:58.54,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}This is that,
 Dialogue: 0,0:00:58.54,0:01:00.46,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}as a KeeperHub workflow.
 Dialogue: 0,0:01:00.46,0:01:02.14,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}It finds them itself.
@@ -65,7 +65,7 @@ Dialogue: 0,0:01:06.87,0:01:08.01,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy1
 Dialogue: 0,0:01:08.01,0:01:09.90,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}which dispute game the proof
 Dialogue: 0,0:01:09.90,0:01:11.31,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}rests on, and whether
 Dialogue: 0,0:01:11.31,0:01:12.59,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}that game resolved.
-Dialogue: 0,0:01:02.50,0:01:12.59,Ko,,0,0,0,,{\fad(120,120)}마무리됐는지, 증명한 사람이 있는지, 그게 누구인지, 그 증명이 어느 분쟁 게임에 기대고 있는지, 그 게임이 해결됐는지를 차례로 읽습니다.
+Dialogue: 0,0:01:02.50,0:01:12.59,Ko,,0,0,0,,{\fad(120,120)}마무리됐는지, 증명한 사람이 있는지, 그게 누구인지, 그 증명이 어느 분쟁 게임에\N기대고 있는지, 그 게임이 해결됐는지를 차례로 읽습니다.
 Dialogue: 0,0:01:13.00,0:01:15.60,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}Two gates. Then one write.
 Dialogue: 0,0:01:13.00,0:01:15.60,Ko,,0,0,0,,{\fad(120,120)}게이트 둘. 그다음 쓰기 한 번.
 Dialogue: 0,0:01:16.00,0:01:17.53,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}Here it is on Ethereum,
@@ -89,7 +89,7 @@ Dialogue: 0,0:01:41.00,0:01:42.69,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy1
 Dialogue: 0,0:01:42.69,0:01:44.12,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}game is still running
 Dialogue: 0,0:01:44.12,0:01:45.95,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}and the second gate closes.
 Dialogue: 0,0:01:45.95,0:01:47.78,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}No transaction either time.
-Dialogue: 0,0:01:41.00,0:01:47.78,Ko,,0,0,0,,{\fad(120,120)}분쟁 게임이 아직 진행 중인 걸 주면 두 번째 게이트가 닫힙니다. 두 경우 다 트랜잭션이 없습니다.
+Dialogue: 0,0:01:41.00,0:01:47.78,Ko,,0,0,0,,{\fad(120,120)}분쟁 게임이 아직 진행 중인 걸 주면 두 번째 게이트가 닫힙니다. 두 경우 다\N트랜잭션이 없습니다.
 Dialogue: 0,0:01:48.20,0:01:49.77,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}The first version had only
 Dialogue: 0,0:01:49.77,0:01:50.98,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}one gate. It reached
 Dialogue: 0,0:01:50.98,0:01:52.20,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}for the portal every
@@ -97,34 +97,32 @@ Dialogue: 0,0:01:52.20,0:01:54.14,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy1
 Dialogue: 0,0:01:54.14,0:01:56.26,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}Nothing was ever sent, and it still
 Dialogue: 0,0:01:56.26,0:01:57.90,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}was not something you would
 Dialogue: 0,0:01:57.90,0:01:58.75,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}leave running.
-Dialogue: 0,0:01:48.20,0:01:58.75,Ko,,0,0,0,,{\fad(120,120)}첫 판은 게이트가 하나뿐이었습니다. 30분마다 포털에 손을 뻗었다가 되돌려졌습니다. 나간 건 없었지만, 그래도 켜 둘 만한 물건은 아니었습니다.
+Dialogue: 0,0:01:48.20,0:01:58.75,Ko,,0,0,0,,{\fad(120,120)}첫 판은 게이트가 하나뿐이었습니다. 30분마다 포털에 손을 뻗었다가 되돌려졌습니다.\N나간 건 없었지만, 그래도 켜 둘 만한 물건은 아니었습니다.
 Dialogue: 0,0:01:59.10,0:02:00.42,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}So it asks the game
 Dialogue: 0,0:02:00.42,0:02:02.29,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}first. This one is watching
 Dialogue: 0,0:02:02.29,0:02:04.73,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}five point four ether, and waiting.
 Dialogue: 0,0:01:59.10,0:02:04.73,Ko,,0,0,0,,{\fad(120,120)}그래서 게임부터 물어봅니다. 이건 5.4 이더를 지켜보며 기다리는 중입니다.
-Dialogue: 0,0:02:05.10,0:02:07.23,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}Unfinished: a sweep reaches
-Dialogue: 0,0:02:07.23,0:02:08.41,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}one query back,
-Dialogue: 0,0:02:08.41,0:02:09.91,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}not all of history,
-Dialogue: 0,0:02:09.91,0:02:11.41,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}and it cannot prove
-Dialogue: 0,0:02:11.41,0:02:12.44,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}a withdrawal,
-Dialogue: 0,0:02:12.44,0:02:13.70,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}only finish one.
-Dialogue: 0,0:02:05.10,0:02:13.70,Ko,,0,0,0,,{\fad(120,120)}미완성. 한 번의 훑기는 조회 한 번만큼만 거슬러 올라가고, 증명은 못 하고 마무리만 합니다.
-Dialogue: 0,0:02:14.10,0:02:16.05,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}Three of the things in the way
-Dialogue: 0,0:02:16.05,0:02:18.07,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}were in KeeperHub, not in this.
-Dialogue: 0,0:02:14.10,0:02:18.07,Ko,,0,0,0,,{\fad(120,120)}가로막던 것 중 셋은 이쪽이 아니라 KeeperHub 안에 있었습니다.
-Dialogue: 0,0:02:18.50,0:02:20.84,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}Its condition node compared numbers
-Dialogue: 0,0:02:20.84,0:02:21.92,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}written as text,
-Dialogue: 0,0:02:21.92,0:02:24.20,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}so nine came out greater than ten,
-Dialogue: 0,0:02:24.20,0:02:25.54,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}and that is the node
-Dialogue: 0,0:02:25.54,0:02:27.02,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}a workflow asks before
-Dialogue: 0,0:02:27.02,0:02:28.56,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}it writes. Two are open
-Dialogue: 0,0:02:28.56,0:02:29.50,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}pull requests,
-Dialogue: 0,0:02:29.50,0:02:31.85,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}and the third is filed as an issue.
-Dialogue: 0,0:02:18.50,0:02:31.85,Ko,,0,0,0,,{\fad(120,120)}Condition 노드가 숫자를 글자로 비교해서 9가 10보다 크게 나왔습니다. 워크플로가 쓰기 전에 묻는 것이 바로 그 노드입니다. 둘은 열려 있는 PR이고, 나머지 하나는 이슈로 냈습니다.
-Dialogue: 0,0:02:32.30,0:02:33.86,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}The survey that produced
-Dialogue: 0,0:02:33.86,0:02:34.77,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}those numbers,
-Dialogue: 0,0:02:34.77,0:02:35.75,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}both workflows,
-Dialogue: 0,0:02:35.75,0:02:37.32,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}and a checker that reads
-Dialogue: 0,0:02:37.32,0:02:39.27,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}every claim back off the chain
-Dialogue: 0,0:02:39.27,0:02:40.71,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}are in the repository.
-Dialogue: 0,0:02:32.30,0:02:40.71,Ko,,0,0,0,,{\fad(120,120)}그 숫자를 만든 조사 스크립트, 워크플로 두 개, 그리고 모든 주장을 체인에서 다시 읽어 확인하는 검사기가 저장소에 있습니다.
+Dialogue: 0,0:02:05.10,0:02:06.61,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}Given no withdrawal
+Dialogue: 0,0:02:06.61,0:02:08.36,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}and no list, one sweep
+Dialogue: 0,0:02:08.36,0:02:09.88,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}found six, and gave
+Dialogue: 0,0:02:09.88,0:02:11.23,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}two of them back.
+Dialogue: 0,0:02:05.10,0:02:11.23,Ko,,0,0,0,,{\fad(120,120)}출금도 목록도 주지 않았는데, 한 번의 훑기가 여섯 건을 찾아 그중 두 건을\N돌려줬습니다.
+Dialogue: 0,0:02:11.60,0:02:13.55,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}Three of the things in the way
+Dialogue: 0,0:02:13.55,0:02:15.57,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}were in KeeperHub, not in this.
+Dialogue: 0,0:02:11.60,0:02:15.57,Ko,,0,0,0,,{\fad(120,120)}가로막던 것 중 셋은 이쪽이 아니라 KeeperHub 안에 있었습니다.
+Dialogue: 0,0:02:16.00,0:02:18.34,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}Its condition node compared numbers
+Dialogue: 0,0:02:18.34,0:02:19.42,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}written as text,
+Dialogue: 0,0:02:19.42,0:02:21.70,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}so nine came out greater than ten,
+Dialogue: 0,0:02:21.70,0:02:23.04,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}and that is the node
+Dialogue: 0,0:02:23.04,0:02:24.52,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}a workflow asks before
+Dialogue: 0,0:02:24.52,0:02:26.06,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}it writes. Two are open
+Dialogue: 0,0:02:26.06,0:02:27.00,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}pull requests,
+Dialogue: 0,0:02:27.00,0:02:29.35,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}and the third is filed as an issue.
+Dialogue: 0,0:02:16.00,0:02:29.35,Ko,,0,0,0,,{\fad(120,120)}Condition 노드가 숫자를 글자로 비교해서 9가 10보다 크게 나왔습니다. 워크플로가\N쓰기 전에 묻는 것이 바로 그 노드입니다. 둘은 열려 있는 PR이고, 나머지 하나는\N이슈로 냈습니다.
+Dialogue: 0,0:02:29.80,0:02:31.36,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}The survey that produced
+Dialogue: 0,0:02:31.36,0:02:32.27,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}those numbers,
+Dialogue: 0,0:02:32.27,0:02:33.25,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}both workflows,
+Dialogue: 0,0:02:33.25,0:02:34.82,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}and a checker that reads
+Dialogue: 0,0:02:34.82,0:02:36.77,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}every claim back off the chain
+Dialogue: 0,0:02:36.77,0:02:38.21,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}are in the repository.
+Dialogue: 0,0:02:29.80,0:02:38.21,Ko,,0,0,0,,{\fad(120,120)}그 숫자를 만든 조사 스크립트, 워크플로 두 개, 그리고 모든 주장을 체인에서 다시\N읽어 확인하는 검사기가 저장소에 있습니다.

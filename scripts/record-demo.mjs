@@ -569,7 +569,7 @@ const CHOREOGRAPHY = [
     steps: [
       { at: 1500, do: async (s) => canvasWide(s) },
       // 2:03.3 what is not done
-      { at: 5800, do: async (s, go) => go(local("limits.html")) },
+      { at: 6000, do: async (s, go) => go(local("run-sweep.html")) },
     ],
   },
   {

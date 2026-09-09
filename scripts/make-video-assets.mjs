@@ -181,6 +181,44 @@ const closes = (w) => /[.,;:?!]$/.test(w);
 /** A word that ends a clause never leans on the next one, whatever it is. */
 const leansOn = (w) => !closes(w) && LEANS_FORWARD.has(bare(w));
 
+/**
+ * Break the Korean gloss into lines that fit the frame.
+ *
+ * The caption style does not wrap: WrapStyle 2 breaks only where the text says
+ * to. Twelve of the twenty two glosses were wider than the frame and the ends
+ * of them were simply not on screen. A Hangul glyph is about as wide as the
+ * font size and a latin one about half, which is close enough to decide where
+ * to break.
+ */
+const KO_FONT_PX = 42;
+const KO_LINE_PX = 1680;                 // 1920 less the 90 margins, with room
+const koWidth = (s) => [...s].reduce(
+  (n, c) => n + (c >= String.fromCharCode(0xac00) && c <= String.fromCharCode(0xd7a3) ? KO_FONT_PX : KO_FONT_PX / 2), 0);
+
+function wrapKo(text) {
+  const words = text.trim().split(/\s+/);
+  const lines = [];
+  let line = "";
+  for (const word of words) {
+    const candidate = line ? line + " " + word : word;
+    if (line && koWidth(candidate) > KO_LINE_PX) {
+      lines.push(line);
+      line = word;
+    } else {
+      line = candidate;
+    }
+  }
+  if (line) lines.push(line);
+  // A single word wider than the frame cannot be broken by this, and would be
+  // clipped on screen exactly as the unwrapped lines were.
+  for (const l of lines) {
+    if (koWidth(l) > KO_LINE_PX + KO_FONT_PX) {
+      problems.push(`a Korean caption line is ${Math.round(koWidth(l))}px wide and the frame fits ${KO_LINE_PX}`);
+    }
+  }
+  return lines.join("\\N");
+}
+
 function pops(text) {
   const words = text.trim().split(/\s+/);
   const out = [];
@@ -314,7 +352,7 @@ function buildAss(korean = false) {
     // rather than chopped to match the bursts above it. The bursts are paced for
     // the ear; a sentence in another language is read once.
     if (korean && line.ko) {
-      const gloss = line.ko.replace(/\{/g, "(").replace(/\}/g, ")");
+      const gloss = wrapKo(line.ko.replace(/\{/g, "(").replace(/\}/g, ")"));
       events.push(`Dialogue: 0,${assTime(start)},${assTime(end)},Ko,,0,0,0,,{\\fad(120,120)}${gloss}`);
     }
   });

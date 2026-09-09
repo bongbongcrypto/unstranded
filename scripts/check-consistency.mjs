@@ -45,6 +45,8 @@ const CLAIMS = [
     spoken: "nine came out greater than ten", page: "pull request 2319" },
   { what: "that it finds them itself", readme: "`sweeper.json` finds them",
     spoken: "It finds them itself", page: "every one a sweep finds" },
+  { what: "what one sweep did", readme: "| Proven, game resolved, released | **2** |",
+    spoken: "found six, and gave two of them back", page: null },
 ];
 
 for (const claim of CLAIMS) {
@@ -104,7 +106,7 @@ if (glossed.length < spoken.length / 3) note("the Korean gloss looks truncated a
 
 // Every shot the script names is either a page that gets built or a real URL.
 const built = [...PAGES.matchAll(/write\("([^"]+)"/g)].map((m) => m[1].replace(/\.html$/, ""));
-const RUNS = ["run-release", "run-unproven", "run-unresolved"];
+const RUNS = ["run-release", "run-unproven", "run-unresolved", "run-sweep"];
 const LIVE = ["canvas", "watching"];
 for (const line of SCRIPT.lines) {
   const shot = line.shot;

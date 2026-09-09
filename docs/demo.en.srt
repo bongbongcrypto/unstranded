@@ -71,17 +71,17 @@ The first version had only one gate. It reached for the portal every thirty minu
 So it asks the game first. This one is watching five point four ether, and waiting.
 
 19
-00:02:05,100 --> 00:02:13,706
-Unfinished: a sweep reaches one query back, not all of history, and it cannot prove a withdrawal, only finish one.
+00:02:05,100 --> 00:02:11,234
+Given no withdrawal and no list, one sweep found six, and gave two of them back.
 
 20
-00:02:14,100 --> 00:02:18,074
+00:02:11,600 --> 00:02:15,574
 Three of the things in the way were in KeeperHub, not in this.
 
 21
-00:02:18,500 --> 00:02:31,858
+00:02:16,000 --> 00:02:29,358
 Its condition node compared numbers written as text, so nine came out greater than ten, and that is the node a workflow asks before it writes. Two are open pull requests, and the third is filed as an issue.
 
 22
-00:02:32,300 --> 00:02:40,714
+00:02:29,800 --> 00:02:38,214
 The survey that produced those numbers, both workflows, and a checker that reads every claim back off the chain are in the repository.

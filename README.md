@@ -303,7 +303,7 @@ thousand Base Sepolia blocks:
 | | |
 | --- | --- |
 | Withdrawals it found started in the window | 6 |
-| Already finalized, skipped | 2 |
+| Already finalized, skipped | 3 |
 | Never proven, skipped | 1 |
 | Proven, game resolved, released | **2** |
 | Transactions | [`0xb8afef6a...`](https://sepolia.etherscan.io/tx/0xb8afef6a4627a00f98cb9c587ca421a9f7f26f95c24f08db26fb6d6117252192) and [`0x051aa9bf...`](https://sepolia.etherscan.io/tx/0x051aa9bf7909074cbba1690deb5bfda71c05c1d12786eed52c2fceab451c1783) |

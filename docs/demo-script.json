@@ -141,28 +141,28 @@
     },
     {
       "start": "02:05.100",
-      "end": "02:14.100",
-      "shot": "limits",
-      "say": "Unfinished: a sweep reaches one query back, not all of history, and it cannot prove a withdrawal, only finish one.",
-      "ko": "미완성. 한 번의 훑기는 조회 한 번만큼만 거슬러 올라가고, 증명은 못 하고 마무리만 합니다."
+      "end": "02:11.600",
+      "shot": "run-sweep",
+      "say": "Given no withdrawal and no list, one sweep found six, and gave two of them back.",
+      "ko": "출금도 목록도 주지 않았는데, 한 번의 훑기가 여섯 건을 찾아 그중 두 건을 돌려줬습니다."
     },
     {
-      "start": "02:14.100",
-      "end": "02:18.500",
+      "start": "02:11.600",
+      "end": "02:16.000",
       "shot": "upstream",
       "say": "Three of the things in the way were in KeeperHub, not in this.",
       "ko": "가로막던 것 중 셋은 이쪽이 아니라 KeeperHub 안에 있었습니다."
     },
     {
-      "start": "02:18.500",
-      "end": "02:32.300",
+      "start": "02:16.000",
+      "end": "02:29.800",
       "shot": "https://github.com/KeeperHub/keeperhub/pull/2319",
       "say": "Its condition node compared numbers written as text, so nine came out greater than ten, and that is the node a workflow asks before it writes. Two are open pull requests, and the third is filed as an issue.",
       "ko": "Condition 노드가 숫자를 글자로 비교해서 9가 10보다 크게 나왔습니다. 워크플로가 쓰기 전에 묻는 것이 바로 그 노드입니다. 둘은 열려 있는 PR이고, 나머지 하나는 이슈로 냈습니다."
     },
     {
-      "start": "02:32.300",
-      "end": "02:41.100",
+      "start": "02:29.800",
+      "end": "02:38.600",
       "shot": "close",
       "say": "The survey that produced those numbers, both workflows, and a checker that reads every claim back off the chain are in the repository.",
       "ko": "그 숫자를 만든 조사 스크립트, 워크플로 두 개, 그리고 모든 주장을 체인에서 다시 읽어 확인하는 검사기가 저장소에 있습니다."

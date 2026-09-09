@@ -83,25 +83,23 @@ Dialogue: 0,0:01:57.90,0:01:58.75,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy1
 Dialogue: 0,0:01:59.10,0:02:00.42,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}So it asks the game
 Dialogue: 0,0:02:00.42,0:02:02.29,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}first. This one is watching
 Dialogue: 0,0:02:02.29,0:02:04.73,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}five point four ether, and waiting.
-Dialogue: 0,0:02:05.10,0:02:07.23,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}Unfinished: a sweep reaches
-Dialogue: 0,0:02:07.23,0:02:08.41,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}one query back,
-Dialogue: 0,0:02:08.41,0:02:09.91,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}not all of history,
-Dialogue: 0,0:02:09.91,0:02:11.41,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}and it cannot prove
-Dialogue: 0,0:02:11.41,0:02:12.44,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}a withdrawal,
-Dialogue: 0,0:02:12.44,0:02:13.70,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}only finish one.
-Dialogue: 0,0:02:14.10,0:02:16.05,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}Three of the things in the way
-Dialogue: 0,0:02:16.05,0:02:18.07,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}were in KeeperHub, not in this.
-Dialogue: 0,0:02:18.50,0:02:20.84,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}Its condition node compared numbers
-Dialogue: 0,0:02:20.84,0:02:21.92,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}written as text,
-Dialogue: 0,0:02:21.92,0:02:24.20,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}so nine came out greater than ten,
-Dialogue: 0,0:02:24.20,0:02:25.54,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}and that is the node
-Dialogue: 0,0:02:25.54,0:02:27.02,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}a workflow asks before
-Dialogue: 0,0:02:27.02,0:02:28.56,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}it writes. Two are open
-Dialogue: 0,0:02:28.56,0:02:29.50,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}pull requests,
-Dialogue: 0,0:02:29.50,0:02:31.85,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}and the third is filed as an issue.
-Dialogue: 0,0:02:32.30,0:02:33.86,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}The survey that produced
-Dialogue: 0,0:02:33.86,0:02:34.77,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}those numbers,
-Dialogue: 0,0:02:34.77,0:02:35.75,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}both workflows,
-Dialogue: 0,0:02:35.75,0:02:37.32,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}and a checker that reads
-Dialogue: 0,0:02:37.32,0:02:39.27,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}every claim back off the chain
-Dialogue: 0,0:02:39.27,0:02:40.71,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}are in the repository.
+Dialogue: 0,0:02:05.10,0:02:06.61,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}Given no withdrawal
+Dialogue: 0,0:02:06.61,0:02:08.36,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}and no list, one sweep
+Dialogue: 0,0:02:08.36,0:02:09.88,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}found six, and gave
+Dialogue: 0,0:02:09.88,0:02:11.23,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}two of them back.
+Dialogue: 0,0:02:11.60,0:02:13.55,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}Three of the things in the way
+Dialogue: 0,0:02:13.55,0:02:15.57,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}were in KeeperHub, not in this.
+Dialogue: 0,0:02:16.00,0:02:18.34,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}Its condition node compared numbers
+Dialogue: 0,0:02:18.34,0:02:19.42,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}written as text,
+Dialogue: 0,0:02:19.42,0:02:21.70,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}so nine came out greater than ten,
+Dialogue: 0,0:02:21.70,0:02:23.04,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}and that is the node
+Dialogue: 0,0:02:23.04,0:02:24.52,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}a workflow asks before
+Dialogue: 0,0:02:24.52,0:02:26.06,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}it writes. Two are open
+Dialogue: 0,0:02:26.06,0:02:27.00,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}pull requests,
+Dialogue: 0,0:02:27.00,0:02:29.35,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}and the third is filed as an issue.
+Dialogue: 0,0:02:29.80,0:02:31.36,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}The survey that produced
+Dialogue: 0,0:02:31.36,0:02:32.27,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}those numbers,
+Dialogue: 0,0:02:32.27,0:02:33.25,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}both workflows,
+Dialogue: 0,0:02:33.25,0:02:34.82,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}and a checker that reads
+Dialogue: 0,0:02:34.82,0:02:36.77,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}every claim back off the chain
+Dialogue: 0,0:02:36.77,0:02:38.21,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}are in the repository.
