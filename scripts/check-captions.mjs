@@ -73,6 +73,38 @@ if (bursts.some((b) => b.includes("{") || b.length === 0)) {
 }
 
 const work = mkdtempSync(join(tmpdir(), "captions-"));
+
+// The measurement is only worth anything in the font the style names. A box
+// without Arial Black draws the captions in whatever libass substitutes,
+// which is wider or narrower by a quarter, and a verdict on that font says
+// nothing about the video. libass reports the face it picked on the info
+// log, so one probe render reads it back before anything is measured.
+const FAMILY = "Arial Black";
+const probeRender = () => {
+  writeFileSync(join(work, "one.ass"), `${[...header, "Dialogue: 0,0:00:00.00,0:00:01.00,Pop,,0,0,0,,probe"].join("\n")}\n`, "utf8");
+  const r = spawnSync(
+    "ffmpeg",
+    ["-loglevel", "info", "-y", "-f", "lavfi", "-i", `color=c=black:s=${WIDTH}x${HEIGHT}:d=1`, "-vf", "ass=one.ass", "-frames:v", "1", "-f", "null", "-"],
+    { cwd: work, encoding: "utf8" },
+  );
+  const line = (r.stderr ?? "").split("\n").find((l) => l.includes("fontselect:"));
+  const picked = line ? line.slice(line.indexOf("->") + 2).trim() : "";
+  return { line, picked };
+};
+const face = probeRender();
+const known = ["C:/Windows/Fonts/ariblk.ttf", "/usr/share/fonts/truetype/msttcorefonts/Arial_Black.ttf", "/Library/Fonts/Arial Black.ttf"];
+// libass names the face it picked as "Arial Black" on one platform and
+// "Arial-Black" on another, so the comparison keeps letters only.
+const letters = (s) => s.toLowerCase().replace(/[^a-z]/g, "");
+const haveFont = face.line ? letters(face.picked).includes("arialblack") || letters(face.picked).includes("ariblk") : known.some((p) => existsSync(p));
+if (!haveFont) {
+  rmSync(work, { recursive: true, force: true });
+  console.log(`${FAMILY} is not installed here${face.picked ? `; libass drew with ${face.picked}` : ""}, so the captions were not measured.`);
+  console.log("The video is rendered where the font is. Install Arial Black (msttcorefonts on Debian and Ubuntu) to measure the captions the way the video draws them.");
+  process.exit(0);
+}
+console.log(`measuring with ${face.picked || FAMILY}`);
+
 const measured = [];
 try {
   for (const text of bursts) {
