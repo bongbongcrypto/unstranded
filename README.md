@@ -42,7 +42,7 @@ with them. Run again on 9 September and it answers 336 proven, 327 finalized,
 sets of withdrawals, the same thing happening in both. The rate is the claim;
 the amounts are what one sample happened to hold.
 
-Two of the fifteen are worth being precise about. The release call succeeds for
+Two of the fifteen need spelling out. The release call succeeds for
 all fifteen, but the portal marks a withdrawal finalized *before* it calls the
 target and a failed target call does not revert the outer call. It surfaces that
 failure in one case only, when `tx.origin` is `address(1)`, which the contract
@@ -86,8 +86,8 @@ The recipient is fixed inside the withdrawal that was already proven. Change any
 field and the hash changes, so the edited withdrawal was never proven and the
 call reverts. A keeper cannot send the money anywhere else and cannot take a cut.
 
-That is the whole basis of this project. It needs no key, no signature, and no
-permission from the person whose money it is.
+That is the whole basis of this project. It needs no key, and no permission from
+the person whose money it is.
 
 What a keeper *can* do wrong is release a withdrawal whose target call fails. The
 withdrawal is spent either way, so that turns a pending withdrawal into a spent
@@ -185,8 +185,7 @@ schedule tick
   -> collect what was released
 ```
 
-Nothing is carried between runs, nothing is read off chain, and no list is
-configured. What bounds a run is the width of one query: two hundred thousand
+Nothing is read off chain, and no list is configured. What bounds a run is the width of one query: two hundred thousand
 blocks come back in seconds and a million times out, so a run sweeps a window
 and the schedule walks the window forward.
 
