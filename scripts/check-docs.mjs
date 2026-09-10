@@ -282,10 +282,17 @@ walk(ROOT);
 // contain the characters it exists to forbid.
 const EM_DASH = String.fromCharCode(0x2014);
 const HANGUL = new RegExp("[" + String.fromCharCode(0xac00) + "-" + String.fromCharCode(0xd7a3) + "]");
-// Korean belongs in exactly two places: the script's `ko` gloss and the Korean
-// caption track built from it. Anywhere else it is a working note that was not
-// meant to be published, which is the thing this check exists to catch.
-const KOREAN_IS_CONTENT = new Set(["docs/demo-script.json", "docs/demo.ko.srt"]);
+// Korean belongs in exactly two kinds of file: a script's `ko` gloss and the
+// Korean subtitle track built from it, one of each per cut. Anywhere else it is
+// a working note that was not meant to be published, which is the thing this
+// check exists to catch. Named rather than matched by pattern, so a new file
+// full of Korean has to be admitted on purpose.
+const KOREAN_IS_CONTENT = new Set([
+  "docs/demo-script.json",
+  "docs/demo.ko.srt",
+  "docs/bounty-script.json",
+  "docs/bounty.ko.srt",
+]);
 for (const file of textFiles) {
   const text = readFileSync(file, "utf8");
   const rel = file.slice(ROOT.length + 1).split("\\").join("/");
