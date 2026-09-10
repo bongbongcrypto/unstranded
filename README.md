@@ -7,6 +7,8 @@ Built on [KeeperHub](https://keeperhub.com). Every transaction linked below was
 sent by a KeeperHub workflow, and every number was produced by a script in this
 repository that you can run again.
 
+**[Two minutes of it running](https://youtu.be/9UdHkgsB3T4)**, including the mainnet release below.
+
 ---
 
 ## The problem
