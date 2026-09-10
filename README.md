@@ -413,7 +413,7 @@ were fixed there.
 | --- | --- |
 | The Condition node compared numeric strings by code unit, so `"9" < "10"` was false, and the verdict flipped at `MAX_SAFE_INTEGER` because larger operands had already been promoted to `BigInt`. That is the node a workflow asks before it writes. | [keeperhub#2319](https://github.com/KeeperHub/keeperhub/pull/2319) |
 | The example workflows seeded into every new organisation put the Condition rule group under a config key the runtime never reads, so their template tokens survive unrendered, the leftover-literal scan finds them, and the run aborts before the node is reached. That one needs a data migration as well as a builder fix, because the editor cannot repair the rows. | [keeperhub#2320](https://github.com/KeeperHub/keeperhub/pull/2320) |
-| A template token inside an array config field is never rendered but is always reported, so the same reference succeeds as a JSON string and aborts as a JSON array. Filed as an issue rather than a pull request, at the maintainer's request. | [keeperhub#2359](https://github.com/KeeperHub/keeperhub/issues/2359) |
+| A template token inside an array config field is never rendered but is always reported, so the same reference succeeds as a JSON string and aborts as a JSON array. Filed as an issue first, at the maintainer's request; accepted, and the fix is the third pull request. | [keeperhub#2359](https://github.com/KeeperHub/keeperhub/issues/2359), [keeperhub#2382](https://github.com/KeeperHub/keeperhub/pull/2382) |
 
 Both gates in this keeper are written as string equality, `String(x) === "false"`
 and `=== "2"`, rather than as `<` or `>` against a number. The first of those
