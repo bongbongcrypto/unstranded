@@ -47,10 +47,14 @@ scripts/publish-guard.py
 
 # Recording output: screenshots, takes and the cut (large, regenerated)
 docs/recording/
+# Synthesised speech, one folder per cut. Rebuilt from the cut's
+# <cut>.narration.txt by scripts/make-narration.sh, so it is not committed.
 docs/narration/
+docs/narration-*/
 
 # Values this repository has told publish-guard are public chain data.
 .publish-allow
 
-# Built from docs/demo-script.json, not committed.
+# Built from a cut's script and its narration, not committed.
 docs/demo.narration.wav
+docs/bounty.narration.wav
