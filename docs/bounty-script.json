@@ -1,0 +1,44 @@
+{
+  "_comment": "The bounty submission's own video. Same shape as demo-script.json: one entry per spoken line, with the Korean gloss the review cut burns underneath it, and the shot each line is spoken over. Timings are written by scripts/retime-script.mjs from the narration audio.",
+  "lines": [
+    {
+      "start": "00:00.000",
+      "end": "00:08.800",
+      "segment": "a",
+      "segmentWhat": "what building on it turned up, and the condition node",
+      "shot": "upstream",
+      "say": "KeeperHub is open source. Building on it turned up three things, and all three were in KeeperHub rather than in the integration.",
+      "ko": "KeeperHub는 오픈소스입니다. 그 위에 만들다 세 가지를 찾았고, 셋 다 연동이 아니라 KeeperHub 안에 있었습니다."
+    },
+    {
+      "start": "00:08.800",
+      "end": "00:18.300",
+      "shot": "https://github.com/KeeperHub/keeperhub/pull/2319",
+      "say": "Its condition node compared numbers written as text, so nine came out greater than ten. That is the node a workflow asks before it writes.",
+      "ko": "조건 노드가 숫자를 글자로 비교해서 9가 10보다 크다고 나왔습니다. 워크플로가 쓰기 직전에 묻는 노드입니다."
+    },
+    {
+      "start": "00:18.300",
+      "end": "00:29.000",
+      "segment": "b",
+      "segmentWhat": "the seeded workflows, the array, and where the three stand",
+      "shot": "https://github.com/KeeperHub/keeperhub/pull/2320",
+      "say": "The example workflows seeded into every new organisation abort before their condition node runs. That one takes a data migration as well as a fix.",
+      "ko": "새 조직마다 심어주는 예시 워크플로가 조건 노드에 닿기 전에 멈춥니다. 이건 코드 수정만이 아니라 데이터 마이그레이션도 필요합니다."
+    },
+    {
+      "start": "00:29.000",
+      "end": "00:38.400",
+      "shot": "https://github.com/KeeperHub/keeperhub/pull/2382",
+      "say": "A template value inside an array is never rendered and always reported, so the same reference works as a string and fails as an array.",
+      "ko": "배열 안에 든 템플릿 값은 렌더되지 않는데 보고는 됩니다. 같은 참조가 문자열이면 되고 배열이면 실패합니다."
+    },
+    {
+      "start": "00:38.400",
+      "end": "00:47.400",
+      "shot": "upstream",
+      "say": "Three pull requests. Two have been through review twice and answered, and the third was written after the maintainer accepted the issue.",
+      "ko": "풀 리퀘스트 세 건입니다. 둘은 리뷰를 두 번 받고 답했고, 셋째는 메인테이너가 이슈를 받아준 뒤에 썼습니다."
+    }
+  ]
+}

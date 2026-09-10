@@ -17,10 +17,12 @@ import { execFileSync, spawnSync } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { SEGMENT_SLOTS, checkSlots, seconds } from "./lib/segments.mjs";
+import { checkSlots, cutFrom, seconds, slots } from "./lib/cuts.mjs";
 
+const CUT = cutFrom(process.argv);
+const SEGMENT_SLOTS = slots(CUT);
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
-const OUT = join(ROOT, "docs", "recording");
+const OUT = CUT.recording;
 const WIDTH = 1920;
 const HEIGHT = 1080;
 
@@ -55,17 +57,17 @@ const run = (args) => {
 };
 
 // ------------------------------------------------------------------- checks
-const { lines } = JSON.parse(readFileSync(join(ROOT, "docs", "demo-script.json"), "utf8"));
+const { lines } = JSON.parse(readFileSync(CUT.script, "utf8"));
 const total = seconds(lines.at(-1).end);
-const slotProblems = checkSlots(total);
+const slotProblems = checkSlots(SEGMENT_SLOTS, total);
 if (slotProblems.length > 0) {
   for (const p of slotProblems) console.error(`  ${p}`);
   process.exit(1);
 }
 
-const narration = join(ROOT, "docs", "demo.narration.wav");
+const narration = CUT.narrationTrack;
 if (!existsSync(narration)) {
-  console.error("docs/demo.narration.wav is missing. Run scripts/build-narration-track.mjs first.");
+  console.error(`docs/${CUT.name}.narration.wav is missing. Run scripts/build-narration-track.mjs --cut ${CUT.name} first.`);
   process.exit(1);
 }
 
@@ -162,8 +164,8 @@ if (Math.abs(picture - total) > 0.4) {
 // the person whose name is on it can read what the video says before it is
 // public, which is not a thing to leave to trust.
 const review = process.argv.includes("--review");
-const final = join(OUT, review ? "demo.review.mp4" : "demo.mp4");
-const assFile = review ? "demo.review.ass" : "demo.short.ass";
+const final = CUT.video(review);
+const assFile = review ? CUT.reviewAss : CUT.shortAss;
 // Refuse to burn a caption track that does not fit the frame. The generator
 // estimates each burst's width; this renders them and measures.
 const captions = spawnSync(process.execPath, [join(ROOT, "scripts", "check-captions.mjs"), join("docs", assFile)], {
@@ -190,7 +192,7 @@ run([
 
 const built = duration(final);
 console.log(
-  `\nwrote docs/recording/${review ? "demo.review.mp4" : "demo.mp4"}  ` +
+  `\nwrote ${final.slice(final.indexOf("docs"))}  ` +
     `${Math.floor(built / 60)}:${String(Math.round(built % 60)).padStart(2, "0")}`,
 );
 const missing = SEGMENT_SLOTS.filter((s) => !existsSync(join(OUT, `seg-${s.id}.mp4`)));

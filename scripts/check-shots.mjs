@@ -16,6 +16,7 @@ import { fileURLToPath } from "node:url";
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const OUT = join(ROOT, "docs", "recording");
 const RECORDER = readFileSync(join(ROOT, "scripts", "record-demo.mjs"), "utf8");
+const WORKFLOWS = ["sweeper.json", "on-demand-finalizer.json", "unattended-finalizer.json"];
 
 // The fact pages are built from the chain, not committed, so a fresh clone has
 // none of them and there is nothing to point a camera at yet. Once the folder

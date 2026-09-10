@@ -5,6 +5,7 @@
 //   node scripts/record-demo.mjs --segment b         record one
 //   node scripts/record-demo.mjs --all               record every segment
 //   node scripts/record-demo.mjs --segment b --dry   choreography only, no capture
+//   node scripts/record-demo.mjs --cut bounty --all  the bounty's video instead
 //
 // The browser is driven over the DevTools protocol rather than by moving the
 // mouse, so recording does not take the machine hostage: the window sits on a
@@ -27,10 +28,16 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSy
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { evaluate, launch } from "./lib/cdp.mjs";
-import { SEGMENT_SLOTS, checkSlots, seconds } from "./lib/segments.mjs";
+import { checkSlots, cutFrom, seconds, slots } from "./lib/cuts.mjs";
+
+const CUT = cutFrom(process.argv);
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
-const OUT = join(ROOT, "docs", "recording");
+// Where this cut's mp4s go. The pages both cuts film are built once, into
+// docs/recording, and PAGES is where they are read from; only the takes are
+// per-cut, because a segment "a" of one is not a segment "a" of the other.
+const OUT = CUT.recording;
+const PAGES = join(ROOT, "docs", "recording");
 const PROFILE = join(ROOT, ".shoot-profile");
 const STATE_FILE = join(OUT, "run-state.json");
 
@@ -47,7 +54,7 @@ const RELEASE_TX =
   "https://etherscan.io/tx/0x9bb2ed94bb3ab655a7ff9ab9ef70c46b56d060a239e318a22d8aee224dd3b55a";
 const REPO = "https://github.com/bongbongcrypto/unstranded";
 const PR_ONE = "https://github.com/KeeperHub/keeperhub/pull/2319";
-const local = (name) => "file:///" + join(OUT, name).replace(/\\/g, "/");
+const local = (name) => "file:///" + join(PAGES, name).replace(/\\/g, "/");
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -519,7 +526,7 @@ const CHOREOGRAPHY = [
     // rebuilding here would make the shoot depend on a network and on installed
     // packages it does not otherwise need. So this checks rather than builds.
     setup: async () => {
-      const page = join(OUT, "three-steps.html");
+      const page = join(PAGES, "three-steps.html");
       if (!existsSync(page)) {
         throw new Error("docs/recording is empty. Build the pages first: "
           + "node scripts/make-pages.mjs, then scripts/make-run-pages.mjs, "
@@ -621,29 +628,60 @@ const CHOREOGRAPHY = [
     ],
   },
   {
-    // 2:11.1 the three that were in KeeperHub, then the close
+    // the close. The three upstream fixes used to be here; they are the bounty
+    // submission and have their own video now, so this segment is the one line
+    // that says what is in the repository.
     id: "g",
-    url: local("upstream.html"),
+    url: local("close.html"),
     steps: [
-      { at: 1200, do: async (s) => evaluate(s, `window.__shoot.spotText("pull request 2319", null, 10)`) },
-      // 2:15.5 the first one, on their own repository
-      { at: 4200, do: async (s) => evaluate(s, `window.__shoot.unspot()`) },
-      { at: 4400, do: async (s, go) => go(PR_ONE) },
-      // 2:29.3 the close
-      { at: 18200, do: async (s, go) => go(local("close.html")) },
-      { at: 19700, do: async (s, go) => go(REPO) },
+      { at: 1200, do: async (s) => evaluate(s, `window.__shoot.spotText("check-docs.mjs", null, 10)`) },
+      { at: 5600, do: async (s) => evaluate(s, `window.__shoot.unspot()`) },
+      { at: 5900, do: async (s, go) => go(REPO) },
     ],
   },
 ];
-const SEGMENTS = SEGMENT_SLOTS.filter((slot) => CHOREOGRAPHY.some((c) => c.id === slot.id)).map((slot) => ({
+
+// The bounty's video. Three pull requests into KeeperHub, on their own pages,
+// because the thing being judged is whether they can be merged and that is
+// read on the pull request rather than described.
+const PR_TWO = "https://github.com/KeeperHub/keeperhub/pull/2320";
+const PR_THREE = "https://github.com/KeeperHub/keeperhub/pull/2382";
+
+const BOUNTY_CHOREOGRAPHY = [
+  {
+    // what building on it turned up, then the first fix
+    id: "a",
+    url: local("upstream.html"),
+    steps: [
+      { at: 1200, do: async (s) => evaluate(s, `window.__shoot.spotText("Three of them were in KeeperHub", null, 10)`) },
+      { at: 5400, do: async (s) => evaluate(s, `window.__shoot.unspot()`) },
+      { at: 5700, do: async (s, go) => go(PR_ONE) },
+    ],
+  },
+  {
+    // the seeded workflows, the array, and where the three stand
+    id: "b",
+    url: PR_TWO,
+    steps: [
+      { at: 9200, do: async (s, go) => go(PR_THREE) },
+      { at: 18400, do: async (s, go) => go(local("upstream.html")) },
+      { at: 19800, do: async (s) => evaluate(s, `window.__shoot.spotText("Three pull requests", null, 10)`) },
+    ],
+  },
+];
+
+const CHOREOGRAPHIES = { demo: CHOREOGRAPHY, bounty: BOUNTY_CHOREOGRAPHY };
+const CHOREO = CHOREOGRAPHIES[CUT.name];
+const SEGMENT_SLOTS = slots(CUT);
+const SEGMENTS = SEGMENT_SLOTS.filter((slot) => CHOREO.some((c) => c.id === slot.id)).map((slot) => ({
   ...slot,
-  ...CHOREOGRAPHY.find((c) => c.id === slot.id),
+  ...CHOREO.find((c) => c.id === slot.id),
 }));
 
 {
-  const orphan = CHOREOGRAPHY.find((c) => !SEGMENT_SLOTS.some((s) => s.id === c.id));
+  const orphan = CHOREO.find((c) => !SEGMENT_SLOTS.some((s) => s.id === c.id));
   if (orphan) throw new Error(`there is choreography for segment ${orphan.id} and no slot for it`);
-  const problems = checkSlots();
+  const problems = checkSlots(SEGMENT_SLOTS);
   if (problems.length > 0) {
     for (const p of problems) console.error(`  ${p}`);
     process.exit(1);
@@ -866,7 +904,7 @@ if (argv.includes("--monitors")) {
 }
 
 if (argv.includes("--list") || argv.length === 0) {
-  const { lines } = JSON.parse(readFileSync(join(ROOT, "docs", "demo-script.json"), "utf8"));
+  const { lines } = JSON.parse(readFileSync(CUT.script, "utf8"));
   const say = (from, to) =>
     lines.filter((l) => seconds(l.start) >= seconds(from) && seconds(l.start) < seconds(to)).length;
   for (const seg of SEGMENTS) {
@@ -879,7 +917,7 @@ if (argv.includes("--list") || argv.length === 0) {
   const scriptRuns = seconds(lines.at(-1).end);
   console.log(`\n  ${covered.toFixed(1)}s covered, and the script runs ${scriptRuns.toFixed(1)}s`);
   if (Math.abs(covered - scriptRuns) > 0.001) {
-    console.log("  the segments and the script disagree; run scripts/retime-script.mjs");
+    console.log(`  the segments and the script disagree; run scripts/retime-script.mjs --cut ${CUT.name}`);
     process.exit(1);
   }
   process.exit(0);

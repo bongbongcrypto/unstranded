@@ -39,10 +39,6 @@ const CLAIMS = [
   { what: "what moved on Ethereum", readme: "6,025.699708", spoken: "Six thousand and twenty five tether", page: "6,025.70" },
   { what: "how long it had sat there", readme: "seventy five days", spoken: "seventy five days", page: "75 days" },
   { what: "what the watcher is watching", readme: "5.447626998490219023 ETH", spoken: "five point four ether", page: null },
-  { what: "how many were upstream", readme: "Three of the things in the way were in KeeperHub",
-    spoken: "Three of the things in the way were in KeeperHub", page: "Three of them were in KeeperHub" },
-  { what: "the upstream fix that matters", readme: "keeperhub#2319",
-    spoken: "nine came out greater than ten", page: "pull request 2319" },
   { what: "that it finds them itself", readme: "`sweeper.json` finds them",
     spoken: "It finds them itself", page: "every one a sweep finds" },
   { what: "what one sweep did", readme: "| Proven, game resolved, released | **2** |",
@@ -80,10 +76,39 @@ for (const [what, text] of [
   if (!README.includes(text)) note(`README no longer states ${what} ("${text}")`);
 }
 
-// Every line has a Korean gloss, and neither language claims the other does not.
-SCRIPT.lines.forEach((line, i) => {
-  if (!line.ko || !line.ko.trim()) note(`narration line ${i + 1} has no Korean gloss`);
-  if (!line.say || !line.say.trim()) note(`narration line ${i + 1} has nothing to say`);
+// The bounty is a separate submission with a separate video, so the three
+// upstream fixes are claimed there rather than in the main track's narration.
+// They are checked here all the same: a claim that moves between two scripts is
+// exactly the kind that stops being checked by either.
+const BOUNTY = JSON.parse(read("docs/bounty-script.json"));
+const bountySpoken = BOUNTY.lines.map((l) => l.say).join(" ");
+const BOUNTY_CLAIMS = [
+  { what: "how many were upstream", readme: "Three of the things in the way were in KeeperHub",
+    spoken: "all three were in KeeperHub", page: "Three of them were in KeeperHub" },
+  { what: "the upstream fix that matters", readme: "keeperhub#2319",
+    spoken: "nine came out greater than ten", page: "pull request 2319" },
+  { what: "the seeded workflows", readme: "keeperhub#2320",
+    spoken: "abort before their condition node runs", page: "pull request 2320" },
+  { what: "the array one", readme: "keeperhub#2382",
+    spoken: "works as a string and fails as an array", page: "pull request 2382" },
+];
+for (const claim of BOUNTY_CLAIMS) {
+  if (!README.includes(claim.readme)) note(`README does not say ${claim.what} as "${claim.readme}"`);
+  if (!bountySpoken.includes(claim.spoken)) {
+    note(`the bounty narration does not say ${claim.what} as "${claim.spoken}"`);
+  }
+  if (claim.page && !PAGES.includes(claim.page)) {
+    note(`no fact page carries ${claim.what} as "${claim.page}"`);
+  }
+}
+
+// Every line of either script has a Korean gloss, and neither language claims
+// the other does not.
+[["narration", SCRIPT], ["bounty narration", BOUNTY]].forEach(([which, s]) => {
+  s.lines.forEach((line, i) => {
+    if (!line.ko || !line.ko.trim()) note(`${which} line ${i + 1} has no Korean gloss`);
+    if (!line.say || !line.say.trim()) note(`${which} line ${i + 1} has nothing to say`);
+  });
 });
 
 // The gloss is what the person whose name is on this reads, so a number that
@@ -108,7 +133,7 @@ if (glossed.length < spoken.length / 3) note("the Korean gloss looks truncated a
 const built = [...PAGES.matchAll(/write\("([^"]+)"/g)].map((m) => m[1].replace(/\.html$/, ""));
 const RUNS = ["run-release", "run-unproven", "run-unresolved", "run-sweep"];
 const LIVE = ["canvas", "watching"];
-for (const line of SCRIPT.lines) {
+for (const line of [...SCRIPT.lines, ...BOUNTY.lines]) {
   const shot = line.shot;
   if (shot.startsWith("http")) continue;
   if (built.includes(shot) || RUNS.includes(shot) || LIVE.includes(shot)) continue;
@@ -129,19 +154,31 @@ const seconds = (s) => {
   const m = /^(\d{1,2}):(\d{2})\.(\d{3})$/.exec(s);
   return m ? Number(m[1]) * 60 + Number(m[2]) + Number(m[3]) / 1000 : NaN;
 };
-const SEGMENTS = read("scripts/lib/segments.mjs");
-const slots = [...SEGMENTS.matchAll(/from: "([^"]+)", to: "([^"]+)"/g)].map((m) => [m[1], m[2]]);
-const scriptEnd = seconds(SCRIPT.lines.at(-1).end);
-if (slots.length === 0) note("the segment table has no slots");
-else {
-  if (seconds(slots[0][0]) !== 0) note("the first segment does not start at zero");
-  const last = seconds(slots.at(-1)[1]);
-  if (Math.abs(last - scriptEnd) > 0.001) {
-    note(`the segments end at ${last}s and the narration ends at ${scriptEnd}s`);
+// Both cuts' segment tables tile their own script exactly. A gap is a black
+// frame in the finished video and an overlap truncates a segment, and neither
+// shows up until it is uploaded.
+for (const [which, s, file] of [
+  ["the main track", SCRIPT, "docs/demo-segments.json"],
+  ["the bounty", BOUNTY, "docs/bounty-segments.json"],
+]) {
+  if (!existsSync(join(ROOT, file))) {
+    note(`${file} does not exist; run scripts/retime-script.mjs for that cut`);
+    continue;
   }
-  for (let i = 1; i < slots.length; i++) {
-    if (Math.abs(seconds(slots[i][0]) - seconds(slots[i - 1][1])) > 0.001) {
-      note(`segment ${i + 1} does not begin where segment ${i} ends`);
+  const table = JSON.parse(read(file));
+  const scriptEnd = seconds(s.lines.at(-1).end);
+  if (table.length === 0) {
+    note(`${which} segment table has no slots`);
+    continue;
+  }
+  if (seconds(table[0].from) !== 0) note(`${which}'s first segment does not start at zero`);
+  const last = seconds(table.at(-1).to);
+  if (Math.abs(last - scriptEnd) > 0.001) {
+    note(`${which} segments end at ${last}s and its narration ends at ${scriptEnd}s`);
+  }
+  for (let i = 1; i < table.length; i++) {
+    if (Math.abs(seconds(table[i].from) - seconds(table[i - 1].to)) > 0.001) {
+      note(`${which} segment ${table[i].id} does not begin where ${table[i - 1].id} ends`);
     }
   }
 }
@@ -183,7 +220,10 @@ if (!spoken.includes("Two gates. Then one write.")) {
 }
 
 console.log(`claims cross-checked: ${CLAIMS.length}`);
-console.log(`narration lines: ${SCRIPT.lines.length}, segments: ${slots.length}, shot rows: ${shotRows}`);
+console.log(
+  `narration lines: ${SCRIPT.lines.length} in ${JSON.parse(read("docs/demo-segments.json")).length} segments, ` +
+    `bounty ${BOUNTY.lines.length} in ${JSON.parse(read("docs/bounty-segments.json")).length}, shot rows: ${shotRows}`,
+);
 if (problems.length === 0) {
   console.log("\nthe documents agree");
   process.exit(0);

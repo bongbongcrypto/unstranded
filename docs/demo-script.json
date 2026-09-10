@@ -16,6 +16,8 @@
     {
       "start": "00:00.000",
       "end": "00:09.100",
+      "segment": "a",
+      "segmentWhat": "three transactions, people stop after two, and the count",
       "shot": "three-steps",
       "say": "Moving money off a rollup takes three transactions, not one. You start it, you prove it, and a week later you come back and finish it.",
       "ko": "롤업에서 돈을 빼는 데는 트랜잭션이 한 번이 아니라 세 번 듭니다. 출금을 걸고, 증명하고, 일주일 뒤에 다시 와서 마무리합니다."
@@ -51,6 +53,8 @@
     {
       "start": "00:32.500",
       "end": "00:38.300",
+      "segment": "b",
+      "segmentWhat": "anyone may finish someone else's withdrawal, and cannot take it",
       "shot": "external-proof",
       "say": "Here is the part that makes this fixable. Anyone can finish someone else's withdrawal.",
       "ko": "이걸 고칠 수 있게 만드는 지점이 여기입니다. 남의 출금은 아무나 대신 마무리할 수 있습니다."
@@ -72,6 +76,8 @@
     {
       "start": "00:57.500",
       "end": "01:02.500",
+      "segment": "c",
+      "segmentWhat": "the workflow: five reads, two gates, one write",
       "shot": "canvas",
       "say": "This is that, as a KeeperHub workflow. It finds them itself.",
       "ko": "그걸 KeeperHub 워크플로로 만든 것입니다. 스스로 찾아냅니다."
@@ -93,6 +99,8 @@
     {
       "start": "01:16.000",
       "end": "01:23.000",
+      "segment": "d",
+      "segmentWhat": "a stranger's five ether released, and the balance that moved",
       "shot": "run-release",
       "say": "Here it is on Ethereum, giving back six thousand dollars of tether that had sat for seventy five days.",
       "ko": "이더리움에서 75일 동안 방치돼 있던 6천 달러어치 테더를 돌려주는 장면입니다."
@@ -114,6 +122,8 @@
     {
       "start": "01:34.800",
       "end": "01:41.000",
+      "segment": "e",
+      "segmentWhat": "both refusals, and the gate that was missing at first",
       "shot": "run-unproven",
       "say": "It also refuses. Give it a withdrawal nobody proved and the first gate closes.",
       "ko": "거절도 합니다. 아무도 증명하지 않은 출금을 주면 첫 게이트가 닫힙니다."
@@ -135,6 +145,8 @@
     {
       "start": "01:59.100",
       "end": "02:05.100",
+      "segment": "f",
+      "segmentWhat": "waiting unattended, and what is unfinished",
       "shot": "watching",
       "say": "So it asks the game first. This one is watching five point four ether, and waiting.",
       "ko": "그래서 게임부터 물어봅니다. 이건 5.4 이더를 지켜보며 기다리는 중입니다."
@@ -148,21 +160,9 @@
     },
     {
       "start": "02:11.600",
-      "end": "02:16.000",
-      "shot": "upstream",
-      "say": "Three of the things in the way were in KeeperHub, not in this.",
-      "ko": "가로막던 것 중 셋은 이쪽이 아니라 KeeperHub 안에 있었습니다."
-    },
-    {
-      "start": "02:16.000",
-      "end": "02:29.800",
-      "shot": "https://github.com/KeeperHub/keeperhub/pull/2319",
-      "say": "Its condition node compared numbers written as text, so nine came out greater than ten, and that is the node a workflow asks before it writes. Two are open pull requests, and the third is filed as an issue.",
-      "ko": "Condition 노드가 숫자를 글자로 비교해서 9가 10보다 크게 나왔습니다. 워크플로가 쓰기 전에 묻는 것이 바로 그 노드입니다. 둘은 열려 있는 PR이고, 나머지 하나는 이슈로 냈습니다."
-    },
-    {
-      "start": "02:29.800",
-      "end": "02:38.600",
+      "end": "02:20.400",
+      "segment": "g",
+      "segmentWhat": "the close",
       "shot": "close",
       "say": "The survey that produced those numbers, both workflows, and a checker that reads every claim back off the chain are in the repository.",
       "ko": "그 숫자를 만든 조사 스크립트, 워크플로 두 개, 그리고 모든 주장을 체인에서 다시 읽어 확인하는 검사기가 저장소에 있습니다."

@@ -87,18 +87,9 @@ Dialogue: 0,0:02:03.40,0:02:04.73,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy1
 Dialogue: 0,0:02:05.10,0:02:07.61,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}Given no withdrawal and no list,
 Dialogue: 0,0:02:07.61,0:02:09.19,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}one sweep found six,
 Dialogue: 0,0:02:09.19,0:02:11.23,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}and gave two of them back.
-Dialogue: 0,0:02:11.60,0:02:13.55,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}Three of the things in the way
-Dialogue: 0,0:02:13.55,0:02:15.57,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}were in KeeperHub, not in this.
-Dialogue: 0,0:02:16.00,0:02:18.33,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}Its condition node compared numbers
-Dialogue: 0,0:02:18.33,0:02:19.40,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}written as text,
-Dialogue: 0,0:02:19.40,0:02:21.67,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}so nine came out greater than ten,
-Dialogue: 0,0:02:21.67,0:02:23.01,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}and that is the node
-Dialogue: 0,0:02:23.01,0:02:25.21,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}a workflow asks before it writes.
-Dialogue: 0,0:02:25.21,0:02:27.02,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}Two are open pull requests,
-Dialogue: 0,0:02:27.02,0:02:29.35,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}and the third is filed as an issue.
-Dialogue: 0,0:02:29.80,0:02:31.36,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}The survey that produced
-Dialogue: 0,0:02:31.36,0:02:32.27,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}those numbers,
-Dialogue: 0,0:02:32.27,0:02:33.25,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}both workflows,
-Dialogue: 0,0:02:33.25,0:02:34.82,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}and a checker that reads
-Dialogue: 0,0:02:34.82,0:02:36.12,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}every claim back off
-Dialogue: 0,0:02:36.12,0:02:38.21,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}the chain are in the repository.
+Dialogue: 0,0:02:11.60,0:02:13.16,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}The survey that produced
+Dialogue: 0,0:02:13.16,0:02:14.07,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}those numbers,
+Dialogue: 0,0:02:14.07,0:02:15.05,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}both workflows,
+Dialogue: 0,0:02:15.05,0:02:16.62,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}and a checker that reads
+Dialogue: 0,0:02:16.62,0:02:17.92,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}every claim back off
+Dialogue: 0,0:02:17.92,0:02:20.01,Pop,,0,0,0,,{\fad(50,50)\t(0,90,\fscx112\fscy112)\t(90,190,\fscx100\fscy100)}the chain are in the repository.

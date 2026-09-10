@@ -20,8 +20,11 @@ import { spawnSync } from "node:child_process";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { cutFrom } from "./lib/cuts.mjs";
+
+const CUT = cutFrom(process.argv);
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
-const SOURCE = join(ROOT, "docs", "demo-script.json");
+const SOURCE = CUT.script;
 
 /** Words per minute a synthetic voice reads at, near enough for planning. */
 const SPEAKING_RATE = 155;
@@ -83,7 +86,7 @@ const problems = [];
  * estimate stands in and says so. That case is the first run only.
  */
 function spokenLengths() {
-  const dir = join(ROOT, "docs", "narration");
+  const dir = CUT.narrationDir;
   const out = [];
   for (let i = 0; i < lines.length; i++) {
     const file = join(dir, `${String(i + 1).padStart(2, "0")}.mp3`);
@@ -303,7 +306,14 @@ function buildAss(korean = false) {
     return ms(f[2]) - ms(f[1]) < 500;
   });
   if (tooFast.length > 0) {
-    console.error(`${tooFast.length} captions are on screen for under half a second`);
+    console.error(`${tooFast.length} caption${tooFast.length === 1 ? " is" : "s are"} on screen for under half a second:`);
+    for (const e of tooFast) {
+      const f = e.slice("Dialogue:".length).split(",");
+      const text = f.slice(9).join(",").replace(/\{[^}]*\}/g, "");
+      console.error(`  ${((ms(f[2]) - ms(f[1])) / 1000).toFixed(2)}s  "${text}"`);
+    }
+    console.error("The slot is shared out by length, so the fix is in the line these come from:");
+    console.error("give it fewer words, or let the sentence carry the time it needs.");
     process.exit(1);
   }
   // A lone word between two full bursts reads as a glitch even when it is on
@@ -330,7 +340,7 @@ if (!process.argv.includes("--check")) {
 
   // One sentence per line, so a voice pauses where the script pauses and the
   // audio lines up with the cues without hand-trimming.
-  write("demo.narration.txt", lines.map((l) => l.say).join("\n") + "\n");
+  write(CUT.narrationText, lines.map((l) => l.say).join("\n") + "\n");
 
   // The sidecar tracks end when the sentence ends too, for the same reason the
   // burned ones do: a subtitle still up two seconds after the voice moved on
@@ -340,7 +350,7 @@ if (!process.argv.includes("--check")) {
     const spokenFor = spoken ? spoken[i] : ((line.say.trim().split(/\s+/).length / SPEAKING_RATE) * 60000);
     return Math.min(parseTime(line.end), start + spokenFor + 350);
   };
-  for (const [name, key] of [["demo.en.srt", "say"], ["demo.ko.srt", "ko"]]) {
+  for (const [name, key] of [[CUT.enSrt, "say"], [CUT.koSrt, "ko"]]) {
     write(
       name,
       lines
@@ -360,10 +370,15 @@ if (!process.argv.includes("--check")) {
     console.error("captions not written");
     process.exit(1);
   }
-  write("demo.short.ass", shortAss);
-  write("demo.review.ass", reviewAss);
+  write(CUT.shortAss, shortAss);
+  write(CUT.reviewAss, reviewAss);
 
-  const doc = join(ROOT, "docs", "VIDEO-SCRIPT.md");
+  // Only the main track keeps a shot table in a document; the bounty's five
+  // lines are the document.
+  const doc = CUT.shotTable;
+  if (doc === null) {
+    process.exit(0);
+  }
   const text = readFileSync(doc, "utf8");
   const START = "<!-- shots:start -->";
   const END = "<!-- shots:end -->";

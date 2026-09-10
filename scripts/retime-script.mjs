@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 // Give every narration line the time its own words need.
 //
-//   node scripts/retime-script.mjs           rewrite docs/demo-script.json
-//   node scripts/retime-script.mjs --dry     print what it would do
+//   node scripts/retime-script.mjs                 rewrite docs/demo-script.json
+//   node scripts/retime-script.mjs --cut bounty    the bounty's video instead
+//   node scripts/retime-script.mjs --dry           print what it would do
 //
 // Timings were written by hand first, and hand-written timings are wrong in
 // two directions at once: a line with too many words is rushed, and a line with
@@ -12,10 +13,10 @@
 // agreement with the script.
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { spawnSync } from "node:child_process";
-import { join, dirname } from "node:path";
-import { fileURLToPath } from "node:url";
+import { join } from "node:path";
+import { cutFrom, writeSlots } from "./lib/cuts.mjs";
 
-const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
+const CUT = cutFrom(process.argv);
 const DRY = process.argv.includes("--dry");
 
 // The voice reads at about this rate. Below it a line sounds unhurried; much
@@ -30,27 +31,30 @@ const stamp = (s) => {
   return `${String(m).padStart(2, "0")}:${rest.toFixed(3).padStart(6, "0")}`;
 };
 
-const script = JSON.parse(readFileSync(join(ROOT, "docs", "demo-script.json"), "utf8"));
+const script = JSON.parse(readFileSync(CUT.script, "utf8"));
+console.log(`${CUT.name}: ${CUT.what}`);
 
-// Segment boundaries are named by the line each one starts at, so a retime
-// moves them rather than breaking them.
-const SEGMENT_STARTS = { 0: "a", 5: "b", 8: "c", 11: "d", 14: "e", 17: "f", 19: "g" };
-const WHAT = {
-  a: "three transactions, people stop after two, and the count",
-  b: "anyone may finish someone else's withdrawal, and cannot take it",
-  c: "the workflow: five reads, two gates, one write",
-  d: "a stranger's five ether released, and the balance that moved",
-  e: "both refusals, and the gate that was missing at first",
-  f: "waiting unattended, and what is unfinished",
-  g: "the three that were in KeeperHub, and the close",
-};
+// Where a segment starts is declared on the line that starts it, so a retime
+// moves the boundaries rather than breaking them, and a cut's shape is written
+// down once. It used to be a table here as well, which is one copy too many
+// the moment there are two cuts.
+const SEGMENT_STARTS = {};
+const WHAT = {};
+script.lines.forEach((line, index) => {
+  if (!line.segment) return;
+  SEGMENT_STARTS[index] = line.segment;
+  WHAT[line.segment] = line.segmentWhat ?? line.segment;
+});
+if (Object.keys(SEGMENT_STARTS).length === 0) {
+  console.error(`no line of ${CUT.script} carries a "segment"`);
+  process.exit(1);
+}
 
 // Once the audio exists, measure it. The word rate is only an estimate, and it
 // was out by two tenths of a second on three lines, which is enough to push a
 // sentence past the picture it belongs to.
-const NARRATION = join(ROOT, "docs", "narration");
 const measured = script.lines.map((_, index) => {
-  const file = join(NARRATION, String(index + 1).padStart(2, "0") + ".mp3");
+  const file = join(CUT.narrationDir, String(index + 1).padStart(2, "0") + ".mp3");
   if (!existsSync(file)) return null;
   const probe = spawnSync("ffprobe", ["-v", "error", "-show_entries", "format=duration",
     "-of", "csv=p=0", file], { encoding: "utf8" });
@@ -102,14 +106,7 @@ if (DRY) {
   process.exit(0);
 }
 
-writeFileSync(join(ROOT, "docs", "demo-script.json"), JSON.stringify(script, null, 2) + "\n");
+writeFileSync(CUT.script, JSON.stringify(script, null, 2) + "\n");
+writeSlots(CUT, segments);
 
-const segmentsFile = join(ROOT, "scripts", "lib", "segments.mjs");
-const source = readFileSync(segmentsFile, "utf8");
-const table = "export const SEGMENT_SLOTS = [\n" + segments.map((s) =>
-  `  { id: "${s.id}", from: "${s.from}", to: "${s.to}", what: "${s.what}" },`).join("\n") + "\n];\n";
-const start = source.indexOf("export const SEGMENT_SLOTS");
-const end = source.indexOf("];", start) + 3;
-writeFileSync(segmentsFile, source.slice(0, start) + table + source.slice(end));
-
-console.log("\nwrote docs/demo-script.json and scripts/lib/segments.mjs");
+console.log(`\nwrote docs/${CUT.name}-script.json and docs/${CUT.name}-segments.json`);

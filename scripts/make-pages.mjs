@@ -152,8 +152,8 @@ write("upstream.html", page("upstream", `
   <h1>Three of them were in KeeperHub</h1>
   <div class="row"><div class="k">pull request 2319</div><div class="v">the Condition node compared numbers written as text, so "9" &lt; "10" was false</div></div>
   <div class="row"><div class="k">pull request 2320</div><div class="v">every new organisation's example workflows abort before their Condition node runs</div></div>
-  <div class="row"><div class="k">issue 2359</div><div class="v">a template token inside an array is never rendered and always reported</div></div>
-  <div class="note">Two pull requests, review addressed. One issue, filed at the maintainer's request.</div>
+  <div class="row"><div class="k">pull request 2382</div><div class="v">a template value inside an array is never rendered and always reported</div></div>
+  <div class="note">Three pull requests. Two through review twice, one written after the issue was accepted.</div>
 `));
 
 // --- the close --------------------------------------------------------------

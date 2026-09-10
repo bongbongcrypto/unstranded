@@ -2,7 +2,8 @@
 // Lay the per-line narration onto one three minute track, each line starting at
 // the time the script gives it.
 //
-//   node scripts/build-narration-track.mjs
+//   node scripts/build-narration-track.mjs                 the main track
+//   node scripts/build-narration-track.mjs --cut bounty    the bounty's
 //
 // Placing each line at its own start time rather than concatenating them is the
 // whole point: the shot list and the captions are keyed to those timestamps, so
@@ -13,10 +14,12 @@ import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { cutFrom } from "./lib/cuts.mjs";
 
+const CUT = cutFrom(process.argv);
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
-const NARRATION = join(ROOT, "docs", "narration");
-const OUT = join(ROOT, "docs", "demo.narration.wav");
+const NARRATION = CUT.narrationDir;
+const OUT = CUT.narrationTrack;
 
 /** ffmpeg is not on PATH in every shell here, so it is looked up rather than assumed. */
 function findFfmpeg(name) {
@@ -43,13 +46,13 @@ const seconds = (stamp) => {
   return Number(m[1]) * 60 + Number(m[2]) + Number(m[3]) / 1000;
 };
 
-const { lines } = JSON.parse(readFileSync(join(ROOT, "docs", "demo-script.json"), "utf8"));
+const { lines } = JSON.parse(readFileSync(CUT.script, "utf8"));
 const total = seconds(lines.at(-1).end);
 
 const clips = lines.map((line, i) => {
   const file = join(NARRATION, `${String(i + 1).padStart(2, "0")}.mp3`);
   if (!existsSync(file)) {
-    console.error(`missing ${file}. Run scripts/make-narration.sh first.`);
+    console.error(`missing ${file}. Run scripts/make-narration.sh CUT=${CUT.name} first.`);
     process.exit(1);
   }
   const duration = Number(
@@ -117,6 +120,6 @@ if (Math.abs(built - total) > 0.5) {
 }
 
 const speech = clips.reduce((n, c) => n + c.duration, 0);
-console.log(`wrote docs/demo.narration.wav`);
+console.log(`wrote docs/${CUT.name}.narration.wav`);
 console.log(`  ${clips.length} lines, ${built.toFixed(1)}s total, ${speech.toFixed(1)}s of speech`);
 console.log(`  ${(100 - (speech / built) * 100).toFixed(0)}% of the track is room for the screen to work`);
