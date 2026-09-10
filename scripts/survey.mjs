@@ -16,6 +16,7 @@
 // statement about nothing.
 import { createPublicClient, http, decodeFunctionData, encodeFunctionData, formatEther, formatUnits } from "viem";
 import { mainnet, sepolia } from "viem/chains";
+import { whyTargetFails } from "./lib/why-target-fails.mjs";
 
 const CHAINS = {
   base: {
@@ -297,6 +298,9 @@ for (const item of abandoned) {
   } else if (callSucceeds) {
     console.log("     DO NOT RELEASE: the call succeeds but the target fails, so it would be");
     console.log("     spent and deliver nothing");
+    console.log(
+      `     the target refuses it: ${await whyTargetFails(client, chain.portal, withdrawal)}`
+    );
   } else {
     console.log(`     not releasable: ${await whyBlocked(chain.portal, item.hash, prover, respected)}`);
   }
