@@ -371,6 +371,22 @@ async function clickXY(s, x, y) {
   return `click ${x},${y}`;
 }
 
+// A real drag, delivered the same way. React Flow pans on a left drag of the
+// canvas background, and it listens for pointer events, so a synthetic
+// transform on the viewport element would be undone on the next render.
+async function dragXY(s, x1, y1, x2, y2, steps = 8) {
+  await s.send("Input.dispatchMouseEvent", { type: "mouseMoved", x: x1, y: y1 });
+  await s.send("Input.dispatchMouseEvent", { type: "mousePressed", x: x1, y: y1, button: "left", buttons: 1, clickCount: 1 });
+  for (let i = 1; i <= steps; i++) {
+    const x = Math.round(x1 + ((x2 - x1) * i) / steps);
+    const y = Math.round(y1 + ((y2 - y1) * i) / steps);
+    await s.send("Input.dispatchMouseEvent", { type: "mouseMoved", x, y, button: "left", buttons: 1 });
+    await sleep(16);
+  }
+  await s.send("Input.dispatchMouseEvent", { type: "mouseReleased", x: x2, y: y2, button: "left", buttons: 0, clickCount: 1 });
+  return `drag ${x1},${y1} -> ${x2},${y2}`;
+}
+
 // The active tab's content. The other two tabs keep empty, hidden panels in
 // the DOM, and the first of those is what a bare [role=tabpanel] finds.
 const PANEL = '[role="tabpanel"][data-state="active"]';
@@ -381,16 +397,48 @@ const UI = {
   fitView: [1312, 975], // React Flow's fit-view control, with the panel hidden
   runsTab: [1632, 124],
   refresh: [1420, 184],
+  sidebarWidth: 200, // the navigation sits on top of the canvas's left edge
+  canvasEmpty: [960, 300], // a point on the canvas with nothing under it
 };
 
-/** Hide the panel and fit every node into the canvas. */
+/** Hide the panel, fit every node into the canvas, and centre them in view. */
 async function canvasWide(s) {
   const panel = await evaluate(s, `window.__shoot.setPanel(false)`);
   const identity = await evaluate(s, `window.__shoot.hideIdentity()`);
   await sleep(700);
   await clickXY(s, ...UI.fitView);
   await sleep(600);
-  return `wide (${panel}, ${identity})`;
+  // Fitting centres the nodes across the whole canvas, and the sidebar covers
+  // its left edge, so the first node came out half under the sidebar. The row
+  // is measured where it landed and slid to the middle of the part a viewer
+  // can see, then measured again, since a drag of n does not always move the
+  // canvas by n. Nothing here assumes a scale.
+  const where = async () => JSON.parse(await evaluate(s, `(() => {
+    const nodes = [...document.querySelectorAll(".react-flow__node")].map((n) => n.getBoundingClientRect());
+    const left = Math.min(...nodes.map((r) => r.left));
+    const right = Math.max(...nodes.map((r) => r.right));
+    // The navigation is the tall column pinned to the left edge.
+    const column = [...document.querySelectorAll("body *")].find((el) => {
+      const r = el.getBoundingClientRect();
+      return r.left <= 1 && r.width > 80 && r.width < 500 && r.height > innerHeight * 0.8;
+    });
+    return JSON.stringify({ left, right, side: column ? column.getBoundingClientRect().right : 0, width: innerWidth });
+  })()`));
+  const [x, y] = UI.canvasEmpty;
+  let row = await where();
+  let moved = 0;
+  for (let pass = 0; pass < 2; pass++) {
+    const target = (row.side + row.width) / 2;
+    const off = target - (row.left + row.right) / 2;
+    if (Math.abs(off) < 4) break;
+    await dragXY(s, x, y, x + Math.round(off), y);
+    await sleep(400);
+    row = await where();
+    moved += off;
+  }
+  console.log(`  canvas: nodes ${Math.round(row.left)}..${Math.round(row.right)} in ${Math.round(row.side)}..${row.width}, slid ${Math.round(moved)}px`);
+  await sleep(300);
+  return `wide (${panel}, ${identity}, centred)`;
 }
 
 /** Fresh page, panel showing, Runs tab open. */
