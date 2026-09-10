@@ -43,7 +43,12 @@ const CSS = `
   h1 { font: 600 44px/1.2 system-ui, "Segoe UI", sans-serif; margin: 0 0 22px; letter-spacing: -0.01em; }
   .row { display: grid; grid-template-columns: 520px 1fr; gap: 24px; padding: 16px 0; border-bottom: 1px solid #1f2933; }
   .k { color: #8b98a5; }
-  .v { color: #e6edf3; word-break: break-all; }
+  /* break-all was here for hashes and addresses, and it broke prose in the
+     middle of a word: "before their Conditio / n node runs" reached a frame
+     of the finished video that way. Wrapping anywhere breaks inside a word
+     only when the word itself does not fit, which is the hash case and
+     nothing else. (No backticks in here: this block is a template string.) */
+  .v { color: #e6edf3; word-break: normal; overflow-wrap: anywhere; }
   .big { font-size: 92px; font-weight: 700; color: #7fd1ff; letter-spacing: -0.02em; line-height: 1.1; }
   .warn { color: #ffb86b; }
   .ok { color: #7ee787; }
@@ -153,7 +158,7 @@ write("upstream.html", page("upstream", `
   <div class="row"><div class="k">pull request 2319</div><div class="v">the Condition node compared numbers written as text, so "9" &lt; "10" was false</div></div>
   <div class="row"><div class="k">pull request 2320</div><div class="v">every new organisation's example workflows abort before their Condition node runs</div></div>
   <div class="row"><div class="k">pull request 2382</div><div class="v">a template value inside an array is never rendered and always reported</div></div>
-  <div class="note">Three pull requests. Two through review twice, one written after the issue was accepted.</div>
+  <div class="note">Three pull requests. Each one carries the reproduction, the fix, and tests that fail without it.</div>
 `));
 
 // --- the close --------------------------------------------------------------

@@ -35,10 +35,10 @@
     },
     {
       "start": "00:38.400",
-      "end": "00:47.400",
+      "end": "00:45.900",
       "shot": "upstream",
-      "say": "Three pull requests. Two have been through review twice and answered, and the third was written after the maintainer accepted the issue.",
-      "ko": "풀 리퀘스트 세 건입니다. 둘은 리뷰를 두 번 받고 답했고, 셋째는 메인테이너가 이슈를 받아준 뒤에 썼습니다."
+      "say": "Three pull requests. Each one carries the reproduction, the fix, and tests that fail without it.",
+      "ko": "풀 리퀘스트 세 건입니다. 각각에 재현 방법과 수정, 그리고 그 수정이 없으면 실패하는 검사가 들어 있습니다."
     }
   ]
 }

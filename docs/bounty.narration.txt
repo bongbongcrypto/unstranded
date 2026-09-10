@@ -2,4 +2,4 @@ KeeperHub is open source. Building on it turned up three things, and all three w
 Its condition node compared numbers written as text, so nine came out greater than ten. That is the node a workflow asks before it writes.
 The example workflows seeded into every new organisation abort before their condition node runs. That one takes a data migration as well as a fix.
 A template value inside an array is never rendered and always reported, so the same reference works as a string and fails as an array.
-Three pull requests. Two have been through review twice and answered, and the third was written after the maintainer accepted the issue.
+Three pull requests. Each one carries the reproduction, the fix, and tests that fail without it.

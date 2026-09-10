@@ -15,5 +15,5 @@ The example workflows seeded into every new organisation abort before their cond
 A template value inside an array is never rendered and always reported, so the same reference works as a string and fails as an array.
 
 5
-00:00:38,400 --> 00:00:47,006
-Three pull requests. Two have been through review twice and answered, and the third was written after the maintainer accepted the issue.
+00:00:38,400 --> 00:00:45,470
+Three pull requests. Each one carries the reproduction, the fix, and tests that fail without it.
