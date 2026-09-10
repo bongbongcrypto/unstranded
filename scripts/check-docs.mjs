@@ -29,10 +29,46 @@ const README = readFileSync(join(ROOT, "README.md"), "utf8");
 const problems = [];
 const note = (m) => problems.push(m);
 
-const client = createPublicClient({
-  chain: sepolia,
-  transport: http("https://ethereum-sepolia-rpc.publicnode.com", { retryCount: 4 }),
-});
+// A public RPC answers with what it has. One of them served a transaction but
+// not its receipt for an hour, and this check went red on a README that was
+// right. So every question is put to several providers in turn: the first
+// answer wins, an empty answer or an error moves to the next, and only when
+// all of them come up empty is it a finding. viem's fallback transport does
+// not do this, because an empty receipt is a successful response to it.
+const SEPOLIA_RPCS = [
+  "https://ethereum-sepolia-rpc.publicnode.com",
+  "https://sepolia.gateway.tenderly.co",
+  "https://1rpc.io/sepolia",
+];
+const MAINNET_RPCS = [
+  "https://ethereum-rpc.publicnode.com",
+  "https://mainnet.gateway.tenderly.co",
+  "https://1rpc.io/eth",
+];
+function several(chain, urls) {
+  const clients = urls.map((url) => createPublicClient({ chain, transport: http(url, { retryCount: 2 }) }));
+  const ask = (name) => async (args) => {
+    let lastError;
+    for (const c of clients) {
+      try {
+        const answer = await c[name](args);
+        if (answer !== null && answer !== undefined) return answer;
+      } catch (error) {
+        lastError = error;
+      }
+    }
+    throw lastError ?? new Error(`${name}: every provider came back empty`);
+  };
+  return {
+    getTransactionReceipt: ask("getTransactionReceipt"),
+    getTransaction: ask("getTransaction"),
+    getBalance: ask("getBalance"),
+    getBlock: ask("getBlock"),
+    readContract: ask("readContract"),
+  };
+}
+
+const client = several(sepolia, SEPOLIA_RPCS);
 
 const PORTAL = "0x49f53e41452C74589E85cA1677426Ba426459e85";
 const PORTAL_ABI = [{
@@ -50,7 +86,7 @@ for (const hash of uniqueTx) {
     const receipt = await client.getTransactionReceipt({ hash });
     if (receipt.status !== "success") note(`${hash}: receipt status ${receipt.status}`);
   } catch {
-    note(`${hash}: no receipt on Sepolia`);
+    note(`${hash}: no receipt on Sepolia from any of ${SEPOLIA_RPCS.length} providers`);
   }
 }
 
@@ -151,7 +187,7 @@ const MAINNET_PORTAL = "0x49048044D57e1C92A77f79988d21Fa8fAF74E97e";
 const USDT = "0xdAC17F958D2ee523a2206206994597C13D831ec7";
 const MAINNET_OWNER = "0xF4e147Db314947fC1275a8CbB6Cde48c510cd8CF";
 if (README.includes(MAINNET_TX)) {
-  const eth = createPublicClient({ chain: mainnet, transport: http("https://ethereum-rpc.publicnode.com", { retryCount: 4 }) });
+  const eth = several(mainnet, MAINNET_RPCS);
   try {
     const receipt = await eth.getTransactionReceipt({ hash: MAINNET_TX });
     if (receipt.status !== "success") note("the mainnet release did not succeed");
