@@ -20,8 +20,10 @@
     "record": "node scripts/record-demo.mjs",
     "assemble": "node scripts/assemble-demo.mjs",
     "check-consistency": "node scripts/check-consistency.mjs",
-    "check": "node scripts/check-docs.mjs && node scripts/check-consistency.mjs && node scripts/check-shots.mjs && node scripts/check-live.mjs",
+    "check": "node scripts/check-docs.mjs && node scripts/check-consistency.mjs && node scripts/check-shots.mjs && node scripts/check-live.mjs && node scripts/check-pops.mjs && node scripts/check-captions.mjs",
     "check-shots": "node scripts/check-shots.mjs",
+    "check-pops": "node scripts/check-pops.mjs",
+    "check-captions": "node scripts/check-captions.mjs",
     "check-live": "node scripts/check-live.mjs"
   },
   "dependencies": {

@@ -164,6 +164,15 @@ if (Math.abs(picture - total) > 0.4) {
 const review = process.argv.includes("--review");
 const final = join(OUT, review ? "demo.review.mp4" : "demo.mp4");
 const assFile = review ? "demo.review.ass" : "demo.short.ass";
+// Refuse to burn a caption track that does not fit the frame. The generator
+// estimates each burst's width; this renders them and measures.
+const captions = spawnSync(process.execPath, [join(ROOT, "scripts", "check-captions.mjs"), join("docs", assFile)], {
+  stdio: "inherit",
+});
+if (captions.status !== 0) {
+  console.error(`${assFile} has captions that do not fit the frame; nothing assembled`);
+  process.exit(1);
+}
 const ass = join(ROOT, "docs", assFile).replace(/\\/g, "/").replace(/^([A-Za-z]):/, "$1\\:");
 // Said out loud because this is the slow part and silence reads like a hang.
 // The preset is deliberate: this is the copy people watch.
